@@ -307,6 +307,16 @@ const emojis = {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-biere
 // INIT
 // ============================================
 document.addEventListener('DOMContentLoaded', async () => {
+  // Charger panier sauvegardé
+  try {
+    const saved = localStorage.getItem('proxikau_panier');
+    if (saved) {
+      const data = JSON.parse(saved);
+      panier = data.items || [];
+      majPanierCount();
+    }
+  } catch(e) {}
+
   // Récupérer slug depuis URL
   const params = new URLSearchParams(window.location.search);
   const slug = params.get('slug') || window.location.pathname.split('/').pop().replace('.html','');
@@ -527,8 +537,13 @@ function majPanierCount() {
   const btn = document.querySelector('.btn-panier');
   if (btn && total > 0) {
     btn.classList.remove('bump');
-    void btn.offsetWidth; // force reflow
+    void btn.offsetWidth;
     btn.classList.add('bump');
+  }
+  // Sauvegarder panier dans localStorage avec l'id de la boutique
+  if (boutique) {
+    const panierData = { boutique_id: boutique.id, boutique_slug: boutique.slug, items: panier };
+    localStorage.setItem('proxikau_panier', JSON.stringify(panierData));
   }
 }
 
@@ -613,7 +628,6 @@ async function passerCommande() {
   if (!livraisonSelectionnee) { alert('Choisis un mode de livraison.'); return; }
   const user = await getUtilisateurConnecte();
   if (!user) { window.location.href = 'connexion.html?redirect=' + window.location.href; return; }
-  // Redirection vers page checkout (à créer)
   const params = new URLSearchParams({
     boutique: boutique.id,
     livraison: livraisonSelectionnee,
