@@ -28,8 +28,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn-connexion{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
 
 /* BANNIERE */
-.banniere{height:160px;background:linear-gradient(135deg,#0D2B1F 0%,#1B4332 40%,#2D6A4F 70%,#40916C 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
-@media(min-width:600px){.banniere{height:200px;}}
+.banniere{height:220px;background:linear-gradient(135deg,#0D2B1F 0%,#1B4332 40%,#2D6A4F 70%,#40916C 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+@media(min-width:600px){.banniere{height:240px;}}
 .banniere-pattern{position:absolute;inset:0;width:100%;height:100%;}
 .banniere-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .banniere-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.1) 100%);}
@@ -201,15 +201,35 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
   </svg>
   <!-- Dégradé bas pour lisibilité du texte -->
   <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 70%);"></div>
-  <!-- Bloc boost enrichi -->
-  <div id="banniere-boost-cta" style="position:relative;z-index:2;width:100%;padding:16px 20px 20px;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 100%);">
-    <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;">
+  <!-- Bloc boost avec 3 offres -->
+  <div id="banniere-boost-cta" style="position:relative;z-index:2;width:100%;padding:14px 20px 18px;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 100%);">
+    <div style="margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
       <div>
-        <div style="color:#FFD166;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">⚡ Visibilité maximale</div>
-        <div style="color:#fff;font-size:17px;font-weight:800;line-height:1.3;text-shadow:0 1px 4px rgba(0,0,0,.4);">Boostez vos ventes —<br>Soyez premier dans votre région</div>
-        <div style="color:rgba(255,255,255,.75);font-size:12px;margin-top:5px;">Région 10€ · France 15€ · Europe 20€ / semaine</div>
+        <div style="color:#FFD166;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">⚡ Boostez votre visibilité</div>
+        <div style="color:#fff;font-size:15px;font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,.4);">Soyez premier dans votre zone</div>
       </div>
-      <a href="dashboard.html" id="btn-boost-banniere" style="display:none;background:linear-gradient(135deg,#BC6C25,#E07B2A);color:#fff;font-size:13px;font-weight:700;padding:10px 20px;border-radius:24px;text-decoration:none;white-space:nowrap;flex-shrink:0;box-shadow:0 4px 14px rgba(188,108,37,.5);letter-spacing:.3px;">⚡ Booster ma boutique</a>
+      <a href="dashboard.html" id="btn-boost-banniere" style="display:none;background:linear-gradient(135deg,#BC6C25,#E07B2A);color:#fff;font-size:12px;font-weight:700;padding:8px 16px;border-radius:20px;text-decoration:none;white-space:nowrap;box-shadow:0 3px 10px rgba(188,108,37,.5);">Activer →</a>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 12px;backdrop-filter:blur(4px);">
+        <div style="font-size:16px;margin-bottom:4px;">📍</div>
+        <div style="color:#fff;font-size:12px;font-weight:700;">Ma Région</div>
+        <div style="color:rgba(255,255,255,.7);font-size:11px;margin-bottom:6px;">Visibilité locale</div>
+        <div style="color:#FFD166;font-size:16px;font-weight:800;">10€<span style="font-size:10px;font-weight:400;color:rgba(255,255,255,.6);">/sem</span></div>
+      </div>
+      <div style="background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:10px;padding:10px 12px;backdrop-filter:blur(4px);position:relative;">
+        <div style="position:absolute;top:-8px;left:50%;transform:translateX(-50%);background:#BC6C25;color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap;">⭐ POPULAIRE</div>
+        <div style="font-size:16px;margin-bottom:4px;">🇫🇷</div>
+        <div style="color:#fff;font-size:12px;font-weight:700;">France</div>
+        <div style="color:rgba(255,255,255,.7);font-size:11px;margin-bottom:6px;">Toute la France</div>
+        <div style="color:#FFD166;font-size:16px;font-weight:800;">15€<span style="font-size:10px;font-weight:400;color:rgba(255,255,255,.6);">/sem</span></div>
+      </div>
+      <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:10px;padding:10px 12px;backdrop-filter:blur(4px);">
+        <div style="font-size:16px;margin-bottom:4px;">🌍</div>
+        <div style="color:#fff;font-size:12px;font-weight:700;">Europe</div>
+        <div style="color:rgba(255,255,255,.7);font-size:11px;margin-bottom:6px;">Toute l'Europe</div>
+        <div style="color:#FFD166;font-size:16px;font-weight:800;">20€<span style="font-size:10px;font-weight:400;color:rgba(255,255,255,.6);">/sem</span></div>
+      </div>
     </div>
   </div>
 </div>
