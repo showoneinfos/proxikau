@@ -622,17 +622,7 @@ async function creerCompte() {
 
     const userId = authData.user.id;
 
-    // 2. Creer le profil utilisateur
-    await creerProfil(
-      userId,
-      document.getElementById('email').value.trim(),
-      document.getElementById('prenom').value.trim(),
-      document.getElementById('nom').value.trim(),
-      document.getElementById('telephone').value.trim(),
-      'vendeur'
-    );
-
-    // 3. Creer la boutique
+    // 2. Creer la boutique
     await creerBoutique({
       slug: document.getElementById('slug').value.trim(),
       nom: document.getElementById('nom-boutique').value.trim(),
