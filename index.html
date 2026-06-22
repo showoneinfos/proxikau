@@ -152,8 +152,8 @@ footer strong{color:#fff;}
   <h1>Le meilleur des producteurs locaux, près de chez vous</h1>
   <p>Charcuterie, miel, fromage, vins... achetez directement aux artisans qui fabriquent.</p>
   <div class="hero-search">
-    <input type="text" placeholder="Que cherchez-vous ?" id="search-hero" onkeydown="if(event.key==='Enter')rechercherHero()">
-    <button onclick="rechercherHero()">Rechercher</button>
+    <input type="text" placeholder="Que cherchez-vous ?" id="search-hero" oninput="document.getElementById('search-nav').value=this.value;rechercherLive(this.value)" onkeydown="if(event.key==='Enter'){document.getElementById('search-nav').value=this.value;rechercherLive(this.value);}">
+    <button onclick="document.getElementById('search-nav').value=document.getElementById('search-hero').value;rechercherLive(document.getElementById('search-hero').value)">Rechercher</button>
   </div>
   <div class="hero-stats">
     <div class="hero-stat"><strong id="stat-boutiques">—</strong><span>Boutiques</span></div>
