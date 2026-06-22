@@ -38,7 +38,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 /* PROFIL BOUTIQUE */
 .boutique-header{background:var(--white);border-bottom:1px solid var(--border);padding:16px 20px 20px;}
 .boutique-header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;}
-.boutique-logo{width:68px;height:68px;border-radius:14px;background:var(--white);border:3px solid var(--white);box-shadow:0 2px 16px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;margin-top:-34px;position:relative;z-index:2;}
+.boutique-logo{width:68px;height:68px;border-radius:14px;background:var(--vert);border:3px solid var(--white);box-shadow:0 2px 16px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#fff;flex-shrink:0;margin-top:-34px;position:relative;z-index:2;letter-spacing:-1px;}
 .boutique-info{flex:1;min-width:200px;padding-top:4px;}
 .boutique-cat-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--vert-light);color:var(--vert2);}
 .boutique-nom{font-size:20px;font-weight:700;color:var(--ink);}
@@ -170,7 +170,10 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
     </defs>
     <rect width="100%" height="100%" fill="url(#pat)"/>
   </svg>
-  <div class="banniere-overlay"></div>
+  <div id="banniere-boost-cta" style="position:relative;z-index:2;width:100%;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(to top,rgba(0,0,0,.35),transparent);">
+    <div style="color:rgba(255,255,255,.9);font-size:13px;font-weight:500;">⚡ <strong style="color:#fff;">Boostez vos ventes</strong> — Soyez premier dans votre région</div>
+    <a href="dashboard.html" id="btn-boost-banniere" style="display:none;background:var(--terre);color:#fff;font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;text-decoration:none;white-space:nowrap;flex-shrink:0;">Booster →</a>
+  </div>
 </div>
 
 <!-- HEADER BOUTIQUE -->
@@ -317,6 +320,18 @@ function afficherBoutique() {
   const catLabels = {'viande-charcuterie':'🥩 Charcuterie','fromage-laitier':'🧀 Fromage','vins-bieres':'🍷 Vins','epicerie-terroir':'🫙 Épicerie','fruits-legumes':'🥦 Fruits & Légumes','miel-confitures':'🍯 Miel','huiles-condiments':'🫒 Huiles','savons-cosmetiques':'🧴 Cosmétiques','bougies-deco':'🕯️ Déco'};
   const catBadge = document.getElementById('boutique-cat-badge');
   if (catBadge && boutique.categorie) catBadge.textContent = catLabels[boutique.categorie] || boutique.categorie;
+  // Logo = initiales
+  const initiales = boutique.nom.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+  document.getElementById('boutique-logo').textContent = initiales;
+
+  // Bouton boost visible seulement pour le vendeur proprio
+  const user = await getUtilisateurConnecte();
+  if (user) {
+    const maB = await getBoutiqueParUserId(user.id);
+    if (maB && maB.id === boutique.id) {
+      document.getElementById('btn-boost-banniere').style.display = 'block';
+    }
+  }
 
   const livEl = document.getElementById('boutique-livraisons');
   if (boutique.livraison_colis) livEl.innerHTML += '<span class="liv-badge">📦 Colis</span>';
