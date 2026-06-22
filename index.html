@@ -31,6 +31,10 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .btn-connexion{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;white-space:nowrap;}
 .btn-vendre{font-size:13px;background:var(--vert);color:#fff;text-decoration:none;padding:8px 14px;border-radius:8px;font-weight:600;white-space:nowrap;}
 .btn-vendre:hover{background:var(--vert2);}
+.btn-panier-nav{position:relative;background:var(--vert);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;display:none;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(45,106,79,.3);text-decoration:none;}
+.btn-panier-nav.visible{display:inline-flex;}
+.panier-nav-count{background:var(--terre);color:#fff;min-width:18px;height:18px;border-radius:9px;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff;}
+@media(max-width:600px){.btn-connexion{display:none;}}
 @media(max-width:600px){.nav-search{display:none;}.btn-connexion{display:none;}}
 
 /* HERO */
@@ -141,6 +145,9 @@ footer strong{color:#fff;}
     <input type="text" placeholder="Chercher un produit, une boutique..." oninput="rechercherLive(this.value)" id="search-nav">
   </div>
   <div class="nav-right">
+    <a href="#" class="btn-panier-nav" id="btn-panier-nav" onclick="allerAuPanier(event)">
+      🛒 Panier <span class="panier-nav-count" id="panier-nav-count">0</span>
+    </a>
     <a href="connexion.html" class="btn-connexion" id="nav-compte">Se connecter</a>
     <a href="inscription.html" class="btn-vendre">Vendre →</a>
   </div>
@@ -300,6 +307,22 @@ let catActive = 'tous';
 // INIT
 // ============================================
 document.addEventListener('DOMContentLoaded', async () => {
+  // Lire panier du localStorage
+  try {
+    const saved = localStorage.getItem('proxikau_panier');
+    if (saved) {
+      const data = JSON.parse(saved);
+      const total = (data.items || []).reduce((s,i) => s + i.qty, 0);
+      if (total > 0) {
+        const btn = document.getElementById('btn-panier-nav');
+        const count = document.getElementById('panier-nav-count');
+        btn.classList.add('visible');
+        count.textContent = total;
+        btn.dataset.slug = data.boutique_slug || '';
+      }
+    }
+  } catch(e) {}
+
   // Vérifier connexion
   const user = await getUtilisateurConnecte();
   if (user) {
@@ -496,6 +519,13 @@ function rechercher(q) {
   afficherProduits(prodsFiltres);
   afficherBoutiques(boutsFiltrees);
   document.getElementById('boutiques-section').style.display = boutsFiltrees.length ? 'block' : 'none';
+}
+function allerAuPanier(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btn-panier-nav');
+  const slug = btn.dataset.slug;
+  if (slug) window.location.href = '/' + slug;
+  else window.location.href = '/';
 }
 </script>
 </body>
