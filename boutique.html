@@ -441,32 +441,44 @@ function ouvrirModalProduit(id) {
   if (!p) return;
   produitActif = p;
   qtyActuelle = 1;
+
+  // Reset complet du modal
+  document.getElementById('modal-produit').classList.remove('open');
   document.getElementById('qty-val').textContent = 1;
   document.getElementById('modal-nom').textContent = p.nom;
   document.getElementById('modal-prix').textContent = parseFloat(p.prix).toFixed(2) + '€ / ' + p.unite;
   document.getElementById('modal-desc').textContent = p.description || '';
-  document.getElementById('modal-emoji').textContent = emojis[p.categorie] || '📦';
 
+  // Reset photo — force le rechargement
   const photosEl = document.getElementById('modal-photos');
+  photosEl.innerHTML = '';
   if (p.photos && p.photos.length) {
-    photosEl.innerHTML = `<img src="${p.photos[0]}" alt="${p.nom}" style="width:100%;height:100%;object-fit:cover;">`;
+    const img = document.createElement('img');
+    img.src = p.photos[0] + '?t=' + Date.now();
+    img.alt = p.nom;
+    img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
+    photosEl.appendChild(img);
   } else {
-    photosEl.innerHTML = `<div class="modal-photos-placeholder">${emojis[p.categorie] || '📦'}</div>`;
+    const div = document.createElement('div');
+    div.className = 'modal-photos-placeholder';
+    div.textContent = emojis[p.categorie] || '📦';
+    photosEl.appendChild(div);
   }
 
   const stockEl = document.getElementById('modal-stock');
-  if (!p.stock_illimite && p.stock <= 5) stockEl.textContent = 'Plus que ' + p.stock + ' !';
-  else stockEl.textContent = '';
+  stockEl.textContent = (!p.stock_illimite && p.stock <= 5) ? 'Plus que ' + p.stock + ' !' : '';
 
-  // Livraisons
   const livEl = document.getElementById('modal-livraisons');
   livEl.innerHTML = '';
   if (boutique.livraison_colis) livEl.innerHTML += '<span class="liv-badge">📦 Colis</span>';
   if (boutique.livraison_enlevement) livEl.innerHTML += '<span class="liv-badge">🏠 Enlèvement</span>';
   if (boutique.livraison_proximite) livEl.innerHTML += `<span class="liv-badge">🚗 ~${boutique.rayon_proximite_km}km</span>`;
 
-  document.getElementById('modal-produit').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  // Ouvrir après un court délai pour forcer le re-render
+  requestAnimationFrame(() => {
+    document.getElementById('modal-produit').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
 }
 
 function fermerModalProduit() {
