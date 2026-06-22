@@ -23,7 +23,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .logo{font-size:20px;font-weight:700;color:var(--vert);text-decoration:none;}
 .logo span{color:var(--terre);}
 .nav-right{margin-left:auto;display:flex;gap:8px;align-items:center;}
-.btn-panier{position:relative;background:var(--vert);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(45,106,79,.3);transition:all .2s;}
+.btn-panier{position:relative;background:var(--vert);color:#fff;border:none;border-radius:10px;padding:11px 22px;font-family:var(--sans);font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(45,106,79,.3);transition:all .2s;}
 .btn-panier:hover{background:var(--vert2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(45,106,79,.4);}
 .btn-panier.bump{animation:bump .3s ease;}
 @keyframes bump{0%{transform:scale(1);}50%{transform:scale(1.12);}100%{transform:scale(1);}}
@@ -156,11 +156,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 <nav>
   <a href="index.html" class="logo">Proxi<span>kau</span></a>
   <div class="nav-right">
-    <a href="connexion.html" class="btn-connexion" id="nav-compte">Mon compte</a>
     <button class="btn-panier" onclick="ouvrirPanier()">
-      🛒 Panier
+      🛒 Mon panier
       <span class="panier-count" id="panier-count">0</span>
     </button>
+    <a href="connexion.html" class="btn-connexion" id="nav-compte">Mon compte</a>
   </div>
 </nav>
 
