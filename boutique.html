@@ -28,8 +28,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn-connexion{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
 
 /* BANNIERE */
-.banniere{height:200px;background:linear-gradient(135deg,#0D2B1F 0%,#1B4332 40%,#2D6A4F 70%,#40916C 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
-@media(min-width:600px){.banniere{height:240px;}}
+.banniere{height:240px;background:linear-gradient(135deg,#0D2B1F 0%,#1B4332 40%,#2D6A4F 70%,#40916C 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+@media(min-width:600px){.banniere{height:280px;}}
 .banniere-pattern{position:absolute;inset:0;width:100%;height:100%;}
 .banniere-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .banniere-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.1) 100%);}
@@ -202,10 +202,12 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
   <!-- Dégradé bas pour lisibilité du texte -->
   <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 70%);"></div>
   <!-- Banniere centree elegante -->
-  <div style="position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px;background:rgba(0,0,0,.45);">
-    <div style="color:rgba(255,255,255,.85);font-size:13px;font-weight:500;letter-spacing:4px;text-transform:uppercase;margin-bottom:10px;">✦ Bienvenue sur la boutique de ✦</div>
-    <div id="banniere-nom" style="color:#fff;font-size:42px;font-weight:900;letter-spacing:-1.5px;text-shadow:0 4px 20px rgba(0,0,0,.6);line-height:1;font-family:Georgia,serif;font-style:italic;"></div>
-    <div id="banniere-ville" style="color:rgba(255,255,255,.7);font-size:13px;margin-top:12px;letter-spacing:1px;"></div>
+  <div style="position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:rgba(0,0,0,.42);">
+    <div style="color:#fff;font-size:16px;font-weight:800;letter-spacing:6px;text-transform:uppercase;margin-bottom:12px;text-shadow:0 2px 8px rgba(0,0,0,.5);">✦ &nbsp;Bienvenue sur la boutique de&nbsp; ✦</div>
+    <div style="height:1px;width:120px;background:rgba(255,255,255,.3);margin-bottom:14px;"></div>
+    <div id="banniere-nom" style="color:#fff;font-size:52px;font-weight:900;letter-spacing:-2px;text-shadow:0 4px 24px rgba(0,0,0,.7);line-height:1;font-family:Georgia,serif;font-style:italic;"></div>
+    <div style="height:1px;width:120px;background:rgba(255,255,255,.3);margin-top:14px;margin-bottom:10px;"></div>
+    <div id="banniere-ville" style="color:rgba(255,255,255,.75);font-size:13px;letter-spacing:2px;text-transform:uppercase;"></div>
   </div>
 </div>
 
