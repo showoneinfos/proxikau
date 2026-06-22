@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ouvrir ma boutique — Proxikau</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<style>
+:root {
+  --vert:#2D6A4F;
+  --vert2:#1B4332;
+  --vert-light:#D8F3DC;
+  --terre:#BC6C25;
+  --terre-light:#FDEBD0;
+  --ink:#1A1A1A;
+  --ink2:#555;
+  --ink3:#999;
+  --border:#E0E0E0;
+  --bg:#F9F7F4;
+  --white:#fff;
+  --sans:'Inter',system-ui,sans-serif;
+  --error:#D32F2F;
+  --success:#2D6A4F;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;}
+
+/* NAV */
+nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 24px;gap:16px;}
+.logo{font-size:22px;font-weight:700;color:var(--vert);text-decoration:none;letter-spacing:-0.5px;}
+.logo span{color:var(--terre);}
+.nav-right{margin-left:auto;font-size:14px;color:var(--ink2);}
+.nav-right a{color:var(--vert);font-weight:500;text-decoration:none;}
+
+/* LAYOUT */
+.page{max-width:960px;margin:0 auto;padding:40px 24px 80px;}
+
+/* STEPS */
+.steps{display:flex;align-items:center;gap:0;margin-bottom:40px;}
+.step{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink3);font-weight:500;}
+.step.active{color:var(--vert);}
+.step.done{color:var(--ink3);}
+.step-num{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;background:var(--white);}
+.step.active .step-num{border-color:var(--vert);background:var(--vert);color:#fff;}
+.step.done .step-num{border-color:var(--vert);background:var(--vert-light);color:var(--vert);}
+.step-line{flex:1;height:2px;background:var(--border);margin:0 8px;}
+.step-line.done{background:var(--vert);}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+@media(max-width:680px){.grid{grid-template-columns:1fr;}}
+
+/* CARD */
+.card{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:32px;}
+.card-title{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.card-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;line-height:1.6;}
+
+/* FORM */
+.field{margin-bottom:20px;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.field label span{color:var(--error);}
+.field input,.field textarea,.field select{
+  width:100%;border:1.5px solid var(--border);border-radius:8px;
+  padding:11px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);
+  background:var(--white);outline:none;transition:border-color .15s;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--vert);}
+.field input.error,.field select.error{border-color:var(--error);}
+.field input.ok{border-color:var(--success);}
+.field textarea{resize:vertical;min-height:90px;}
+.field-hint{font-size:12px;color:var(--ink3);margin-top:5px;}
+.field-error{font-size:12px;color:var(--error);margin-top:5px;display:none;}
+
+/* SLUG */
+.slug-wrap{position:relative;}
+.slug-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--ink3);pointer-events:none;}
+.slug-input{padding-left:130px !important;}
+.slug-status{display:flex;align-items:center;gap:6px;font-size:12px;margin-top:6px;}
+.slug-ok{color:var(--success);}
+.slug-ko{color:var(--error);}
+.slug-check{color:var(--ink3);}
+
+/* LIVRAISONS */
+.livraisons{display:flex;flex-direction:column;gap:10px;}
+.livraison-option{display:flex;align-items:flex-start;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s;}
+.livraison-option:hover{border-color:var(--vert);background:var(--vert-light);}
+.livraison-option.selected{border-color:var(--vert);background:var(--vert-light);}
+.livraison-option input[type=checkbox]{width:18px;height:18px;accent-color:var(--vert);flex-shrink:0;margin-top:1px;cursor:pointer;}
+.livraison-label{font-size:14px;font-weight:600;color:var(--ink);}
+.livraison-desc{font-size:12px;color:var(--ink2);margin-top:2px;}
+
+/* CATEGORIES */
+.cats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.cat-option{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;font-size:13px;font-weight:500;color:var(--ink2);}
+.cat-option:hover{border-color:var(--vert);color:var(--vert);}
+.cat-option.selected{border-color:var(--vert);background:var(--vert-light);color:var(--vert2);}
+.cat-option input{display:none;}
+.cat-emoji{font-size:18px;}
+
+/* APERCU */
+.apercu{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:24px;position:sticky;top:20px;}
+.apercu-title{font-size:13px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;}
+.apercu-card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;}
+.apercu-banniere{height:80px;background:linear-gradient(135deg,var(--vert),var(--vert2));display:flex;align-items:center;justify-content:center;}
+.apercu-banniere span{font-size:28px;}
+.apercu-body{padding:16px;}
+.apercu-nom{font-size:16px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.apercu-slug{font-size:12px;color:var(--vert);margin-bottom:8px;}
+.apercu-desc{font-size:12px;color:var(--ink2);line-height:1.5;margin-bottom:12px;}
+.apercu-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.apercu-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--vert-light);color:var(--vert2);font-weight:500;}
+
+/* AVANTAGES */
+.avantages{margin-top:20px;}
+.avantage{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink2);padding:8px 0;border-bottom:1px solid var(--border);}
+.avantage:last-child{border-bottom:none;}
+.avantage svg{width:16px;height:16px;fill:none;stroke:var(--vert);stroke-width:2;flex-shrink:0;}
+
+/* BTN */
+.btn-submit{width:100%;padding:14px;border-radius:10px;background:var(--vert);color:#fff;border:none;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:8px;}
+.btn-submit:hover{background:var(--vert2);}
+.btn-submit:disabled{background:var(--ink3);cursor:not-allowed;}
+.btn-submit.loading::after{content:' ...';animation:dots 1s infinite;}
+
+/* SECTION TITRE */
+.section-head{margin-bottom:32px;}
+.section-head h1{font-size:28px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.section-head p{font-size:15px;color:var(--ink2);line-height:1.6;}
+
+/* ALERT */
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:20px;display:none;}
+.alert.error{background:#FFEBEE;color:var(--error);border:1px solid #FFCDD2;}
+.alert.success{background:var(--vert-light);color:var(--vert2);border:1px solid #B7E4C7;}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:24px 0;}
+
+/* SUCCESS PAGE */
+.success-page{text-align:center;padding:60px 24px;display:none;}
+.success-icon{width:72px;height:72px;border-radius:50%;background:var(--vert-light);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
+.success-icon svg{width:36px;height:36px;fill:none;stroke:var(--vert);stroke-width:2;}
+.success-page h2{font-size:24px;font-weight:700;color:var(--ink);margin-bottom:12px;}
+.success-page p{font-size:15px;color:var(--ink2);line-height:1.6;margin-bottom:32px;}
+.btn-dashboard{display:inline-block;padding:14px 32px;border-radius:10px;background:var(--vert);color:#fff;text-decoration:none;font-size:15px;font-weight:600;}
+.btn-dashboard:hover{background:var(--vert2);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Proxi<span>kau</span></a>
+  <div class="nav-right">Deja vendeur ? <a href="connexion.html">Se connecter</a></div>
+</nav>
+
+<div class="page">
+
+  <!-- ETAPES -->
+  <div class="steps">
+    <div class="step active" id="step1-indicator">
+      <div class="step-num">1</div>
+      <span>Mon compte</span>
+    </div>
+    <div class="step-line" id="line1"></div>
+    <div class="step" id="step2-indicator">
+      <div class="step-num">2</div>
+      <span>Ma boutique</span>
+    </div>
+    <div class="step-line" id="line2"></div>
+    <div class="step" id="step3-indicator">
+      <div class="step-num">3</div>
+      <span>Livraisons</span>
+    </div>
+  </div>
+
+  <!-- FORMULAIRE -->
+  <div id="form-container">
+
+    <!-- ETAPE 1 : COMPTE -->
+    <div id="step1">
+      <div class="section-head">
+        <h1>Ouvre ta boutique gratuitement</h1>
+        <p>0% a l'inscription — on prend seulement 5% par vente realisee.</p>
+      </div>
+      <div class="grid">
+        <div>
+          <div class="card">
+            <div class="card-title">Ton compte</div>
+            <div class="card-sub">Ces informations restent privees.</div>
+            <div class="alert error" id="alert-step1"></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div class="field">
+                <label>Prenom <span>*</span></label>
+                <input type="text" id="prenom" placeholder="Jean">
+              </div>
+              <div class="field">
+                <label>Nom <span>*</span></label>
+                <input type="text" id="nom" placeholder="Dupont">
+              </div>
+            </div>
+            <div class="field">
+              <label>Email <span>*</span></label>
+              <input type="email" id="email" placeholder="jean@exemple.fr">
+            </div>
+            <div class="field">
+              <label>Telephone <span>*</span></label>
+              <input type="tel" id="telephone" placeholder="+33 6 00 00 00 00">
+            </div>
+            <div class="field">
+              <label>Mot de passe <span>*</span></label>
+              <input type="password" id="motdepasse" placeholder="8 caracteres minimum">
+              <div class="field-hint">Minimum 8 caracteres</div>
+            </div>
+            <button class="btn-submit" onclick="etape1Suivant()">Continuer →</button>
+          </div>
+        </div>
+        <div>
+          <div class="apercu">
+            <div class="apercu-title">Pourquoi Proxikau ?</div>
+            <div class="avantages">
+              <div class="avantage">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Inscription 100% gratuite
+              </div>
+              <div class="avantage">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Seulement 5% par vente
+              </div>
+              <div class="avantage">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Ta propre vitrine personnalisee
+              </div>
+              <div class="avantage">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Paiement securise Stripe
+              </div>
+              <div class="avantage">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Virement vendeur a J+30
+              </div>
+              <div class="avantage">
+                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+                Boost ta visibilite (10€/sem)
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETAPE 2 : BOUTIQUE -->
+    <div id="step2" style="display:none;">
+      <div class="section-head">
+        <h1>Ta boutique</h1>
+        <p>C'est ton espace sur Proxikau. Choisis bien ton nom — il sera dans ton URL.</p>
+      </div>
+      <div class="grid">
+        <div>
+          <div class="card">
+            <div class="card-title">Identite de ta boutique</div>
+            <div class="card-sub">Ces informations sont visibles par les acheteurs.</div>
+            <div class="alert error" id="alert-step2"></div>
+
+            <div class="field">
+              <label>Nom de ta boutique <span>*</span></label>
+              <input type="text" id="nom-boutique" placeholder="Charcuterie Torre" oninput="genererSlug(this.value)">
+            </div>
+
+            <div class="field">
+              <label>Ton URL personnalisee <span>*</span></label>
+              <div class="slug-wrap">
+                <span class="slug-prefix">proxikau.com/</span>
+                <input type="text" id="slug" class="slug-input" placeholder="torre" oninput="verifierSlug(this.value)">
+              </div>
+              <div class="slug-status" id="slug-status"></div>
+              <div class="field-hint">Uniquement lettres, chiffres et tirets. Ex : torre, miel-biancucci</div>
+            </div>
+
+            <div class="field">
+              <label>Description <span>*</span></label>
+              <textarea id="description" placeholder="Decris tes produits, ton savoir-faire, ta region..."></textarea>
+            </div>
+
+            <div class="field">
+              <label>Categorie principale <span>*</span></label>
+              <div class="cats-grid" id="cats-grid">
+                <div class="cat-option" onclick="selectCat('viande-charcuterie',this)"><span class="cat-emoji">🥩</span>Viande & Charcuterie</div>
+                <div class="cat-option" onclick="selectCat('fromage-laitier',this)"><span class="cat-emoji">🧀</span>Fromage & Laitier</div>
+                <div class="cat-option" onclick="selectCat('vins-bieres',this)"><span class="cat-emoji">🍷</span>Vins & Bieres</div>
+                <div class="cat-option" onclick="selectCat('epicerie-terroir',this)"><span class="cat-emoji">🫙</span>Epicerie & Terroir</div>
+                <div class="cat-option" onclick="selectCat('fruits-legumes',this)"><span class="cat-emoji">🥦</span>Fruits & Legumes</div>
+                <div class="cat-option" onclick="selectCat('miel-confitures',this)"><span class="cat-emoji">🍯</span>Miel & Confitures</div>
+                <div class="cat-option" onclick="selectCat('huiles-condiments',this)"><span class="cat-emoji">🫒</span>Huiles & Condiments</div>
+                <div class="cat-option" onclick="selectCat('savons-cosmetiques',this)"><span class="cat-emoji">🧴</span>Savons & Cosmetiques</div>
+                <div class="cat-option" onclick="selectCat('bougies-deco',this)"><span class="cat-emoji">🕯️</span>Bougies & Deco</div>
+              </div>
+              <input type="hidden" id="categorie">
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="field">
+              <label>Ville <span>*</span></label>
+              <input type="text" id="ville" placeholder="Ajaccio">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+              <div class="field">
+                <label>Region</label>
+                <input type="text" id="region" placeholder="Corse">
+              </div>
+              <div class="field">
+                <label>Pays <span>*</span></label>
+                <input type="text" id="pays" value="France">
+              </div>
+            </div>
+
+            <button class="btn-submit" onclick="etape2Suivant()">Continuer →</button>
+            <button onclick="retourEtape(1)" style="width:100%;margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:transparent;font-family:var(--sans);font-size:14px;color:var(--ink2);cursor:pointer;">← Retour</button>
+          </div>
+        </div>
+
+        <!-- APERCU BOUTIQUE -->
+        <div>
+          <div class="apercu">
+            <div class="apercu-title">Apercu de ta vitrine</div>
+            <div class="apercu-card">
+              <div class="apercu-banniere"><span id="apercu-emoji">🏪</span></div>
+              <div class="apercu-body">
+                <div class="apercu-nom" id="apercu-nom">Nom de ta boutique</div>
+                <div class="apercu-slug" id="apercu-slug">proxikau.com/ton-slug</div>
+                <div class="apercu-desc" id="apercu-desc">Ta description apparaitra ici...</div>
+                <div class="apercu-tags">
+                  <span class="apercu-tag" id="apercu-cat">Categorie</span>
+                  <span class="apercu-tag" id="apercu-ville">Ta ville</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ETAPE 3 : LIVRAISONS -->
+    <div id="step3" style="display:none;">
+      <div class="section-head">
+        <h1>Modes de livraison</h1>
+        <p>Choisis comment tes clients vont recevoir leurs commandes. Tu peux en activer plusieurs.</p>
+      </div>
+      <div class="grid">
+        <div>
+          <div class="card">
+            <div class="card-title">Comment tu livres ?</div>
+            <div class="card-sub">Tu pourras modifier ca depuis ton dashboard.</div>
+            <div class="alert error" id="alert-step3"></div>
+
+            <div class="livraisons">
+              <label class="livraison-option" id="opt-colis">
+                <input type="checkbox" id="livraison-colis" onchange="toggleLivraison('opt-colis',this)">
+                <div>
+                  <div class="livraison-label">📦 Envoi par colis</div>
+                  <div class="livraison-desc">Tu envoies tes produits par La Poste, Colissimo, Chronopost... Les frais de port sont a la charge de l'acheteur.</div>
+                </div>
+              </label>
+
+              <label class="livraison-option" id="opt-enlevement">
+                <input type="checkbox" id="livraison-enlevement" onchange="toggleLivraison('opt-enlevement',this)">
+                <div>
+                  <div class="livraison-label">🏠 Enlevement sur place</div>
+                  <div class="livraison-desc">L'acheteur vient chercher sa commande directement chez toi. Gratuit pour tout le monde.</div>
+                </div>
+              </label>
+
+              <label class="livraison-option" id="opt-proximite">
+                <input type="checkbox" id="livraison-proximite" onchange="toggleLivraison('opt-proximite',this)">
+                <div>
+                  <div class="livraison-label">🚗 Livraison a proximite</div>
+                  <div class="livraison-desc">Tu livres toi-meme dans un rayon autour de chez toi.</div>
+                </div>
+              </label>
+            </div>
+
+            <div id="rayon-field" class="field" style="margin-top:20px;display:none;">
+              <label>Rayon de livraison (km)</label>
+              <input type="number" id="rayon" placeholder="30" min="1" max="200" value="30">
+              <div class="field-hint">Distance maximale autour de ta ville ou tu peux livrer</div>
+            </div>
+
+            <div class="divider"></div>
+
+            <button class="btn-submit" id="btn-creer" onclick="creerCompte()">Creer ma boutique 🎉</button>
+            <button onclick="retourEtape(2)" style="width:100%;margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:transparent;font-family:var(--sans);font-size:14px;color:var(--ink2);cursor:pointer;">← Retour</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="apercu">
+            <div class="apercu-title">Recapitulatif</div>
+            <div id="recap" style="font-size:14px;color:var(--ink2);line-height:2;"></div>
+            <div class="divider"></div>
+            <div style="font-size:13px;color:var(--ink3);">
+              En creant ta boutique tu acceptes les <a href="#" style="color:var(--vert);">conditions d'utilisation</a> de Proxikau. Commission de 5% par vente, paiement vendeur a J+30.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PAGE SUCCES -->
+  <div class="success-page" id="success-page">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Ta boutique est creee ! 🎉</h2>
+    <p>Bienvenue sur Proxikau. Tu peux maintenant ajouter tes premiers produits et commencer a vendre.</p>
+    <a href="dashboard.html" class="btn-dashboard">Acceder a mon dashboard →</a>
+  </div>
+
+</div>
+
+<script>
+// ============================================
+// STATE
+// ============================================
+let currentStep = 1;
+let slugValide = false;
+let categorieSelectionnee = '';
+let slugTimeout = null;
+const emojis = {
+  'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷',
+  'epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯',
+  'huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️'
+};
+
+// ============================================
+// NAVIGATION ETAPES
+// ============================================
+function allerEtape(n) {
+  document.getElementById('step1').style.display = n===1 ? 'block' : 'none';
+  document.getElementById('step2').style.display = n===2 ? 'block' : 'none';
+  document.getElementById('step3').style.display = n===3 ? 'block' : 'none';
+  [1,2,3].forEach(i => {
+    const el = document.getElementById('step'+i+'-indicator');
+    el.className = 'step' + (i===n ? ' active' : (i<n ? ' done' : ''));
+    const num = el.querySelector('.step-num');
+    if (i < n) num.innerHTML = '✓';
+    else num.innerHTML = i;
+  });
+  document.getElementById('line1').className = 'step-line' + (n>1 ? ' done' : '');
+  document.getElementById('line2').className = 'step-line' + (n>2 ? ' done' : '');
+  currentStep = n;
+  window.scrollTo(0,0);
+}
+
+function retourEtape(n) { allerEtape(n); }
+
+// ============================================
+// ETAPE 1 — VALIDATION COMPTE
+// ============================================
+function etape1Suivant() {
+  const prenom = document.getElementById('prenom').value.trim();
+  const nom = document.getElementById('nom').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const tel = document.getElementById('telephone').value.trim();
+  const mdp = document.getElementById('motdepasse').value;
+  const alert = document.getElementById('alert-step1');
+
+  if (!prenom || !nom || !email || !tel || !mdp) {
+    showAlert(alert, 'Tous les champs sont obligatoires.');
+    return;
+  }
+  if (!email.includes('@')) {
+    showAlert(alert, 'Email invalide.');
+    return;
+  }
+  if (mdp.length < 8) {
+    showAlert(alert, 'Le mot de passe doit contenir au moins 8 caracteres.');
+    return;
+  }
+  alert.style.display = 'none';
+  allerEtape(2);
+}
+
+// ============================================
+// ETAPE 2 — SLUG + BOUTIQUE
+// ============================================
+function genererSlug(nom) {
+  const slug = nom.toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+    .replace(/[^a-z0-9\s-]/g,'')
+    .trim().replace(/\s+/g,'-')
+    .substring(0,30);
+  document.getElementById('slug').value = slug;
+  verifierSlug(slug);
+  // Apercu
+  document.getElementById('apercu-nom').textContent = nom || 'Nom de ta boutique';
+}
+
+function verifierSlug(slug) {
+  const input = document.getElementById('slug');
+  const status = document.getElementById('slug-status');
+  document.getElementById('apercu-slug').textContent = 'proxikau.com/' + (slug || 'ton-slug');
+  const propre = slug.replace(/[^a-z0-9-]/g,'');
+  if (propre !== slug) { input.value = propre; slug = propre; }
+  if (!slug || slug.length < 2) {
+    status.innerHTML = '';
+    slugValide = false;
+    return;
+  }
+  status.innerHTML = '<span class="slug-check">Verification...</span>';
+  clearTimeout(slugTimeout);
+  slugTimeout = setTimeout(async () => {
+    try {
+      const dispo = await slugDisponible(slug);
+      if (dispo) {
+        status.innerHTML = '<span class="slug-ok">✓ Disponible — proxikau.com/' + slug + '</span>';
+        input.className = 'slug-input ok';
+        slugValide = true;
+      } else {
+        status.innerHTML = '<span class="slug-ko">✗ Deja pris — essaie un autre</span>';
+        input.className = 'slug-input error';
+        slugValide = false;
+      }
+    } catch(e) {
+      status.innerHTML = '<span class="slug-check">Impossible de verifier</span>';
+      slugValide = false;
+    }
+  }, 600);
+}
+
+function selectCat(val, el) {
+  document.querySelectorAll('.cat-option').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  categorieSelectionnee = val;
+  document.getElementById('categorie').value = val;
+  document.getElementById('apercu-cat').textContent = el.textContent.trim();
+  document.getElementById('apercu-emoji').textContent = emojis[val] || '🏪';
+}
+
+// Live apercu description
+document.addEventListener('DOMContentLoaded', () => {
+  document.getElementById('description').addEventListener('input', e => {
+    document.getElementById('apercu-desc').textContent = e.target.value || 'Ta description apparaitra ici...';
+  });
+  document.getElementById('ville').addEventListener('input', e => {
+    document.getElementById('apercu-ville').textContent = e.target.value || 'Ta ville';
+  });
+});
+
+function etape2Suivant() {
+  const nom = document.getElementById('nom-boutique').value.trim();
+  const slug = document.getElementById('slug').value.trim();
+  const desc = document.getElementById('description').value.trim();
+  const ville = document.getElementById('ville').value.trim();
+  const pays = document.getElementById('pays').value.trim();
+  const alert = document.getElementById('alert-step2');
+
+  if (!nom || !slug || !desc || !categorieSelectionnee || !ville || !pays) {
+    showAlert(alert, 'Remplis tous les champs obligatoires.');
+    return;
+  }
+  if (!slugValide) {
+    showAlert(alert, 'Choisis un nom de boutique disponible.');
+    return;
+  }
+  alert.style.display = 'none';
+
+  // Recapitulatif
+  const recap = document.getElementById('recap');
+  recap.innerHTML = `
+    <div><strong>Compte :</strong> ${document.getElementById('email').value}</div>
+    <div><strong>Boutique :</strong> ${nom}</div>
+    <div><strong>URL :</strong> proxikau.com/${slug}</div>
+    <div><strong>Categorie :</strong> ${document.getElementById('apercu-cat').textContent}</div>
+    <div><strong>Ville :</strong> ${ville}, ${pays}</div>
+  `;
+  allerEtape(3);
+}
+
+// ============================================
+// ETAPE 3 — LIVRAISONS
+// ============================================
+function toggleLivraison(id, cb) {
+  const el = document.getElementById(id);
+  el.classList.toggle('selected', cb.checked);
+  const rayonField = document.getElementById('rayon-field');
+  const proxCb = document.getElementById('livraison-proximite');
+  rayonField.style.display = proxCb.checked ? 'block' : 'none';
+}
+
+// ============================================
+// CREATION COMPTE + BOUTIQUE
+// ============================================
+async function creerCompte() {
+  const colis = document.getElementById('livraison-colis').checked;
+  const enlevement = document.getElementById('livraison-enlevement').checked;
+  const proximite = document.getElementById('livraison-proximite').checked;
+  const alert = document.getElementById('alert-step3');
+  const btn = document.getElementById('btn-creer');
+
+  if (!colis && !enlevement && !proximite) {
+    showAlert(alert, 'Selectionne au moins un mode de livraison.');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Creation en cours...';
+  alert.style.display = 'none';
+
+  try {
+    // 1. Creer le compte auth
+    const authData = await inscrireUtilisateur(
+      document.getElementById('email').value.trim(),
+      document.getElementById('motdepasse').value,
+      document.getElementById('prenom').value.trim(),
+      document.getElementById('nom').value.trim(),
+      document.getElementById('telephone').value.trim()
+    );
+
+    const userId = authData.user.id;
+
+    // 2. Creer le profil utilisateur
+    await creerProfil(
+      userId,
+      document.getElementById('email').value.trim(),
+      document.getElementById('prenom').value.trim(),
+      document.getElementById('nom').value.trim(),
+      document.getElementById('telephone').value.trim(),
+      'vendeur'
+    );
+
+    // 3. Creer la boutique
+    await creerBoutique({
+      slug: document.getElementById('slug').value.trim(),
+      nom: document.getElementById('nom-boutique').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      categorie: categorieSelectionnee,
+      ville: document.getElementById('ville').value.trim(),
+      region: document.getElementById('region').value.trim(),
+      pays: document.getElementById('pays').value.trim(),
+      livraison_colis: colis,
+      livraison_enlevement: enlevement,
+      livraison_proximite: proximite,
+      rayon_proximite_km: proximite ? parseInt(document.getElementById('rayon').value) || 30 : 30
+    });
+
+    // Succes
+    document.getElementById('form-container').style.display = 'none';
+    document.querySelector('.steps').style.display = 'none';
+    document.getElementById('success-page').style.display = 'block';
+
+  } catch(e) {
+    let msg = 'Une erreur est survenue. Reessaie.';
+    if (e.message && e.message.includes('already registered')) msg = 'Cet email est deja utilise.';
+    if (e.message && e.message.includes('Password')) msg = 'Mot de passe trop faible (8 caracteres minimum).';
+    showAlert(alert, msg);
+    btn.disabled = false;
+    btn.textContent = 'Creer ma boutique 🎉';
+  }
+}
+
+// ============================================
+// UTILS
+// ============================================
+function showAlert(el, msg) {
+  el.textContent = msg;
+  el.style.display = 'block';
+  el.className = 'alert error';
+}
+</script>
+</body>
+</html>
