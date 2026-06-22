@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Dashboard — Proxikau</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<style>
+:root{
+  --vert:#2D6A4F;--vert2:#1B4332;--vert-light:#D8F3DC;
+  --terre:#BC6C25;--terre-light:#FDEBD0;
+  --ink:#1A1A1A;--ink2:#555;--ink3:#999;
+  --border:#E0E0E0;--bg:#F9F7F4;--white:#fff;
+  --error:#D32F2F;--warning:#F57C00;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);}
+
+/* NAV */
+nav{background:var(--vert2);height:60px;display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:100;}
+.logo{font-size:20px;font-weight:700;color:#fff;text-decoration:none;letter-spacing:-0.5px;}
+.logo span{color:#95D5B2;}
+.nav-slug{font-size:13px;color:#95D5B2;background:rgba(255,255,255,.1);padding:4px 12px;border-radius:20px;}
+.nav-right{margin-left:auto;display:flex;align-items:center;gap:12px;}
+.btn-voir-boutique{font-size:13px;color:#fff;text-decoration:none;padding:7px 14px;border:1px solid rgba(255,255,255,.3);border-radius:8px;}
+.btn-voir-boutique:hover{background:rgba(255,255,255,.1);}
+.btn-deco{font-size:13px;color:#95D5B2;background:none;border:none;cursor:pointer;font-family:var(--sans);}
+
+/* LAYOUT */
+.layout{display:grid;grid-template-columns:220px 1fr;min-height:calc(100vh - 60px);}
+@media(max-width:768px){.layout{grid-template-columns:1fr;}}
+
+/* SIDEBAR */
+.sidebar{background:var(--white);border-right:1px solid var(--border);padding:24px 0;}
+.sidebar-section{padding:0 16px;margin-bottom:8px;}
+.sidebar-label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px;}
+.sidebar-item{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:8px;font-size:14px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .15s;text-decoration:none;}
+.sidebar-item:hover{background:var(--bg);color:var(--ink);}
+.sidebar-item.active{background:var(--vert-light);color:var(--vert2);}
+.sidebar-item svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;flex-shrink:0;}
+.sidebar-badge{margin-left:auto;background:var(--terre);color:#fff;font-size:11px;font-weight:600;padding:2px 7px;border-radius:10px;}
+
+/* MAIN */
+.main{padding:32px;max-width:1000px;}
+@media(max-width:768px){.main{padding:20px;}}
+
+/* PAGE TITLE */
+.page-title{font-size:24px;font-weight:700;color:var(--ink);margin-bottom:6px;}
+.page-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:32px;}
+@media(max-width:900px){.stats-grid{grid-template-columns:repeat(2,1fr);}}
+.stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;}
+.stat-label{font-size:12px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.stat-value{font-size:28px;font-weight:700;color:var(--ink);}
+.stat-sub{font-size:12px;color:var(--ink3);margin-top:4px;}
+.stat-card.vert .stat-value{color:var(--vert);}
+.stat-card.terre .stat-value{color:var(--terre);}
+
+/* SECTION */
+.section{display:none;}
+.section.active{display:block;}
+
+/* CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:20px;}
+.card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
+.card-title{font-size:16px;font-weight:700;color:var(--ink);}
+
+/* BTN */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;border:none;text-decoration:none;}
+.btn-primary{background:var(--vert);color:#fff;}
+.btn-primary:hover{background:var(--vert2);}
+.btn-secondary{background:var(--bg);color:var(--ink);border:1px solid var(--border);}
+.btn-secondary:hover{border-color:var(--vert);color:var(--vert);}
+.btn-danger{background:#FFEBEE;color:var(--error);border:1px solid #FFCDD2;}
+.btn-danger:hover{background:#FFCDD2;}
+.btn-sm{padding:6px 12px;font-size:13px;}
+.btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;}
+
+/* FORM */
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:600px){.form-grid{grid-template-columns:1fr;}}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.field label span{color:var(--error);}
+.field input,.field textarea,.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color .15s;}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--vert);}
+.field textarea{resize:vertical;min-height:80px;}
+.field-hint{font-size:12px;color:var(--ink3);margin-top:4px;}
+
+/* TABLE */
+.table-wrap{overflow-x:auto;}
+table{width:100%;border-collapse:collapse;}
+th{text-align:left;font-size:12px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;padding:10px 12px;border-bottom:2px solid var(--border);}
+td{padding:12px;border-bottom:1px solid var(--border);font-size:14px;color:var(--ink);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--bg);}
+.td-actions{display:flex;gap:8px;align-items:center;}
+
+/* BADGE STATUT */
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
+.badge-dispo{background:var(--vert-light);color:var(--vert2);}
+.badge-indispo{background:#FFEBEE;color:var(--error);}
+.badge-attente{background:#FFF3E0;color:var(--warning);}
+.badge-payee{background:var(--vert-light);color:var(--vert2);}
+.badge-expediee{background:#E3F2FD;color:#1565C0;}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:16px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto;padding:28px;}
+.modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.modal-title{font-size:18px;font-weight:700;}
+.modal-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
+
+/* ALERT */
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:16px;display:none;}
+.alert.error{background:#FFEBEE;color:var(--error);}
+.alert.success{background:var(--vert-light);color:var(--vert2);}
+.alert.show{display:block;}
+
+/* PRODUIT CARD */
+.produit-row{display:grid;grid-template-columns:48px 1fr auto auto auto;gap:12px;align-items:center;padding:12px;border-bottom:1px solid var(--border);}
+.produit-row:last-child{border-bottom:none;}
+.produit-photo{width:48px;height:48px;border-radius:8px;background:var(--bg);object-fit:cover;border:1px solid var(--border);}
+.produit-photo-placeholder{width:48px;height:48px;border-radius:8px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.produit-nom{font-weight:600;font-size:14px;}
+.produit-cat{font-size:12px;color:var(--ink3);}
+.produit-prix{font-weight:700;color:var(--vert);font-size:15px;white-space:nowrap;}
+.produit-stock{font-size:13px;color:var(--ink2);white-space:nowrap;}
+.stock-low{color:var(--warning);}
+.stock-out{color:var(--error);}
+
+/* BOOST */
+.boost-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+@media(max-width:600px){.boost-cards{grid-template-columns:1fr;}}
+.boost-card{border:2px solid var(--border);border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all .15s;}
+.boost-card:hover{border-color:var(--vert);}
+.boost-card.selected{border-color:var(--vert);background:var(--vert-light);}
+.boost-emoji{font-size:32px;margin-bottom:12px;}
+.boost-name{font-size:15px;font-weight:700;margin-bottom:4px;}
+.boost-desc{font-size:12px;color:var(--ink2);margin-bottom:12px;}
+.boost-prix{font-size:22px;font-weight:700;color:var(--vert);}
+.boost-periode{font-size:12px;color:var(--ink3);}
+
+/* EMPTY STATE */
+.empty{text-align:center;padding:48px 24px;color:var(--ink3);}
+.empty-icon{font-size:48px;margin-bottom:12px;}
+.empty h3{font-size:16px;font-weight:600;color:var(--ink2);margin-bottom:8px;}
+.empty p{font-size:14px;margin-bottom:20px;}
+
+/* LOADING */
+.loading-spinner{text-align:center;padding:40px;color:var(--ink3);font-size:14px;}
+
+/* TOGGLE */
+.toggle-wrap{display:flex;align-items:center;gap:10px;}
+.toggle{position:relative;width:44px;height:24px;}
+.toggle input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;inset:0;background:#ccc;border-radius:24px;cursor:pointer;transition:.3s;}
+.toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
+.toggle input:checked + .toggle-slider{background:var(--vert);}
+.toggle input:checked + .toggle-slider::before{transform:translateX(20px);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Proxi<span>kau</span></a>
+  <span class="nav-slug" id="nav-slug">...</span>
+  <div class="nav-right">
+    <a href="#" class="btn-voir-boutique" id="btn-voir-boutique" target="_blank">👁 Voir ma boutique</a>
+    <button class="btn-deco" onclick="seDeconnecter()">Déconnexion</button>
+  </div>
+</nav>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-label">Mon espace</div>
+      <a class="sidebar-item active" onclick="showSection('tableau-bord')" href="#">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Tableau de bord
+      </a>
+      <a class="sidebar-item" onclick="showSection('produits')" href="#">
+        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg>
+        Mes produits
+      </a>
+      <a class="sidebar-item" onclick="showSection('commandes')" href="#">
+        <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        Commandes
+        <span class="sidebar-badge" id="badge-commandes" style="display:none">0</span>
+      </a>
+      <a class="sidebar-item" onclick="showSection('boutique')" href="#">
+        <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Ma boutique
+      </a>
+    </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Visibilité</div>
+      <a class="sidebar-item" onclick="showSection('boost')" href="#">
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Booster ma boutique
+      </a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- TABLEAU DE BORD -->
+    <div class="section active" id="section-tableau-bord">
+      <div class="page-title">Bonjour <span id="prenom-user">!</span> 👋</div>
+      <div class="page-sub" id="boutique-nom-sub">Voici un aperçu de ton activité.</div>
+
+      <div class="stats-grid">
+        <div class="stat-card vert">
+          <div class="stat-label">Produits actifs</div>
+          <div class="stat-value" id="stat-produits">0</div>
+          <div class="stat-sub">en vente</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Commandes</div>
+          <div class="stat-value" id="stat-commandes">0</div>
+          <div class="stat-sub">au total</div>
+        </div>
+        <div class="stat-card terre">
+          <div class="stat-label">Revenus</div>
+          <div class="stat-value" id="stat-revenus">0€</div>
+          <div class="stat-sub">après commission</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Note</div>
+          <div class="stat-value" id="stat-note">—</div>
+          <div class="stat-sub" id="stat-nb-avis">aucun avis</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">Dernières commandes</div>
+          <a onclick="showSection('commandes')" href="#" class="btn btn-secondary btn-sm">Tout voir</a>
+        </div>
+        <div id="dernières-commandes">
+          <div class="loading-spinner">Chargement...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUITS -->
+    <div class="section" id="section-produits">
+      <div class="page-title">Mes produits</div>
+      <div class="page-sub">Gère ton catalogue. Les acheteurs verront ces produits sur ta vitrine.</div>
+
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title" id="count-produits">0 produits</div>
+          <button class="btn btn-primary" onclick="ouvrirModalProduit()">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Ajouter un produit
+          </button>
+        </div>
+        <div id="liste-produits">
+          <div class="loading-spinner">Chargement...</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMMANDES -->
+    <div class="section" id="section-commandes">
+      <div class="page-title">Commandes</div>
+      <div class="page-sub">Gère les commandes de tes clients.</div>
+      <div class="card">
+        <div class="table-wrap">
+          <div id="liste-commandes"><div class="loading-spinner">Chargement...</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MA BOUTIQUE -->
+    <div class="section" id="section-boutique">
+      <div class="page-title">Ma boutique</div>
+      <div class="page-sub">Modifie les informations de ta vitrine.</div>
+      <div class="card">
+        <div class="alert" id="alert-boutique"></div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Nom de la boutique <span>*</span></label>
+            <input type="text" id="edit-nom">
+          </div>
+          <div class="field">
+            <label>Catégorie <span>*</span></label>
+            <select id="edit-categorie">
+              <option value="viande-charcuterie">🥩 Viande & Charcuterie</option>
+              <option value="fromage-laitier">🧀 Fromage & Laitier</option>
+              <option value="vins-bieres">🍷 Vins & Bières</option>
+              <option value="epicerie-terroir">🫙 Épicerie & Terroir</option>
+              <option value="fruits-legumes">🥦 Fruits & Légumes</option>
+              <option value="miel-confitures">🍯 Miel & Confitures</option>
+              <option value="huiles-condiments">🫒 Huiles & Condiments</option>
+              <option value="savons-cosmetiques">🧴 Savons & Cosmétiques</option>
+              <option value="bougies-deco">🕯️ Bougies & Déco</option>
+            </select>
+          </div>
+        </div>
+        <div class="field">
+          <label>Description</label>
+          <textarea id="edit-description" rows="4"></textarea>
+        </div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Ville</label>
+            <input type="text" id="edit-ville">
+          </div>
+          <div class="field">
+            <label>Région</label>
+            <input type="text" id="edit-region">
+          </div>
+        </div>
+        <div class="field">
+          <label>Téléphone de contact</label>
+          <input type="tel" id="edit-telephone">
+        </div>
+        <div class="field">
+          <label>Email de contact</label>
+          <input type="email" id="edit-email-contact">
+        </div>
+
+        <div style="margin:20px 0 8px;font-size:14px;font-weight:600;">Modes de livraison</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:24px;">
+          <div class="toggle-wrap">
+            <label class="toggle"><input type="checkbox" id="edit-colis"><span class="toggle-slider"></span></label>
+            <span style="font-size:14px;">📦 Envoi par colis</span>
+          </div>
+          <div class="toggle-wrap">
+            <label class="toggle"><input type="checkbox" id="edit-enlevement"><span class="toggle-slider"></span></label>
+            <span style="font-size:14px;">🏠 Enlèvement sur place</span>
+          </div>
+          <div class="toggle-wrap">
+            <label class="toggle"><input type="checkbox" id="edit-proximite"><span class="toggle-slider"></span></label>
+            <span style="font-size:14px;">🚗 Livraison à proximité</span>
+          </div>
+        </div>
+        <div class="field">
+          <label>Rayon de livraison (km)</label>
+          <input type="number" id="edit-rayon" min="1" max="200">
+        </div>
+
+        <button class="btn btn-primary" onclick="sauvegarderBoutique()">Sauvegarder</button>
+      </div>
+    </div>
+
+    <!-- BOOST -->
+    <div class="section" id="section-boost">
+      <div class="page-title">Booster ma boutique</div>
+      <div class="page-sub">Apparais en tête des résultats dans ta région, en France ou en Europe.</div>
+
+      <div class="boost-cards">
+        <div class="boost-card" onclick="selectBoost('region',this)">
+          <div class="boost-emoji">📍</div>
+          <div class="boost-name">Ma Région</div>
+          <div class="boost-desc">Visible en priorité dans ta région</div>
+          <div class="boost-prix">10€</div>
+          <div class="boost-periode">par semaine</div>
+        </div>
+        <div class="boost-card" onclick="selectBoost('france',this)">
+          <div class="boost-emoji">🇫🇷</div>
+          <div class="boost-name">France</div>
+          <div class="boost-desc">Visible en priorité dans toute la France</div>
+          <div class="boost-prix">15€</div>
+          <div class="boost-periode">par semaine</div>
+        </div>
+        <div class="boost-card" onclick="selectBoost('europe',this)">
+          <div class="boost-emoji">🌍</div>
+          <div class="boost-name">Europe</div>
+          <div class="boost-desc">Visible en priorité dans toute l'Europe</div>
+          <div class="boost-prix">20€</div>
+          <div class="boost-periode">par semaine</div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:24px;" id="boost-recap" style="display:none;">
+        <div class="card-title" style="margin-bottom:16px;">Récapitulatif</div>
+        <div id="boost-recap-content" style="font-size:14px;color:var(--ink2);line-height:2;"></div>
+        <button class="btn btn-primary" style="margin-top:16px;" onclick="acheterBoost()">Payer et activer le boost</button>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL PRODUIT -->
+<div class="modal-overlay" id="modal-produit">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title" id="modal-produit-titre">Ajouter un produit</div>
+      <button class="modal-close" onclick="fermerModalProduit()">✕</button>
+    </div>
+    <div class="alert" id="alert-produit"></div>
+
+    <input type="hidden" id="produit-id-edit">
+
+    <div class="field">
+      <label>Nom du produit <span>*</span></label>
+      <input type="text" id="p-nom" placeholder="Ex: Lonzu 300g">
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea id="p-description" placeholder="Décris ton produit, son origine, comment il est fabriqué..."></textarea>
+    </div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Catégorie <span>*</span></label>
+        <select id="p-categorie">
+          <option value="viande-charcuterie">🥩 Viande & Charcuterie</option>
+          <option value="fromage-laitier">🧀 Fromage & Laitier</option>
+          <option value="vins-bieres">🍷 Vins & Bières</option>
+          <option value="epicerie-terroir">🫙 Épicerie & Terroir</option>
+          <option value="fruits-legumes">🥦 Fruits & Légumes</option>
+          <option value="miel-confitures">🍯 Miel & Confitures</option>
+          <option value="huiles-condiments">🫒 Huiles & Condiments</option>
+          <option value="savons-cosmetiques">🧴 Savons & Cosmétiques</option>
+          <option value="bougies-deco">🕯️ Bougies & Déco</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Unité <span>*</span></label>
+        <select id="p-unite">
+          <option value="unite">Unité</option>
+          <option value="kg">Kg</option>
+          <option value="g">Grammes</option>
+          <option value="500g">500g</option>
+          <option value="litre">Litre</option>
+          <option value="bouteille">Bouteille</option>
+          <option value="pot">Pot</option>
+          <option value="sachet">Sachet</option>
+          <option value="boite">Boîte</option>
+          <option value="barquette">Barquette</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="field">
+        <label>Prix (€) <span>*</span></label>
+        <input type="number" id="p-prix" placeholder="12.50" min="0.01" step="0.01">
+      </div>
+      <div class="field">
+        <label>Stock <span>*</span></label>
+        <input type="number" id="p-stock" placeholder="10" min="0">
+        <div class="field-hint">Mets 0 pour illimité</div>
+      </div>
+    </div>
+    <div class="field">
+      <label>Poids (grammes)</label>
+      <input type="number" id="p-poids" placeholder="300">
+      <div class="field-hint">Optionnel — utile pour calculer les frais de port</div>
+    </div>
+
+    <div style="margin:8px 0 16px;font-size:13px;font-weight:600;color:var(--ink);">Disponible à la vente</div>
+    <div class="toggle-wrap" style="margin-bottom:20px;">
+      <label class="toggle"><input type="checkbox" id="p-disponible" checked><span class="toggle-slider"></span></label>
+      <span style="font-size:14px;">Produit visible sur ma vitrine</span>
+    </div>
+
+    <div style="display:flex;gap:12px;">
+      <button class="btn btn-primary" style="flex:1;" onclick="sauvegarderProduit()" id="btn-save-produit">Ajouter</button>
+      <button class="btn btn-secondary" onclick="fermerModalProduit()">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================
+// STATE
+// ============================================
+let boutique = null;
+let produits = [];
+let commandes = [];
+let boostSelectionne = null;
+
+// ============================================
+// INIT
+// ============================================
+document.addEventListener('DOMContentLoaded', async () => {
+  const user = await getUtilisateurConnecte();
+  if (!user) { window.location.href = 'connexion.html'; return; }
+
+  const profil = await getProfil(user.id);
+  if (profil) {
+    document.getElementById('prenom-user').textContent = profil.prenom || '';
+  }
+
+  boutique = await getBoutiqueParUserId(user.id);
+  if (!boutique) { window.location.href = 'inscription.html'; return; }
+
+  // Nav
+  document.getElementById('nav-slug').textContent = 'proxikau.com/' + boutique.slug;
+  document.getElementById('btn-voir-boutique').href = 'boutique.html?slug=' + boutique.slug;
+  document.getElementById('boutique-nom-sub').textContent = boutique.nom;
+
+  // Stats
+  document.getElementById('stat-note').textContent = boutique.note_moyenne > 0 ? boutique.note_moyenne + '★' : '—';
+  document.getElementById('stat-nb-avis').textContent = boutique.nb_avis + ' avis';
+
+  await chargerProduits();
+  await chargerCommandes();
+  remplirFormBoutique();
+});
+
+// ============================================
+// NAVIGATION
+// ============================================
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ============================================
+// PRODUITS
+// ============================================
+async function chargerProduits() {
+  if (!boutique) return;
+  produits = await getProduitsBoutiqueVendeur(boutique.id);
+  afficherProduits();
+  document.getElementById('stat-produits').textContent = produits.filter(p => p.disponible).length;
+  document.getElementById('count-produits').textContent = produits.length + ' produit' + (produits.length > 1 ? 's' : '');
+}
+
+function afficherProduits() {
+  const el = document.getElementById('liste-produits');
+  if (!produits.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📦</div><h3>Aucun produit</h3><p>Ajoute ton premier produit pour commencer à vendre.</p><button class="btn btn-primary" onclick="ouvrirModalProduit()">+ Ajouter un produit</button></div>';
+    return;
+  }
+  el.innerHTML = produits.map(p => `
+    <div class="produit-row">
+      <div class="produit-photo-placeholder">${getEmoji(p.categorie)}</div>
+      <div>
+        <div class="produit-nom">${p.nom}</div>
+        <div class="produit-cat">${p.categorie} · ${p.unite}</div>
+      </div>
+      <div class="produit-prix">${parseFloat(p.prix).toFixed(2)}€</div>
+      <div class="produit-stock ${p.stock === 0 && !p.stock_illimite ? 'stock-out' : p.stock < 5 && !p.stock_illimite ? 'stock-low' : ''}">
+        ${p.stock_illimite ? '∞ stock' : p.stock + ' en stock'}
+      </div>
+      <div class="td-actions">
+        <span class="badge ${p.disponible ? 'badge-dispo' : 'badge-indispo'}">${p.disponible ? 'En vente' : 'Masqué'}</span>
+        <button class="btn btn-secondary btn-sm" onclick="editerProduit('${p.id}')">Modifier</button>
+        <button class="btn btn-danger btn-sm" onclick="supprimerProduitConfirm('${p.id}', '${p.nom}')">✕</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function getEmoji(cat) {
+  const m = {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️'};
+  return m[cat] || '📦';
+}
+
+function ouvrirModalProduit() {
+  document.getElementById('modal-produit-titre').textContent = 'Ajouter un produit';
+  document.getElementById('btn-save-produit').textContent = 'Ajouter';
+  document.getElementById('produit-id-edit').value = '';
+  document.getElementById('p-nom').value = '';
+  document.getElementById('p-description').value = '';
+  document.getElementById('p-prix').value = '';
+  document.getElementById('p-stock').value = '';
+  document.getElementById('p-poids').value = '';
+  document.getElementById('p-disponible').checked = true;
+  document.getElementById('p-categorie').value = boutique.categorie || 'viande-charcuterie';
+  document.getElementById('alert-produit').className = 'alert';
+  document.getElementById('modal-produit').classList.add('open');
+}
+
+function fermerModalProduit() {
+  document.getElementById('modal-produit').classList.remove('open');
+}
+
+function editerProduit(id) {
+  const p = produits.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('modal-produit-titre').textContent = 'Modifier le produit';
+  document.getElementById('btn-save-produit').textContent = 'Sauvegarder';
+  document.getElementById('produit-id-edit').value = p.id;
+  document.getElementById('p-nom').value = p.nom;
+  document.getElementById('p-description').value = p.description || '';
+  document.getElementById('p-categorie').value = p.categorie;
+  document.getElementById('p-unite').value = p.unite;
+  document.getElementById('p-prix').value = p.prix;
+  document.getElementById('p-stock').value = p.stock;
+  document.getElementById('p-poids').value = p.poids_grammes || '';
+  document.getElementById('p-disponible').checked = p.disponible;
+  document.getElementById('alert-produit').className = 'alert';
+  document.getElementById('modal-produit').classList.add('open');
+}
+
+async function sauvegarderProduit() {
+  const nom = document.getElementById('p-nom').value.trim();
+  const prix = parseFloat(document.getElementById('p-prix').value);
+  const stock = parseInt(document.getElementById('p-stock').value);
+  const alert = document.getElementById('alert-produit');
+
+  if (!nom || isNaN(prix) || prix <= 0) {
+    alert.textContent = 'Nom et prix obligatoires.';
+    alert.className = 'alert error show';
+    return;
+  }
+
+  const data = {
+    boutique_id: boutique.id,
+    nom,
+    description: document.getElementById('p-description').value.trim(),
+    categorie: document.getElementById('p-categorie').value,
+    unite: document.getElementById('p-unite').value,
+    prix,
+    stock: isNaN(stock) ? 0 : stock,
+    stock_illimite: stock === 0,
+    poids_grammes: parseInt(document.getElementById('p-poids').value) || null,
+    disponible: document.getElementById('p-disponible').checked,
+  };
+
+  const btn = document.getElementById('btn-save-produit');
+  btn.disabled = true;
+  btn.textContent = '...';
+
+  try {
+    const editId = document.getElementById('produit-id-edit').value;
+    if (editId) {
+      await majProduit(editId, data);
+    } else {
+      await creerProduit(data);
+    }
+    fermerModalProduit();
+    await chargerProduits();
+  } catch(e) {
+    alert.textContent = 'Erreur : ' + e.message;
+    alert.className = 'alert error show';
+  }
+  btn.disabled = false;
+  btn.textContent = document.getElementById('produit-id-edit').value ? 'Sauvegarder' : 'Ajouter';
+}
+
+async function supprimerProduitConfirm(id, nom) {
+  if (!confirm('Supprimer "' + nom + '" ?')) return;
+  try {
+    await supprimerProduit(id);
+    await chargerProduits();
+  } catch(e) {
+    alert('Erreur suppression : ' + e.message);
+  }
+}
+
+// ============================================
+// COMMANDES
+// ============================================
+async function chargerCommandes() {
+  if (!boutique) return;
+  try {
+    commandes = await getCommandesBoutique(boutique.id);
+    afficherCommandes();
+    const enAttente = commandes.filter(c => c.statut === 'payee' || c.statut === 'preparee').length;
+    document.getElementById('stat-commandes').textContent = commandes.length;
+    const revenus = commandes.filter(c => c.statut !== 'annulee' && c.statut !== 'remboursee').reduce((s,c) => s + parseFloat(c.montant_vendeur || 0), 0);
+    document.getElementById('stat-revenus').textContent = revenus.toFixed(2) + '€';
+    if (enAttente > 0) {
+      const badge = document.getElementById('badge-commandes');
+      badge.textContent = enAttente;
+      badge.style.display = 'inline';
+    }
+    afficherDernieresCommandes();
+  } catch(e) {
+    console.log('Pas encore de commandes');
+    afficherDernieresCommandes();
+  }
+}
+
+function afficherCommandes() {
+  const el = document.getElementById('liste-commandes');
+  if (!commandes.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🛍️</div><h3>Aucune commande</h3><p>Tes commandes apparaîtront ici.</p></div>';
+    return;
+  }
+  el.innerHTML = `<table>
+    <thead><tr>
+      <th>Date</th><th>Client</th><th>Montant</th><th>Livraison</th><th>Statut</th><th>Action</th>
+    </tr></thead>
+    <tbody>${commandes.map(c => `
+      <tr>
+        <td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</td>
+        <td>${c.utilisateurs?.prenom || '—'} ${c.utilisateurs?.nom || ''}</td>
+        <td><strong>${parseFloat(c.montant_total).toFixed(2)}€</strong></td>
+        <td>${{colis:'📦 Colis',enlevement:'🏠 Enlèvement',proximite:'🚗 Proximité'}[c.mode_livraison]}</td>
+        <td><span class="badge badge-${c.statut}">${c.statut.replace('_',' ')}</span></td>
+        <td>
+          ${c.statut === 'payee' ? `<button class="btn btn-secondary btn-sm" onclick="majStatutCommande('${c.id}','preparee')">Préparer</button>` : ''}
+          ${c.statut === 'preparee' ? `<button class="btn btn-secondary btn-sm" onclick="majStatutCommande('${c.id}','${c.mode_livraison === 'colis' ? 'expediee' : 'disponible'}')">
+            ${c.mode_livraison === 'colis' ? 'Expédier' : 'Prêt'}
+          </button>` : ''}
+        </td>
+      </tr>
+    `).join('')}</tbody>
+  </table>`;
+}
+
+function afficherDernieresCommandes() {
+  const el = document.getElementById('dernières-commandes');
+  const dernieres = commandes.slice(0, 5);
+  if (!dernieres.length) {
+    el.innerHTML = '<div class="empty" style="padding:24px"><div class="empty-icon">🛍️</div><p>Aucune commande pour l\'instant.</p></div>';
+    return;
+  }
+  el.innerHTML = `<table>
+    <thead><tr><th>Date</th><th>Client</th><th>Montant</th><th>Statut</th></tr></thead>
+    <tbody>${dernieres.map(c => `
+      <tr>
+        <td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</td>
+        <td>${c.utilisateurs?.prenom || '—'}</td>
+        <td>${parseFloat(c.montant_total).toFixed(2)}€</td>
+        <td><span class="badge badge-${c.statut}">${c.statut}</span></td>
+      </tr>
+    `).join('')}</tbody>
+  </table>`;
+}
+
+async function majStatutCommande(id, statut) {
+  try {
+    const { error } = await db.from('commandes').update({ statut }).eq('id', id);
+    if (error) throw error;
+    await chargerCommandes();
+  } catch(e) { alert('Erreur : ' + e.message); }
+}
+
+// ============================================
+// BOUTIQUE
+// ============================================
+function remplirFormBoutique() {
+  if (!boutique) return;
+  document.getElementById('edit-nom').value = boutique.nom || '';
+  document.getElementById('edit-categorie').value = boutique.categorie || '';
+  document.getElementById('edit-description').value = boutique.description || '';
+  document.getElementById('edit-ville').value = boutique.ville || '';
+  document.getElementById('edit-region').value = boutique.region || '';
+  document.getElementById('edit-telephone').value = boutique.telephone || '';
+  document.getElementById('edit-email-contact').value = boutique.email_contact || '';
+  document.getElementById('edit-colis').checked = boutique.livraison_colis || false;
+  document.getElementById('edit-enlevement').checked = boutique.livraison_enlevement || false;
+  document.getElementById('edit-proximite').checked = boutique.livraison_proximite || false;
+  document.getElementById('edit-rayon').value = boutique.rayon_proximite_km || 30;
+}
+
+async function sauvegarderBoutique() {
+  const alert = document.getElementById('alert-boutique');
+  try {
+    await majBoutique(boutique.id, {
+      nom: document.getElementById('edit-nom').value.trim(),
+      categorie: document.getElementById('edit-categorie').value,
+      description: document.getElementById('edit-description').value.trim(),
+      ville: document.getElementById('edit-ville').value.trim(),
+      region: document.getElementById('edit-region').value.trim(),
+      telephone: document.getElementById('edit-telephone').value.trim(),
+      email_contact: document.getElementById('edit-email-contact').value.trim(),
+      livraison_colis: document.getElementById('edit-colis').checked,
+      livraison_enlevement: document.getElementById('edit-enlevement').checked,
+      livraison_proximite: document.getElementById('edit-proximite').checked,
+      rayon_proximite_km: parseInt(document.getElementById('edit-rayon').value) || 30,
+    });
+    alert.textContent = '✓ Boutique mise à jour !';
+    alert.className = 'alert success show';
+    boutique = await getBoutiqueParUserId((await getUtilisateurConnecte()).id);
+    setTimeout(() => alert.className = 'alert', 3000);
+  } catch(e) {
+    alert.textContent = 'Erreur : ' + e.message;
+    alert.className = 'alert error show';
+  }
+}
+
+// ============================================
+// BOOST
+// ============================================
+function selectBoost(type, el) {
+  document.querySelectorAll('.boost-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  boostSelectionne = type;
+  const prix = {region:10, france:15, europe:20}[type];
+  const label = {region:'Ma Région', france:'France', europe:'Europe'}[type];
+  document.getElementById('boost-recap').style.display = 'block';
+  document.getElementById('boost-recap-content').innerHTML = `
+    <div><strong>Type :</strong> Boost ${label}</div>
+    <div><strong>Durée :</strong> 1 semaine</div>
+    <div><strong>Prix :</strong> ${prix}€</div>
+    <div><strong>Effet :</strong> Ta boutique apparaît en tête des résultats pour la zone ${label}</div>
+  `;
+}
+
+async function acheterBoost() {
+  alert('Intégration Stripe à venir — le paiement boost sera disponible prochainement.');
+}
+
+// ============================================
+// DECONNEXION
+// ============================================
+async function seDeconnecter() {
+  await deconnecterUtilisateur();
+  window.location.href = 'index.html';
+}
+</script>
+</body>
+</html>
