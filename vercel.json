@@ -1,0 +1,9 @@
+{
+  "rewrites": [
+    { "source": "/dashboard", "destination": "/dashboard.html" },
+    { "source": "/inscription", "destination": "/inscription.html" },
+    { "source": "/connexion", "destination": "/connexion.html" },
+    { "source": "/checkout", "destination": "/checkout.html" },
+    { "source": "/:slug", "destination": "/boutique.html?slug=:slug" }
+  ]
+}
