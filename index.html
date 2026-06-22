@@ -456,14 +456,16 @@ function filtrerCat(cat, el) {
 // RECHERCHE
 // ============================================
 let searchTimeout = null;
-function rechercherLive(q) {
+async function rechercherLive(q) {
   clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(() => rechercher(q), 300);
+  searchTimeout = setTimeout(async () => await rechercher(q), 300);
 }
 
-function rechercherHero() {
+async function rechercherHero() {
   const q = document.getElementById('search-hero').value.trim();
-  if (q) rechercher(q);
+  // Sync avec la barre nav
+  document.getElementById('search-nav').value = q;
+  await rechercher(q);
 }
 
 async function rechercher(q) {
