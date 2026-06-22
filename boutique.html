@@ -23,8 +23,12 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .logo{font-size:20px;font-weight:700;color:var(--vert);text-decoration:none;}
 .logo span{color:var(--terre);}
 .nav-right{margin-left:auto;display:flex;gap:8px;align-items:center;}
-.btn-panier{position:relative;background:var(--vert);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;}
-.panier-count{position:absolute;top:-6px;right:-6px;background:var(--terre);color:#fff;width:18px;height:18px;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;display:none;}
+.btn-panier{position:relative;background:var(--vert);color:#fff;border:none;border-radius:10px;padding:9px 18px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:8px;box-shadow:0 2px 8px rgba(45,106,79,.3);transition:all .2s;}
+.btn-panier:hover{background:var(--vert2);transform:translateY(-1px);box-shadow:0 4px 12px rgba(45,106,79,.4);}
+.btn-panier.bump{animation:bump .3s ease;}
+@keyframes bump{0%{transform:scale(1);}50%{transform:scale(1.12);}100%{transform:scale(1);}}
+.panier-count{position:absolute;top:-8px;right:-8px;background:var(--terre);color:#fff;min-width:20px;height:20px;border-radius:10px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;display:none;box-shadow:0 2px 6px rgba(188,108,37,.5);border:2px solid #fff;animation:pop .25s ease;}
+@keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
 .btn-connexion{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
 
 /* BANNIERE */
@@ -519,6 +523,13 @@ function majPanierCount() {
   const el = document.getElementById('panier-count');
   el.textContent = total;
   el.style.display = total > 0 ? 'flex' : 'none';
+  // Animation sur le bouton panier
+  const btn = document.querySelector('.btn-panier');
+  if (btn && total > 0) {
+    btn.classList.remove('bump');
+    void btn.offsetWidth; // force reflow
+    btn.classList.add('bump');
+  }
 }
 
 function ouvrirPanier() {
