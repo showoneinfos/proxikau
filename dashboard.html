@@ -446,10 +446,6 @@ tr:last-child td{border-bottom:none;}
         <label>Unité <span>*</span></label>
         <select id="p-unite">
           <option value="unite">Unité</option>
-          <option value="kg">Kg (kilogramme)</option>
-          <option value="500g">500g</option>
-          <option value="250g">250g</option>
-          <option value="litre">Litre</option>
           <option value="bouteille">Bouteille</option>
           <option value="pot">Pot</option>
           <option value="sachet">Sachet</option>
@@ -474,8 +470,16 @@ tr:last-child td{border-bottom:none;}
       </div>
     </div>
     <div class="field">
-      <label>Poids (grammes)</label>
-      <input type="number" id="p-poids" placeholder="300" inputmode="numeric">
+      <label>Poids</label>
+      <div style="display:flex;gap:8px;">
+        <input type="number" id="p-poids" placeholder="Ex: 300" inputmode="numeric" style="flex:1;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px;outline:none;">
+        <select id="p-poids-unite" style="border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;font-family:var(--sans);font-size:14px;outline:none;background:var(--white);cursor:pointer;-webkit-appearance:none;min-width:80px;">
+          <option value="g">g</option>
+          <option value="kg">kg</option>
+          <option value="l">L</option>
+        </select>
+      </div>
+      <div class="field-hint">Optionnel — utile pour estimer les frais de port</div>
     </div>
     <div class="toggle-wrap" style="margin-bottom:20px;">
       <label class="toggle"><input type="checkbox" id="p-disponible" checked><span class="toggle-slider"></span></label>
@@ -652,7 +656,19 @@ function editerProduit(id) {
   document.getElementById('p-unite').value = p.unite;
   document.getElementById('p-prix').value = p.prix;
   document.getElementById('p-stock').value = p.stock;
-  document.getElementById('p-poids').value = p.poids_grammes || '';
+  // Afficher poids intelligemment
+  if (p.poids_grammes) {
+    if (p.poids_grammes >= 1000) {
+      document.getElementById('p-poids').value = (p.poids_grammes / 1000).toFixed(1).replace('.0','');
+      document.getElementById('p-poids-unite').value = 'kg';
+    } else {
+      document.getElementById('p-poids').value = p.poids_grammes;
+      document.getElementById('p-poids-unite').value = 'g';
+    }
+  } else {
+    document.getElementById('p-poids').value = '';
+    document.getElementById('p-poids-unite').value = 'g';
+  }
   document.getElementById('p-disponible').checked = p.disponible;
   photosEnAttente = p.photos ? [...p.photos] : [];
   afficherPreviews();
@@ -680,7 +696,14 @@ async function sauvegarderProduit() {
     description: document.getElementById('p-description').value.trim(),
     categorie: document.getElementById('p-categorie').value,
     unite: document.getElementById('p-unite').value,
-    poids_grammes: parseInt(document.getElementById('p-poids').value) || null,
+    poids_grammes: (() => {
+      const val = parseFloat(document.getElementById('p-poids').value);
+      const unite = document.getElementById('p-poids-unite').value;
+      if (!val) return null;
+      if (unite === 'kg') return Math.round(val * 1000);
+      if (unite === 'l') return Math.round(val * 1000);
+      return Math.round(val);
+    })(),
     disponible: document.getElementById('p-disponible').checked,
     photos: photosEnAttente,
   };
