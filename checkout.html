@@ -286,9 +286,9 @@ function selectLivraison(bid, val, el) {
   el.classList.add('selected');
   el.querySelector('input').checked = true;
 
-  // Afficher/masquer adresse si colis sélectionné
-  const hasColis = Object.values(livraisonsChoisies).includes('colis');
-  document.getElementById('card-adresse').style.display = hasColis ? 'block' : 'none';
+  // Afficher adresse si colis OU proximite
+  const needsAdresse = Object.values(livraisonsChoisies).some(v => v === 'colis' || v === 'proximite');
+  document.getElementById('card-adresse').style.display = needsAdresse ? 'block' : 'none';
 
   afficherRecap();
 }
@@ -360,8 +360,8 @@ async function confirmerCommande() {
     }
   }
 
-  // Vérif adresse si colis
-  const hasColis = Object.values(livraisonsChoisies).includes('colis');
+  // Vérif adresse si colis ou proximite
+  const hasColis = Object.values(livraisonsChoisies).some(v => v === 'colis' || v === 'proximite');
   if (hasColis) {
     const adresse = document.getElementById('c-adresse')?.value.trim();
     const cp = document.getElementById('c-cp')?.value.trim();
@@ -453,7 +453,7 @@ async function confirmerCommande() {
             commande_id: commande.id,
             produits: groupe.items.map(i => ({ nom: i.nom, qty: i.qty, prix: i.prix })),
             mode_livraison: livraisonsChoisies[bid],
-            adresse: livraisonsChoisies[bid] === 'colis' ? {
+            adresse: (livraisonsChoisies[bid] === 'colis' || livraisonsChoisies[bid] === 'proximite') ? {
               rue: document.getElementById('c-adresse')?.value,
               cp: document.getElementById('c-cp')?.value,
               ville: document.getElementById('c-ville')?.value,
