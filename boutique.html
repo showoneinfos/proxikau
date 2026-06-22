@@ -28,8 +28,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn-connexion{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
 
 /* BANNIERE */
-.banniere{height:280px;background:linear-gradient(135deg,#0D2B1F 0%,#1B4332 40%,#2D6A4F 70%,#40916C 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
-@media(min-width:600px){.banniere{height:300px;}}
+.banniere{height:160px;background:linear-gradient(135deg,#0D2B1F 0%,#1B4332 40%,#2D6A4F 70%,#40916C 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+@media(min-width:600px){.banniere{height:200px;}}
 .banniere-pattern{position:absolute;inset:0;width:100%;height:100%;}
 .banniere-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .banniere-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.1) 100%);}
@@ -201,50 +201,10 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
   </svg>
   <!-- Dégradé bas pour lisibilité du texte -->
   <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 70%);"></div>
-  <!-- Bloc boost centré artistique -->
-  <div id="banniere-boost-cta" style="position:relative;z-index:2;width:100%;padding:0 20px 18px;background:linear-gradient(to top,rgba(0,0,0,.65) 0%,rgba(0,0,0,.1) 60%,transparent 100%);">
-
-    <!-- Titre centré -->
-    <div style="text-align:center;padding:18px 0 14px;">
-      <div style="display:inline-flex;align-items:center;gap:8px;margin-bottom:6px;">
-        <div style="height:1px;width:40px;background:rgba(255,215,100,.4);"></div>
-        <span style="color:#FFD166;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;">Visibilité maximale</span>
-        <div style="height:1px;width:40px;background:rgba(255,215,100,.4);"></div>
-      </div>
-      <div style="color:#fff;font-size:22px;font-weight:900;letter-spacing:-0.5px;line-height:1.2;text-shadow:0 2px 12px rgba(0,0,0,.5);">Boostez vos ventes</div>
-      <div style="color:rgba(255,255,255,.75);font-size:13px;margin-top:4px;font-style:italic;">Soyez le premier vu dans votre zone</div>
-    </div>
-
-    <!-- 3 cartes offres -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;max-width:640px;margin:0 auto;">
-      <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;text-align:center;backdrop-filter:blur(6px);">
-        <div style="font-size:20px;margin-bottom:4px;">📍</div>
-        <div style="color:#fff;font-size:12px;font-weight:700;margin-bottom:2px;">Ma Région</div>
-        <div style="color:rgba(255,255,255,.55);font-size:10px;margin-bottom:8px;">Clients locaux</div>
-        <div style="color:#FFD166;font-size:18px;font-weight:900;">10€<span style="font-size:10px;font-weight:400;color:rgba(255,255,255,.5);">/sem</span></div>
-      </div>
-
-      <div style="background:rgba(255,255,255,.15);border:2px solid rgba(255,215,100,.4);border-radius:12px;padding:12px;text-align:center;backdrop-filter:blur(6px);position:relative;transform:scale(1.04);">
-        <div style="position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#BC6C25,#E07B2A);color:#fff;font-size:9px;font-weight:800;padding:3px 10px;border-radius:10px;white-space:nowrap;letter-spacing:.5px;">⭐ POPULAIRE</div>
-        <div style="font-size:20px;margin-bottom:4px;">🇫🇷</div>
-        <div style="color:#fff;font-size:12px;font-weight:700;margin-bottom:2px;">France</div>
-        <div style="color:rgba(255,255,255,.55);font-size:10px;margin-bottom:8px;">Toute la France</div>
-        <div style="color:#FFD166;font-size:18px;font-weight:900;">15€<span style="font-size:10px;font-weight:400;color:rgba(255,255,255,.5);">/sem</span></div>
-      </div>
-
-      <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:12px;padding:12px;text-align:center;backdrop-filter:blur(6px);">
-        <div style="font-size:20px;margin-bottom:4px;">🌍</div>
-        <div style="color:#fff;font-size:12px;font-weight:700;margin-bottom:2px;">Europe</div>
-        <div style="color:rgba(255,255,255,.55);font-size:10px;margin-bottom:8px;">Toute l'Europe</div>
-        <div style="color:#FFD166;font-size:18px;font-weight:900;">20€<span style="font-size:10px;font-weight:400;color:rgba(255,255,255,.5);">/sem</span></div>
-      </div>
-    </div>
-
-    <!-- Bouton activer (vendeur uniquement) -->
-    <div style="text-align:center;margin-top:12px;">
-      <a href="dashboard.html" id="btn-boost-banniere" style="display:none;background:linear-gradient(135deg,#BC6C25,#E07B2A);color:#fff;font-size:13px;font-weight:700;padding:10px 24px;border-radius:24px;text-decoration:none;box-shadow:0 4px 16px rgba(188,108,37,.5);letter-spacing:.3px;">⚡ Activer le boost</a>
-    </div>
-
+  <!-- Banniere simple acheteur -->
+  <div style="position:relative;z-index:2;width:100%;padding:20px 24px 24px;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,transparent 100%);">
+    <div id="banniere-nom" style="color:#fff;font-size:26px;font-weight:800;letter-spacing:-0.5px;text-shadow:0 2px 8px rgba(0,0,0,.4);margin-bottom:4px;"></div>
+    <div id="banniere-ville" style="color:rgba(255,255,255,.75);font-size:13px;display:flex;align-items:center;gap:6px;"></div>
   </div>
 </div>
 
@@ -372,6 +332,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 async function afficherBoutique() {
   document.title = boutique.nom + ' — Proxikau';
   document.getElementById('boutique-nom').textContent = boutique.nom;
+  // Remplir bannière
+  const banNom = document.getElementById('banniere-nom');
+  const banVille = document.getElementById('banniere-ville');
+  if (banNom) banNom.textContent = boutique.nom;
+  if (banVille && boutique.ville) banVille.innerHTML = '📍 ' + boutique.ville + (boutique.region ? ', ' + boutique.region : '');
   document.getElementById('boutique-logo').textContent = emojis[boutique.categorie] || '🏪';
 
   if (boutique.photo_banniere) {
@@ -407,7 +372,7 @@ async function afficherBoutique() {
   if (user) {
     const maB = await getBoutiqueParUserId(user.id);
     if (maB && maB.id === boutique.id) {
-      document.getElementById('btn-boost-banniere').style.display = 'block';
+      // boost button removed from public view
     }
   }
 
