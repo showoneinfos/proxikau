@@ -152,8 +152,8 @@ footer strong{color:#fff;}
   <h1>Le meilleur des producteurs locaux, près de chez vous</h1>
   <p>Charcuterie, miel, fromage, vins... achetez directement aux artisans qui fabriquent.</p>
   <div class="hero-search">
-    <input type="text" placeholder="Que cherchez-vous ?" id="search-hero" oninput="document.getElementById('search-nav').value=this.value;rechercherLive(this.value)" onkeydown="if(event.key==='Enter'){document.getElementById('search-nav').value=this.value;rechercherLive(this.value);}">
-    <button onclick="document.getElementById('search-nav').value=document.getElementById('search-hero').value;rechercherLive(document.getElementById('search-hero').value)">Rechercher</button>
+    <input type="text" placeholder="Que cherchez-vous ?" id="search-hero" oninput="rechercherLive(this.value)" onkeydown="if(event.key==='Enter')rechercherLive(this.value)">
+    <button onclick="rechercherLive(document.getElementById('search-hero').value)">Rechercher</button>
   </div>
   <div class="hero-stats">
     <div class="hero-stat"><strong id="stat-boutiques">—</strong><span>Boutiques</span></div>
@@ -261,7 +261,7 @@ footer strong{color:#fff;}
 </div>
 
 <!-- BOUTIQUES -->
-<div class="section" id="boutiques-section">
+<div class="section" id="boutiques-section" style="display:block;">
   <div class="section-head">
     <div class="section-title">Nos boutiques</div>
   </div>
@@ -456,83 +456,46 @@ function filtrerCat(cat, el) {
 // RECHERCHE
 // ============================================
 let searchTimeout = null;
-async function rechercherLive(q) {
+
+function rechercherLive(q) {
   clearTimeout(searchTimeout);
-  searchTimeout = setTimeout(async () => await rechercher(q), 300);
+  searchTimeout = setTimeout(() => { rechercher(q); }, 400);
 }
 
-async function rechercherHero() {
-  const q = document.getElementById('search-hero').value.trim();
-  // Sync avec la barre nav
-  document.getElementById('search-nav').value = q;
-  await rechercher(q);
-}
+function rechercher(q) {
+  const ql = (q || '').toLowerCase().trim();
 
-async function rechercher(q) {
-  if (!q) {
+  if (!ql) {
     afficherProduits(tousLesProduits);
     afficherBoutiques(toutesLesBoutiques);
     document.getElementById('produits-titre').textContent = 'Produits du moment';
+    document.getElementById('boutiques-section').style.display = 'block';
     return;
   }
-  const ql = q.toLowerCase();
 
-  // Recherche locale dans les produits déjà chargés
+  // Filtrer produits
   const prodsFiltres = tousLesProduits.filter(p =>
     p.nom.toLowerCase().includes(ql) ||
     (p.description && p.description.toLowerCase().includes(ql)) ||
     (p.boutiques?.nom && p.boutiques.nom.toLowerCase().includes(ql)) ||
-    p.categorie.replace('-',' ').includes(ql)
+    p.categorie.replace(/-/g,' ').includes(ql)
   );
 
-  // Recherche boutiques par nom ou ville
+  // Filtrer boutiques
   const boutsFiltrees = toutesLesBoutiques.filter(b =>
     b.nom.toLowerCase().includes(ql) ||
     b.slug.toLowerCase().includes(ql) ||
     (b.ville && b.ville.toLowerCase().includes(ql)) ||
     (b.region && b.region.toLowerCase().includes(ql)) ||
-    b.categorie.replace('-',' ').includes(ql)
+    b.categorie.replace(/-/g,' ').includes(ql)
   );
 
-  // Si rien trouvé localement → chercher dans Supabase
-  if (!prodsFiltres.length && !boutsFiltrees.length) {
-    try {
-      const { data: produitsDB } = await db.from('produits')
-        .select('*, boutiques(nom, slug, ville)')
-        .eq('disponible', true)
-        .or(`nom.ilike.%${q}%,description.ilike.%${q}%,categorie.ilike.%${q}%`)
-        .limit(20);
-      if (produitsDB && produitsDB.length) {
-        document.getElementById('produits-titre').textContent = `Résultats pour "${q}"`;
-        afficherProduits(produitsDB);
-        document.getElementById('boutiques-section').style.display = 'none';
-        document.getElementById('produits-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-      const { data: boutiquesDB } = await db.from('boutiques')
-        .select('*')
-        .eq('actif', true)
-        .or(`nom.ilike.%${q}%,slug.ilike.%${q}%,ville.ilike.%${q}%,categorie.ilike.%${q}%`)
-        .limit(12);
-      if (boutiquesDB && boutiquesDB.length) {
-        document.getElementById('produits-titre').textContent = `Boutiques pour "${q}"`;
-        afficherProduits([]);
-        afficherBoutiques(boutiquesDB);
-        document.getElementById('boutiques-section').style.display = 'block';
-        document.getElementById('boutiques-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
-        return;
-      }
-    } catch(e) {}
-    document.getElementById('produits-titre').textContent = `Aucun résultat pour "${q}"`;
-    afficherProduits([]);
-    return;
-  }
+  document.getElementById('produits-titre').textContent =
+    prodsFiltres.length ? `${prodsFiltres.length} résultat${prodsFiltres.length > 1 ? 's' : ''} pour "${q}"` : `Aucun produit pour "${q}"`;
 
-  document.getElementById('produits-titre').textContent = `Résultats pour "${q}" (${prodsFiltres.length} produit${prodsFiltres.length > 1 ? 's' : ''})`;
   afficherProduits(prodsFiltres);
   afficherBoutiques(boutsFiltrees);
   document.getElementById('boutiques-section').style.display = boutsFiltrees.length ? 'block' : 'none';
-  document.getElementById('produits-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 </script>
 </body>
