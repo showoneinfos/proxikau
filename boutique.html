@@ -297,7 +297,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 // ============================================
 // AFFICHAGE BOUTIQUE
 // ============================================
-function afficherBoutique() {
+async function afficherBoutique() {
   document.title = boutique.nom + ' — Proxikau';
   document.getElementById('boutique-nom').textContent = boutique.nom;
   document.getElementById('boutique-logo').textContent = emojis[boutique.categorie] || '🏪';
