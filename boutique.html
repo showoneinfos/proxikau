@@ -28,8 +28,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn-connexion{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
 
 /* BANNIERE */
-.banniere{height:130px;background:linear-gradient(135deg,var(--vert2) 0%,var(--vert) 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
-@media(min-width:600px){.banniere{height:160px;}}
+.banniere{height:120px;background:linear-gradient(135deg,#1B4332 0%,#2D6A4F 60%,#40916C 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+@media(min-width:600px){.banniere{height:150px;}}
+.banniere-pattern{position:absolute;inset:0;width:100%;height:100%;}
 .banniere-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .banniere-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 60%);}
 .banniere-content{position:relative;z-index:2;padding:20px;width:100%;}
@@ -39,7 +40,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .boutique-header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;}
 .boutique-logo{width:68px;height:68px;border-radius:14px;background:var(--white);border:3px solid var(--white);box-shadow:0 2px 16px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;margin-top:-34px;position:relative;z-index:2;}
 .boutique-info{flex:1;min-width:200px;padding-top:4px;}
-.boutique-nom{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:4px;}
+.boutique-cat-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--vert-light);color:var(--vert2);}
+.boutique-nom{font-size:20px;font-weight:700;color:var(--ink);}
 .boutique-meta{display:flex;flex-wrap:wrap;gap:10px;font-size:13px;color:var(--ink2);margin-bottom:8px;}
 .boutique-desc{font-size:14px;color:var(--ink2);line-height:1.6;max-width:600px;}
 .boutique-livraisons{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
@@ -158,6 +160,16 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 
 <!-- BANNIERE -->
 <div class="banniere" id="banniere">
+  <svg class="banniere-pattern" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <pattern id="pat" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+        <circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.06)"/>
+        <line x1="0" y1="10" x2="20" y2="10" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+        <line x1="10" y1="0" x2="10" y2="20" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#pat)"/>
+  </svg>
   <div class="banniere-overlay"></div>
 </div>
 
@@ -166,7 +178,10 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
   <div class="boutique-header-inner">
     <div class="boutique-logo" id="boutique-logo">🏪</div>
     <div class="boutique-info">
-      <div class="boutique-nom" id="boutique-nom">Chargement...</div>
+      <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+        <div class="boutique-nom" id="boutique-nom">Chargement...</div>
+        <span class="boutique-cat-badge" id="boutique-cat-badge"></span>
+      </div>
       <div class="boutique-meta">
         <span id="boutique-ville"></span>
         <span id="boutique-note"></span>
@@ -299,6 +314,9 @@ function afficherBoutique() {
   }
 
   if (boutique.description) document.getElementById('boutique-desc').textContent = boutique.description;
+  const catLabels = {'viande-charcuterie':'🥩 Charcuterie','fromage-laitier':'🧀 Fromage','vins-bieres':'🍷 Vins','epicerie-terroir':'🫙 Épicerie','fruits-legumes':'🥦 Fruits & Légumes','miel-confitures':'🍯 Miel','huiles-condiments':'🫒 Huiles','savons-cosmetiques':'🧴 Cosmétiques','bougies-deco':'🕯️ Déco'};
+  const catBadge = document.getElementById('boutique-cat-badge');
+  if (catBadge && boutique.categorie) catBadge.textContent = catLabels[boutique.categorie] || boutique.categorie;
 
   const livEl = document.getElementById('boutique-livraisons');
   if (boutique.livraison_colis) livEl.innerHTML += '<span class="liv-badge">📦 Colis</span>';
