@@ -436,6 +436,38 @@ async function confirmerCommande() {
     // Vider le panier
     localStorage.removeItem('proxikau_panier');
 
+    // Envoyer emails pour chaque commande
+    for (let i = 0; i < commandesCreees.length; i++) {
+      const commande = commandesCreees[i];
+      const bid = boutique_ids[i];
+      const groupe = groupes[bid];
+      const b = boutiquesData[bid] || {};
+      try {
+        await fetch('/api/send-email', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            vendeur_email: b.email_contact || '',
+            vendeur_nom: b.nom,
+            boutique_nom: groupe.nom,
+            commande_id: commande.id,
+            produits: groupe.items.map(i => ({ nom: i.nom, qty: i.qty, prix: i.prix })),
+            mode_livraison: livraisonsChoisies[bid],
+            adresse: livraisonsChoisies[bid] === 'colis' ? {
+              rue: document.getElementById('c-adresse')?.value,
+              cp: document.getElementById('c-cp')?.value,
+              ville: document.getElementById('c-ville')?.value,
+              pays: document.getElementById('c-pays')?.value
+            } : null,
+            acheteur_nom: prenom + ' ' + nom,
+            acheteur_email: email,
+            acheteur_tel: tel,
+            montant_total: groupe.items.reduce((s,i) => s + i.prix * i.qty, 0)
+          })
+        });
+      } catch(e) { console.log('Email non envoyé:', e); }
+    }
+
     // Afficher succès
     document.getElementById('checkout-page').style.display = 'none';
     const successPage = document.getElementById('success-page');
