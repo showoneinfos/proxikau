@@ -447,7 +447,7 @@ async function confirmerCommande() {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            vendeur_email: b.email_contact || '',
+            vendeur_email: b._email_vendeur || b.email_contact || '',
             vendeur_nom: b.nom,
             boutique_nom: groupe.nom,
             commande_id: commande.id,
