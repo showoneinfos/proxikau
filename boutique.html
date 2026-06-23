@@ -44,7 +44,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 /* PROFIL BOUTIQUE */
 .boutique-header{background:var(--white);border-bottom:1px solid var(--border);padding:16px 20px 20px;}
 .boutique-header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;}
-.boutique-logo{width:70px;height:70px;border-radius:50%;background:linear-gradient(145deg,#40916C,#1B4332);border:4px solid var(--white);box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:900;color:#fff;flex-shrink:0;margin-top:-20px;position:relative;z-index:2;}
+.boutique-logo{width:80px;height:80px;border-radius:50%;background:linear-gradient(145deg,#40916C,#1B4332);border:4px solid var(--white);box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;margin-top:-24px;position:relative;z-index:2;overflow:hidden;}
 .boutique-info{flex:1;min-width:200px;padding-top:4px;}
 .boutique-cat-badge{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;background:var(--vert-light);color:var(--vert2);}
 .boutique-nom{font-size:20px;font-weight:700;color:var(--ink);}
@@ -373,14 +373,13 @@ async function afficherBoutique() {
   const catLabels = {'viande-charcuterie':'🥩 Charcuterie','fromage-laitier':'🧀 Fromage','vins-bieres':'🍷 Vins','epicerie-terroir':'🫙 Épicerie','fruits-legumes':'🥦 Fruits & Légumes','miel-confitures':'🍯 Miel','huiles-condiments':'🫒 Huiles','savons-cosmetiques':'🧴 Cosmétiques','bougies-deco':'🕯️ Déco'};
   const catBadge = document.getElementById('boutique-cat-badge');
   if (catBadge && boutique.categorie) catBadge.textContent = catLabels[boutique.categorie] || boutique.categorie;
-  // Logo = emoji catégorie
-  const catEmojis = {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🌿','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🌸','bougies-deco':'🕯️'};
+  // Logo = nom de la boutique en italic Georgia
   const logoEl = document.getElementById('boutique-logo');
   if (boutique.photo_logo) {
     logoEl.innerHTML = `<img src="${boutique.photo_logo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
   } else {
-    logoEl.style.fontSize = '32px';
-    logoEl.textContent = catEmojis[boutique.categorie] || '🏪';
+    const nomCourt = boutique.nom.length > 12 ? boutique.nom.substring(0, 12) : boutique.nom;
+    logoEl.innerHTML = `<span style="font-family:Georgia,serif;font-style:italic;font-weight:800;font-size:${boutique.nom.length > 8 ? '11px' : '14px'};color:#fff;text-align:center;line-height:1.2;padding:4px;">${boutique.nom}</span>`;
   }
 
   // Bouton boost visible seulement pour le vendeur proprio
