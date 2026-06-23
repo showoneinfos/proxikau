@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comment ça marche — Proxikau</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--vert:#2D6A4F;--vert2:#1B4332;--vert-light:#D8F3DC;--terre:#BC6C25;--terre-light:#FDEBD0;--ink:#1A1A1A;--ink2:#555;--ink3:#999;--border:#E0E0E0;--bg:#F9F7F4;--white:#fff;--sans:'Inter',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);}
+nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 20px;gap:12px;}
+.logo{font-size:20px;font-weight:800;color:var(--vert);text-decoration:none;}
+.logo span{color:var(--terre);}
+.btn-vendre{margin-left:auto;background:var(--vert);color:#fff;padding:8px 16px;border-radius:8px;text-decoration:none;font-size:14px;font-weight:600;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,var(--vert2),var(--vert));padding:48px 20px;text-align:center;}
+.hero h1{font-size:32px;font-weight:800;color:#fff;margin-bottom:12px;line-height:1.2;}
+@media(min-width:600px){.hero h1{font-size:42px;}}
+.hero p{font-size:16px;color:rgba(255,255,255,.8);max-width:480px;margin:0 auto;}
+
+/* SECTIONS */
+.section{padding:48px 20px;}
+.section-inner{max-width:860px;margin:0 auto;}
+.section-tag{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--vert);margin-bottom:8px;}
+.section-title{font-size:26px;font-weight:800;margin-bottom:12px;}
+@media(min-width:600px){.section-title{font-size:32px;}}
+.section-sub{font-size:16px;color:var(--ink2);line-height:1.7;max-width:560px;margin-bottom:40px;}
+
+/* STEPS */
+.steps-grid{display:grid;grid-template-columns:1fr;gap:20px;}
+@media(min-width:600px){.steps-grid{grid-template-columns:repeat(3,1fr);}}
+.step-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:24px;}
+.step-num{width:40px;height:40px;border-radius:12px;background:var(--vert);color:#fff;font-size:18px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:16px;}
+.step-title{font-size:16px;font-weight:700;margin-bottom:8px;}
+.step-desc{font-size:14px;color:var(--ink2);line-height:1.6;}
+
+/* AVANTAGES */
+.avantages-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:600px){.avantages-grid{grid-template-columns:repeat(2,1fr);}}
+.avantage-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;display:flex;gap:16px;align-items:flex-start;}
+.avantage-icon{font-size:28px;flex-shrink:0;}
+.avantage-title{font-size:15px;font-weight:700;margin-bottom:4px;}
+.avantage-desc{font-size:13px;color:var(--ink2);line-height:1.6;}
+
+/* TARIFS */
+.tarifs-grid{display:grid;grid-template-columns:1fr;gap:16px;}
+@media(min-width:600px){.tarifs-grid{grid-template-columns:repeat(3,1fr);}}
+.tarif-card{background:var(--white);border:2px solid var(--border);border-radius:14px;padding:24px;text-align:center;}
+.tarif-card.highlight{border-color:var(--vert);background:var(--vert-light);}
+.tarif-icon{font-size:32px;margin-bottom:12px;}
+.tarif-nom{font-size:16px;font-weight:700;margin-bottom:4px;}
+.tarif-desc{font-size:13px;color:var(--ink2);margin-bottom:16px;}
+.tarif-prix{font-size:28px;font-weight:800;color:var(--vert);}
+.tarif-periode{font-size:12px;color:var(--ink3);}
+
+/* FAQ */
+.faq-item{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;}
+.faq-q{font-size:15px;font-weight:700;margin-bottom:8px;cursor:pointer;}
+.faq-a{font-size:14px;color:var(--ink2);line-height:1.7;}
+
+/* CTA */
+.cta{background:linear-gradient(135deg,var(--vert2),var(--vert));padding:48px 20px;text-align:center;}
+.cta h2{font-size:28px;font-weight:800;color:#fff;margin-bottom:12px;}
+.cta p{font-size:16px;color:rgba(255,255,255,.8);margin-bottom:28px;}
+.btn-cta{display:inline-block;background:#fff;color:var(--vert2);padding:14px 32px;border-radius:10px;font-size:16px;font-weight:700;text-decoration:none;}
+.btn-cta:hover{background:var(--vert-light);}
+
+/* DIVIDER */
+.divider{height:1px;background:var(--border);margin:0;}
+
+footer{background:var(--vert2);color:rgba(255,255,255,.6);text-align:center;padding:24px;font-size:13px;}
+footer a{color:rgba(255,255,255,.6);text-decoration:none;margin:0 8px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Proxi<span>kau</span></a>
+  <a href="inscription.html" class="btn-vendre">Ouvrir ma boutique →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>La marketplace des artisans<br>et producteurs locaux</h1>
+  <p>Proxikau connecte les acheteurs directement aux producteurs. Charcuterie, miel, légumes, vins... achetez authentique, achetez local.</p>
+</div>
+
+<!-- POUR LES ACHETEURS -->
+<div class="section">
+  <div class="section-inner">
+    <div class="section-tag">Pour les acheteurs</div>
+    <div class="section-title">Comment acheter sur Proxikau ?</div>
+    <div class="section-sub">Simple comme bonjour — trouvez, commandez, recevez.</div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Parcourez les boutiques</div>
+        <div class="step-desc">Explorez les boutiques de producteurs locaux par catégorie ou par recherche. Chaque vendeur a sa propre vitrine avec ses produits.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Ajoutez au panier</div>
+        <div class="step-desc">Ajoutez des produits de plusieurs boutiques en même temps. Choisissez votre mode de livraison pour chaque vendeur.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Commandez et suivez</div>
+        <div class="step-desc">Confirmez votre commande et suivez son statut en temps réel. Le vendeur vous prépare votre commande et vous livre selon le mode choisi.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- POUR LES VENDEURS -->
+<div class="section" style="background:var(--white);">
+  <div class="section-inner">
+    <div class="section-tag">Pour les vendeurs</div>
+    <div class="section-title">Vendez vos produits partout en Europe</div>
+    <div class="section-sub">Ouvrez votre boutique gratuitement en 5 minutes. Aucune compétence technique requise.</div>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-title">Créez votre boutique</div>
+        <div class="step-desc">Inscrivez-vous gratuitement, choisissez votre nom de boutique personnalisé (ex: proxikau.com/votre-nom) et configurez vos modes de livraison.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-title">Ajoutez vos produits</div>
+        <div class="step-desc">Publiez vos produits avec photos, description, prix et stock depuis votre tableau de bord. Simple et rapide.</div>
+      </div>
+      <div class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-title">Recevez et gérez vos commandes</div>
+        <div class="step-desc">Vous êtes notifié par email à chaque commande. Gérez tout depuis votre espace vendeur et recevez votre paiement à J+30.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- AVANTAGES -->
+<div class="section">
+  <div class="section-inner">
+    <div class="section-tag">Pourquoi Proxikau</div>
+    <div class="section-title">Les avantages de la plateforme</div>
+    <div class="avantages-grid">
+      <div class="avantage-card">
+        <div class="avantage-icon">🆓</div>
+        <div><div class="avantage-title">Inscription 100% gratuite</div><div class="avantage-desc">Aucun abonnement, aucun frais d'entrée. On prend seulement 5% sur vos ventes réelles.</div></div>
+      </div>
+      <div class="avantage-card">
+        <div class="avantage-icon">🏪</div>
+        <div><div class="avantage-title">Votre vitrine personnalisée</div><div class="avantage-desc">Une URL unique à votre nom (proxikau.com/votre-boutique) partageable sur les réseaux sociaux.</div></div>
+      </div>
+      <div class="avantage-card">
+        <div class="avantage-icon">📦</div>
+        <div><div class="avantage-title">3 modes de livraison</div><div class="avantage-desc">Colis, enlèvement sur place ou livraison à proximité. Vous choisissez selon votre organisation.</div></div>
+      </div>
+      <div class="avantage-card">
+        <div class="avantage-icon">🔒</div>
+        <div><div class="avantage-title">Paiement sécurisé</div><div class="avantage-desc">Paiement en ligne sécurisé via Stripe. Virement vendeur automatique à J+30.</div></div>
+      </div>
+      <div class="avantage-card">
+        <div class="avantage-icon">🌍</div>
+        <div><div class="avantage-title">Visibilité mondiale</div><div class="avantage-desc">Vendez à des acheteurs de toute la France et de toute l'Europe grâce aux options de boost.</div></div>
+      </div>
+      <div class="avantage-card">
+        <div class="avantage-icon">📱</div>
+        <div><div class="avantage-title">100% mobile</div><div class="avantage-desc">Gérez votre boutique depuis votre téléphone. Ajoutez des produits, répondez aux commandes, partout.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- TARIFS BOOST -->
+<div class="section" style="background:var(--white);">
+  <div class="section-inner">
+    <div class="section-tag">Visibilité</div>
+    <div class="section-title">Boostez votre boutique</div>
+    <div class="section-sub">Options de visibilité optionnelles pour apparaître en premier dans les résultats.</div>
+    <div class="tarifs-grid">
+      <div class="tarif-card">
+        <div class="tarif-icon">📍</div>
+        <div class="tarif-nom">Ma Région</div>
+        <div class="tarif-desc">Priorité dans votre région</div>
+        <div class="tarif-prix">10€</div>
+        <div class="tarif-periode">/ semaine</div>
+      </div>
+      <div class="tarif-card highlight">
+        <div class="tarif-icon">🇫🇷</div>
+        <div class="tarif-nom">France ⭐</div>
+        <div class="tarif-desc">Priorité dans toute la France</div>
+        <div class="tarif-prix">15€</div>
+        <div class="tarif-periode">/ semaine</div>
+      </div>
+      <div class="tarif-card">
+        <div class="tarif-icon">🌍</div>
+        <div class="tarif-nom">Europe</div>
+        <div class="tarif-desc">Priorité dans toute l'Europe</div>
+        <div class="tarif-prix">20€</div>
+        <div class="tarif-periode">/ semaine</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- FAQ -->
+<div class="section">
+  <div class="section-inner">
+    <div class="section-tag">Questions fréquentes</div>
+    <div class="section-title">FAQ</div>
+    <div class="faq-item"><div class="faq-q">💰 Combien coûte l'inscription ?</div><div class="faq-a">L'inscription est totalement gratuite. Proxikau prélève uniquement une commission de 5% sur chaque vente réalisée. Si vous ne vendez rien, vous ne payez rien.</div></div>
+    <div class="faq-item"><div class="faq-q">🏪 Qui peut vendre sur Proxikau ?</div><div class="faq-a">Tout artisan, producteur, agriculteur ou fabricant qui produit lui-même ses produits. Charcutiers, maraîchers, apiculteurs, vignerons, savonniers, potiers...</div></div>
+    <div class="faq-item"><div class="faq-q">💳 Quand est-ce que je suis payé ?</div><div class="faq-a">Le vendeur reçoit son paiement (moins la commission de 5%) dans les 30 jours suivant la confirmation de livraison par l'acheteur.</div></div>
+    <div class="faq-item"><div class="faq-q">📦 Comment fonctionne la livraison ?</div><div class="faq-a">Vous choisissez vos modes de livraison lors de l'inscription : colis (La Poste, Colissimo...), enlèvement sur place, ou livraison à proximité dans un rayon que vous définissez.</div></div>
+    <div class="faq-item"><div class="faq-q">🌍 Peut-on vendre à l'international ?</div><div class="faq-a">Oui ! Avec l'option Boost Europe, votre boutique est visible par des acheteurs de toute l'Europe. La livraison par colis permet d'expédier partout.</div></div>
+    <div class="faq-item"><div class="faq-q">📞 Comment vous contacter ?</div><div class="faq-a">Par email à proxikau@gmail.com ou par téléphone au 06 72 38 02 65. Nous répondons dans les 24h.</div></div>
+  </div>
+</div>
+
+<!-- CTA FINAL -->
+<div class="cta">
+  <h2>Prêt à rejoindre Proxikau ?</h2>
+  <p>Ouvrez votre boutique gratuitement en 5 minutes et commencez à vendre vos produits partout en Europe.</p>
+  <a href="inscription.html" class="btn-cta">Ouvrir ma boutique gratuitement →</a>
+</div>
+
+<footer>
+  <strong style="color:#fff;">Proxikau</strong> — Marketplace des artisans et producteurs locaux<br>
+  <div style="margin-top:8px;">
+    <a href="mentions-legales.html">Mentions légales</a>
+    <a href="cgv.html">CGV</a>
+    <a href="mailto:proxikau@gmail.com">Contact</a>
+  </div>
+</footer>
+
+</body>
+</html>
