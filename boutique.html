@@ -300,7 +300,7 @@ let panier = [];
 let livraisonSelectionnee = null;
 let filtreCourant = 'tous';
 
-const emojis = {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️'};
+const emojis = {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'};
 
 // ============================================
 // INIT
@@ -370,7 +370,7 @@ async function afficherBoutique() {
   }
 
   if (boutique.description) document.getElementById('boutique-desc').textContent = boutique.description;
-  const catLabels = {'viande-charcuterie':'🥩 Charcuterie','fromage-laitier':'🧀 Fromage','vins-bieres':'🍷 Vins','epicerie-terroir':'🫙 Épicerie','fruits-legumes':'🥦 Fruits & Légumes','miel-confitures':'🍯 Miel','huiles-condiments':'🫒 Huiles','savons-cosmetiques':'🧴 Cosmétiques','bougies-deco':'🕯️ Déco'};
+  const catLabels = {'viande-charcuterie':'🥩 Charcuterie','fromage-laitier':'🧀 Fromage','vins-bieres':'🍷 Vins','epicerie-terroir':'🫙 Épicerie','fruits-legumes':'🥦 Fruits & Légumes','miel-confitures':'🍯 Miel','huiles-condiments':'🫒 Huiles','savons-cosmetiques':'🧴 Cosmétiques','bougies-deco':'🕯️ Déco','oeufs-volaille':'🥚 Œufs & Volaille'};
   const catBadge = document.getElementById('boutique-cat-badge');
   if (catBadge && boutique.categorie) catBadge.textContent = catLabels[boutique.categorie] || boutique.categorie;
   // Logo = nom de la boutique en italic Georgia
