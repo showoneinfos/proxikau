@@ -747,14 +747,27 @@ function afficherCommandes() {
   const el = document.getElementById('liste-commandes');
   if (!commandes.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🛍️</div><h3>Aucune commande</h3><p>Tes commandes apparaîtront ici.</p></div>'; return; }
   const livLabel = {colis:'📦',enlevement:'🏠',proximite:'🚗'};
+  const statutLabel = {'en_attente':'En attente','payee':'Payée','preparee':'En préparation','expediee':'Expédiée','disponible':'Disponible','livree':'Livrée','terminee':'Terminée','annulee':'Annulée','remboursee':'Remboursée'};
+
+  function getBoutonAction(c) {
+    if (c.statut === 'en_attente' || c.statut === 'payee') return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','preparee')">✅ Préparer</button>`;
+    if (c.statut === 'preparee') {
+      if (c.mode_livraison === 'colis') return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','expediee')">📦 Expédier</button>`;
+      if (c.mode_livraison === 'enlevement') return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','disponible')">🏠 Prêt</button>`;
+      return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','expediee')">🚗 En route</button>`;
+    }
+    if (c.statut === 'expediee' || c.statut === 'disponible') return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','livree')">✅ Livré</button>`;
+    return '';
+  }
+
   el.innerHTML = `<table><thead><tr><th>Date</th><th>Client</th><th>Montant</th><th>Livraison</th><th>Statut</th><th></th></tr></thead><tbody>
   ${commandes.map(c => `<tr>
     <td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</td>
     <td>${c.utilisateurs?.prenom || '—'} ${c.utilisateurs?.nom || ''}</td>
     <td><strong>${parseFloat(c.montant_total).toFixed(2)}€</strong></td>
     <td>${livLabel[c.mode_livraison] || ''} ${c.mode_livraison}</td>
-    <td><span class="badge badge-${c.statut}">${c.statut.replace('_',' ')}</span></td>
-    <td>${c.statut === 'payee' ? `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','preparee')">Préparer</button>` : c.statut === 'preparee' ? `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','${c.mode_livraison === 'colis' ? 'expediee' : 'disponible'}')">Expédier</button>` : ''}</td>
+    <td><span class="badge badge-${c.statut}">${statutLabel[c.statut] || c.statut}</span></td>
+    <td>${getBoutonAction(c)}</td>
   </tr>`).join('')}</tbody></table>`;
 }
 
