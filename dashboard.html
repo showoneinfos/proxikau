@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mon Dashboard — Proxikau</title>
+<title>Mon Espace — Proxikau</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
@@ -733,7 +733,7 @@ async function chargerCommandes() {
   if (!boutique) return;
   try {
     commandes = await getCommandesBoutique(boutique.id);
-    const enAttente = commandes.filter(c => c.statut === 'payee' || c.statut === 'preparee').length;
+    const enAttente = commandes.filter(c => ['en_attente','payee','preparee','expediee','disponible'].includes(c.statut)).length;
     document.getElementById('stat-commandes').textContent = commandes.length;
     const revenus = commandes.filter(c => !['annulee','remboursee'].includes(c.statut)).reduce((s,c) => s + parseFloat(c.montant_vendeur || 0), 0);
     document.getElementById('stat-revenus').textContent = revenus.toFixed(2) + '€';
