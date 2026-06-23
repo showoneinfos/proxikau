@@ -431,7 +431,7 @@ function afficherBoutiques(list) {
   }
   el.innerHTML = list.map(b => {
     const nomCourt = b.nom.length > 14 ? b.nom.substring(0,14) : b.nom;
-    const fontSize = b.nom.length > 10 ? '13px' : '16px';
+    const fontSize = b.nom.length > 14 ? '15px' : b.nom.length > 10 ? '18px' : '22px';
     return `
     <a class="boutique-card" href="/${b.slug}">
       <div class="boutique-card-banner" style="display:flex;align-items:center;justify-content:center;">
