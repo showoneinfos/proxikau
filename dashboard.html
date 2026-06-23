@@ -355,7 +355,34 @@ tr:last-child td{border-bottom:none;}
           <div class="toggle-wrap"><label class="toggle"><input type="checkbox" id="edit-proximite"><span class="toggle-slider"></span></label><span style="font-size:14px;">🚗 Livraison à proximité</span></div>
         </div>
         <div class="field"><label>Rayon livraison (km)</label><input type="number" id="edit-rayon" min="1" max="200" inputmode="numeric"></div>
-        <button class="btn btn-primary" onclick="sauvegarderBoutique()">Sauvegarder</button>
+
+        <div style="margin:20px 0 10px;font-size:14px;font-weight:600;">Photo de bannière</div>
+        <div id="banniere-preview" style="display:none;margin-bottom:12px;border-radius:10px;overflow:hidden;height:120px;position:relative;">
+          <img id="banniere-img" src="" style="width:100%;height:100%;object-fit:cover;">
+          <button onclick="supprimerBanniere()" style="position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;border:none;border-radius:6px;padding:4px 10px;cursor:pointer;font-size:12px;">✕ Supprimer</button>
+        </div>
+        <div class="photo-upload-zone" id="banniere-zone" onclick="document.getElementById('banniere-input').click()">
+          <input type="file" id="banniere-input" accept="image/*" style="display:none" onchange="uploadBanniere(this)">
+          <div class="upload-icon">🖼️</div>
+          <p>Ajouter une photo de bannière</p>
+          <small>JPG, PNG — max 5MB — idéal : 1200×400px</small>
+        </div>
+        <div class="upload-progress" id="banniere-progress"><div class="upload-progress-bar" id="banniere-bar"></div></div>
+
+        <div style="margin:20px 0 10px;font-size:14px;font-weight:600;">Logo de la boutique</div>
+        <div id="logo-preview" style="display:none;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+          <img id="logo-img" src="" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid var(--vert);">
+          <button onclick="supprimerLogo()" style="background:#FFEBEE;color:var(--error);border:none;border-radius:6px;padding:6px 12px;cursor:pointer;font-size:13px;">✕ Supprimer</button>
+        </div>
+        <div class="photo-upload-zone" id="logo-zone" onclick="document.getElementById('logo-input').click()">
+          <input type="file" id="logo-input" accept="image/*" style="display:none" onchange="uploadLogo(this)">
+          <div class="upload-icon">📷</div>
+          <p>Ajouter un logo (optionnel)</p>
+          <small>Format carré recommandé — max 2MB</small>
+        </div>
+        <div class="upload-progress" id="logo-progress"><div class="upload-progress-bar" id="logo-bar"></div></div>
+
+        <button class="btn btn-primary" style="margin-top:20px;" onclick="sauvegarderBoutique()">Sauvegarder</button>
       </div>
     </div>
 
@@ -798,6 +825,74 @@ function remplirFormBoutique() {
   document.getElementById('edit-enlevement').checked = boutique.livraison_enlevement || false;
   document.getElementById('edit-proximite').checked = boutique.livraison_proximite || false;
   document.getElementById('edit-rayon').value = boutique.rayon_proximite_km || 30;
+  // Afficher bannière existante
+  if (boutique.photo_banniere) {
+    document.getElementById('banniere-img').src = boutique.photo_banniere;
+    document.getElementById('banniere-preview').style.display = 'block';
+    document.getElementById('banniere-zone').style.display = 'none';
+  }
+  // Afficher logo existant
+  if (boutique.photo_logo) {
+    document.getElementById('logo-img').src = boutique.photo_logo;
+    document.getElementById('logo-preview').style.display = 'flex';
+    document.getElementById('logo-zone').style.display = 'none';
+  }
+}
+
+async function uploadBanniere(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { alert('Photo trop lourde (max 5MB)'); return; }
+  const prog = document.getElementById('banniere-progress');
+  const bar = document.getElementById('banniere-bar');
+  prog.style.display = 'block';
+  bar.style.width = '50%';
+  try {
+    const url = await uploadPhoto(file, 'bannieres');
+    bar.style.width = '100%';
+    await majBoutique(boutique.id, { photo_banniere: url });
+    boutique.photo_banniere = url;
+    document.getElementById('banniere-img').src = url;
+    document.getElementById('banniere-preview').style.display = 'block';
+    document.getElementById('banniere-zone').style.display = 'none';
+    setTimeout(() => prog.style.display = 'none', 500);
+  } catch(e) { alert('Erreur upload : ' + e.message); prog.style.display = 'none'; }
+}
+
+async function supprimerBanniere() {
+  if (!confirm('Supprimer la bannière ?')) return;
+  await majBoutique(boutique.id, { photo_banniere: null });
+  boutique.photo_banniere = null;
+  document.getElementById('banniere-preview').style.display = 'none';
+  document.getElementById('banniere-zone').style.display = 'block';
+}
+
+async function uploadLogo(input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (file.size > 2 * 1024 * 1024) { alert('Logo trop lourd (max 2MB)'); return; }
+  const prog = document.getElementById('logo-progress');
+  const bar = document.getElementById('logo-bar');
+  prog.style.display = 'block';
+  bar.style.width = '50%';
+  try {
+    const url = await uploadPhoto(file, 'logos');
+    bar.style.width = '100%';
+    await majBoutique(boutique.id, { photo_logo: url });
+    boutique.photo_logo = url;
+    document.getElementById('logo-img').src = url;
+    document.getElementById('logo-preview').style.display = 'flex';
+    document.getElementById('logo-zone').style.display = 'none';
+    setTimeout(() => prog.style.display = 'none', 500);
+  } catch(e) { alert('Erreur upload : ' + e.message); prog.style.display = 'none'; }
+}
+
+async function supprimerLogo() {
+  if (!confirm('Supprimer le logo ?')) return;
+  await majBoutique(boutique.id, { photo_logo: null });
+  boutique.photo_logo = null;
+  document.getElementById('logo-preview').style.display = 'none';
+  document.getElementById('logo-zone').style.display = 'block';
 }
 
 async function sauvegarderBoutique() {

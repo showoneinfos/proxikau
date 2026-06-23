@@ -4,6 +4,7 @@
     { "source": "/inscription", "destination": "/inscription.html" },
     { "source": "/connexion", "destination": "/connexion.html" },
     { "source": "/checkout", "destination": "/checkout.html" },
+    { "source": "/mes-commandes", "destination": "/mes-commandes.html" },
     { "source": "/:slug", "destination": "/boutique.html?slug=:slug" }
   ]
 }

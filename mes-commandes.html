@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mes commandes — Proxikau</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<style>
+:root{--vert:#2D6A4F;--vert2:#1B4332;--vert-light:#D8F3DC;--terre:#BC6C25;--terre-light:#FDEBD0;--ink:#1A1A1A;--ink2:#555;--ink3:#999;--border:#E0E0E0;--bg:#F9F7F4;--white:#fff;--error:#D32F2F;--sans:'Inter',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);}
+nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:50;}
+.logo{font-size:20px;font-weight:800;color:var(--vert);text-decoration:none;}
+.logo span{color:var(--terre);}
+.nav-right{margin-left:auto;display:flex;gap:8px;align-items:center;}
+.btn-retour{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
+.btn-deco{font-size:13px;color:var(--error);background:none;border:none;cursor:pointer;font-family:var(--sans);}
+
+.page{max-width:720px;margin:0 auto;padding:28px 16px 60px;}
+.page-title{font-size:22px;font-weight:800;margin-bottom:4px;}
+.page-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;}
+
+/* COMMANDE CARD */
+.commande-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px;}
+.commande-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.commande-boutique{font-size:15px;font-weight:700;color:var(--ink);text-decoration:none;}
+.commande-boutique:hover{color:var(--vert);}
+.commande-date{font-size:12px;color:var(--ink3);}
+.commande-body{padding:16px 20px;}
+.commande-produit{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);}
+.commande-produit:last-child{border-bottom:none;}
+.commande-produit-photo{width:44px;height:44px;border-radius:8px;background:var(--bg);object-fit:cover;flex-shrink:0;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.commande-produit-info{flex:1;}
+.commande-produit-nom{font-size:14px;font-weight:600;}
+.commande-produit-qty{font-size:12px;color:var(--ink3);}
+.commande-produit-prix{font-size:14px;font-weight:700;color:var(--vert);}
+.commande-footer{padding:14px 20px;background:var(--bg);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.commande-total{font-size:15px;font-weight:700;}
+.commande-livraison{font-size:13px;color:var(--ink2);}
+
+/* BADGE STATUT */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;}
+.badge-en_attente{background:#FFF3E0;color:#F57C00;}
+.badge-payee,.badge-livree,.badge-terminee{background:var(--vert-light);color:var(--vert2);}
+.badge-preparee{background:#EDE7F6;color:#4527A0;}
+.badge-expediee{background:#E3F2FD;color:#1565C0;}
+.badge-disponible{background:#E8F5E9;color:#2E7D32;}
+.badge-annulee,.badge-remboursee{background:#FFEBEE;color:var(--error);}
+
+/* TIMELINE */
+.timeline{display:flex;align-items:center;gap:0;margin-top:12px;overflow-x:auto;padding:4px 0;}
+.tl-step{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
+.tl-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
+.tl-dot.done{border-color:var(--vert);background:var(--vert);}
+.tl-dot.active{border-color:var(--vert);background:var(--vert-light);}
+.tl-label{font-size:10px;color:var(--ink3);margin-top:4px;white-space:nowrap;}
+.tl-label.done,.tl-label.active{color:var(--vert2);font-weight:600;}
+.tl-line{flex:1;height:2px;background:var(--border);min-width:20px;}
+.tl-line.done{background:var(--vert);}
+
+/* EMPTY */
+.empty{text-align:center;padding:60px 20px;}
+.empty-icon{font-size:48px;margin-bottom:16px;}
+.empty h3{font-size:18px;font-weight:700;margin-bottom:8px;}
+.empty p{font-size:14px;color:var(--ink2);margin-bottom:24px;}
+.btn-shop{display:inline-block;padding:12px 24px;border-radius:10px;background:var(--vert);color:#fff;text-decoration:none;font-weight:600;}
+
+/* LOGIN */
+.login-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:32px;max-width:400px;margin:0 auto;text-align:center;}
+.login-card h2{font-size:20px;font-weight:700;margin-bottom:8px;}
+.login-card p{font-size:14px;color:var(--ink2);margin-bottom:24px;}
+.field{margin-bottom:14px;text-align:left;}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;}
+.field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:var(--sans);font-size:14px;outline:none;-webkit-appearance:none;}
+.field input:focus{border-color:var(--vert);}
+.btn-login{width:100%;padding:13px;border-radius:10px;background:var(--vert);color:#fff;border:none;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;}
+.alert-err{background:#FFEBEE;color:var(--error);padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;}
+.loading{text-align:center;padding:40px;color:var(--ink3);}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">Proxi<span>kau</span></a>
+  <div class="nav-right">
+    <a href="index.html" class="btn-retour">← Retour</a>
+    <button class="btn-deco" id="btn-deco" onclick="seDeconnecter()" style="display:none;">Déconnexion</button>
+  </div>
+</nav>
+
+<div class="page">
+  <div id="loading" class="loading">Chargement...</div>
+  <div id="login-section" style="display:none;">
+    <div class="login-card">
+      <h2>Mes commandes</h2>
+      <p>Connecte-toi pour voir tes commandes Proxikau.</p>
+      <div class="alert-err" id="alert-login"></div>
+      <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="ton@email.fr" inputmode="email"></div>
+      <div class="field"><label>Mot de passe</label><input type="password" id="login-mdp" onkeydown="if(event.key==='Enter')seConnecter()"></div>
+      <button class="btn-login" onclick="seConnecter()">Se connecter</button>
+    </div>
+  </div>
+
+  <div id="commandes-section" style="display:none;">
+    <div class="page-title">Mes commandes</div>
+    <div class="page-sub" id="nb-commandes"></div>
+    <div id="liste-commandes"></div>
+  </div>
+</div>
+
+<script>
+const statutLabels = {
+  'en_attente': 'En attente',
+  'payee': 'Payée',
+  'preparee': 'En préparation',
+  'expediee': 'Expédiée',
+  'disponible': 'Prête à enlever',
+  'livree': 'Livrée ✅',
+  'terminee': 'Terminée',
+  'annulee': 'Annulée',
+  'remboursee': 'Remboursée'
+};
+
+const livLabels = {
+  'colis': '📦 Envoi par colis',
+  'enlevement': '🏠 Enlèvement sur place',
+  'proximite': '🚗 Livraison à proximité'
+};
+
+// Timeline steps par mode de livraison
+function getTimeline(statut, mode) {
+  const steps = {
+    colis: [
+      { key: 'en_attente', label: 'Reçue', icon: '📋' },
+      { key: 'preparee', label: 'Préparée', icon: '📦' },
+      { key: 'expediee', label: 'Expédiée', icon: '🚚' },
+      { key: 'livree', label: 'Livrée', icon: '✅' }
+    ],
+    enlevement: [
+      { key: 'en_attente', label: 'Reçue', icon: '📋' },
+      { key: 'preparee', label: 'Préparée', icon: '🔧' },
+      { key: 'disponible', label: 'Disponible', icon: '🏠' },
+      { key: 'livree', label: 'Récupérée', icon: '✅' }
+    ],
+    proximite: [
+      { key: 'en_attente', label: 'Reçue', icon: '📋' },
+      { key: 'preparee', label: 'Préparée', icon: '🔧' },
+      { key: 'expediee', label: 'En route', icon: '🚗' },
+      { key: 'livree', label: 'Livrée', icon: '✅' }
+    ]
+  };
+
+  const ordre = ['en_attente','payee','preparee','expediee','disponible','livree','terminee'];
+  const statutIdx = ordre.indexOf(statut);
+  const stps = steps[mode] || steps.colis;
+
+  return stps.map((s, i) => {
+    const sIdx = ordre.indexOf(s.key);
+    const isDone = sIdx < statutIdx;
+    const isActive = sIdx === statutIdx || (s.key === statut);
+    return { ...s, isDone, isActive };
+  });
+}
+
+// ============================================
+// INIT
+// ============================================
+document.addEventListener('DOMContentLoaded', async () => {
+  const user = await getUtilisateurConnecte();
+  document.getElementById('loading').style.display = 'none';
+  if (!user) {
+    document.getElementById('login-section').style.display = 'block';
+    return;
+  }
+  document.getElementById('btn-deco').style.display = 'block';
+  await chargerCommandes(user.id);
+});
+
+// ============================================
+// LOGIN
+// ============================================
+async function seConnecter() {
+  const email = document.getElementById('login-email').value.trim();
+  const mdp = document.getElementById('login-mdp').value;
+  const alertEl = document.getElementById('alert-login');
+  if (!email || !mdp) { alertEl.textContent = 'Remplis tous les champs.'; alertEl.style.display = 'block'; return; }
+  try {
+    const { data } = await connecterUtilisateur(email, mdp);
+    document.getElementById('login-section').style.display = 'none';
+    document.getElementById('btn-deco').style.display = 'block';
+    await chargerCommandes(data.user.id);
+  } catch(e) {
+    alertEl.textContent = 'Email ou mot de passe incorrect.';
+    alertEl.style.display = 'block';
+  }
+}
+
+async function seDeconnecter() {
+  await deconnecterUtilisateur();
+  window.location.reload();
+}
+
+// ============================================
+// COMMANDES
+// ============================================
+async function chargerCommandes(userId) {
+  try {
+    const { data: commandes, error } = await db.from('commandes')
+      .select('*, boutiques(nom, slug), commande_lignes(*, produits(photos, categorie))')
+      .eq('acheteur_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+
+    document.getElementById('commandes-section').style.display = 'block';
+
+    if (!commandes || !commandes.length) {
+      document.getElementById('nb-commandes').textContent = '';
+      document.getElementById('liste-commandes').innerHTML = `
+        <div class="empty">
+          <div class="empty-icon">🛒</div>
+          <h3>Aucune commande</h3>
+          <p>Tu n'as pas encore passé de commande sur Proxikau.</p>
+          <a href="index.html" class="btn-shop">Découvrir les boutiques →</a>
+        </div>`;
+      return;
+    }
+
+    document.getElementById('nb-commandes').textContent = commandes.length + ' commande' + (commandes.length > 1 ? 's' : '');
+
+    const emojis = {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'};
+
+    document.getElementById('liste-commandes').innerHTML = commandes.map(c => {
+      const timeline = getTimeline(c.statut, c.mode_livraison);
+      const tlHTML = timeline.map((s, i) => `
+        <div class="tl-step">
+          <div class="tl-dot ${s.isDone ? 'done' : s.isActive ? 'active' : ''}">${s.isDone ? '✓' : s.icon}</div>
+          <div class="tl-label ${s.isDone ? 'done' : s.isActive ? 'active' : ''}">${s.label}</div>
+        </div>
+        ${i < timeline.length - 1 ? `<div class="tl-line ${s.isDone ? 'done' : ''}"></div>` : ''}
+      `).join('');
+
+      const lignes = c.commande_lignes || [];
+      const produitsHTML = lignes.map(l => {
+        const photo = l.produits?.photos?.[0];
+        const emoji = emojis[l.produits?.categorie] || '📦';
+        return `<div class="commande-produit">
+          <div class="commande-produit-photo">${photo ? `<img src="${photo}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">` : emoji}</div>
+          <div class="commande-produit-info">
+            <div class="commande-produit-nom">${l.nom_produit}</div>
+            <div class="commande-produit-qty">x${l.quantite}</div>
+          </div>
+          <div class="commande-produit-prix">${parseFloat(l.sous_total).toFixed(2)}€</div>
+        </div>`;
+      }).join('');
+
+      return `<div class="commande-card">
+        <div class="commande-head">
+          <div>
+            <a href="/${c.boutiques?.slug}" class="commande-boutique">🏪 ${c.boutiques?.nom || '—'}</a>
+            <div class="commande-date">Commande du ${new Date(c.created_at).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'})}</div>
+          </div>
+          <span class="badge badge-${c.statut}">${statutLabels[c.statut] || c.statut}</span>
+        </div>
+        <div class="commande-body">
+          ${produitsHTML}
+          <div class="timeline">${tlHTML}</div>
+        </div>
+        <div class="commande-footer">
+          <div>
+            <div class="commande-livraison">${livLabels[c.mode_livraison] || c.mode_livraison}</div>
+            ${c.adresse_livraison?.rue ? `<div style="font-size:12px;color:var(--ink3);">${c.adresse_livraison.rue}, ${c.adresse_livraison.cp} ${c.adresse_livraison.ville}</div>` : ''}
+          </div>
+          <div class="commande-total">${parseFloat(c.montant_total).toFixed(2)}€</div>
+        </div>
+      </div>`;
+    }).join('');
+
+  } catch(e) {
+    document.getElementById('liste-commandes').innerHTML = '<p style="color:var(--error);padding:20px;">Erreur : ' + e.message + '</p>';
+  }
+}
+</script>
+</body>
+</html>
