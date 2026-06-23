@@ -436,37 +436,63 @@ async function confirmerCommande() {
     // Vider le panier
     localStorage.removeItem('proxikau_panier');
 
-    // Envoyer emails pour chaque commande
+    // Envoyer email vendeur pour chaque boutique
+    const adresseCommande = {
+      rue: document.getElementById('c-adresse')?.value || '',
+      cp: document.getElementById('c-cp')?.value || '',
+      ville: document.getElementById('c-ville')?.value || '',
+      pays: document.getElementById('c-pays')?.value || 'France'
+    };
+
     for (let i = 0; i < commandesCreees.length; i++) {
       const commande = commandesCreees[i];
       const bid = boutique_ids[i];
       const groupe = groupes[bid];
       const b = boutiquesData[bid] || {};
-      try {
-        await fetch('/api/send-email', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            vendeur_email: b._email_vendeur || b.email_contact || '',
-            vendeur_nom: b.nom,
-            boutique_nom: groupe.nom,
-            commande_id: commande.id,
-            produits: groupe.items.map(i => ({ nom: i.nom, qty: i.qty, prix: i.prix })),
-            mode_livraison: livraisonsChoisies[bid],
-            adresse: (livraisonsChoisies[bid] === 'colis' || livraisonsChoisies[bid] === 'proximite') ? {
-              rue: document.getElementById('c-adresse')?.value,
-              cp: document.getElementById('c-cp')?.value,
-              ville: document.getElementById('c-ville')?.value,
-              pays: document.getElementById('c-pays')?.value
-            } : null,
-            acheteur_nom: prenom + ' ' + nom,
-            acheteur_email: email,
-            acheteur_tel: tel,
-            montant_total: groupe.items.reduce((s,i) => s + i.prix * i.qty, 0)
-          })
-        });
-      } catch(e) { console.log('Email non envoyé:', e); }
+      const vendeurEmail = b._email_vendeur || b.email_contact || '';
+      if (vendeurEmail) {
+        try {
+          await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              vendeur_email: vendeurEmail,
+              boutique_nom: groupe.nom,
+              commande_id: commande.id,
+              produits: groupe.items.map(it => ({ nom: it.nom, qty: it.qty, prix: it.prix })),
+              mode_livraison: livraisonsChoisies[bid],
+              adresse: ['colis','proximite'].includes(livraisonsChoisies[bid]) ? adresseCommande : null,
+              acheteur_nom: prenom + ' ' + nom,
+              acheteur_email: email,
+              acheteur_tel: tel,
+              montant_total: groupe.items.reduce((s,it) => s + it.prix * it.qty, 0)
+            })
+          });
+        } catch(e) { console.log('Email vendeur non envoyé:', e); }
+      }
     }
+
+    // Envoyer UN SEUL email récap à l'acheteur avec toutes les boutiques
+    try {
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'acheteur_recap',
+          acheteur_nom: prenom + ' ' + nom,
+          acheteur_email: email,
+          acheteur_tel: tel,
+          toutes_commandes: boutique_ids.map((bid, i) => ({
+            boutique_nom: groupes[bid].nom,
+            commande_id: commandesCreees[i].id,
+            produits: groupes[bid].items.map(it => ({ nom: it.nom, qty: it.qty, prix: it.prix })),
+            mode_livraison: livraisonsChoisies[bid],
+            adresse: ['colis','proximite'].includes(livraisonsChoisies[bid]) ? adresseCommande : null,
+            montant: groupes[bid].items.reduce((s,it) => s + it.prix * it.qty, 0)
+          }))
+        })
+      });
+    } catch(e) { console.log('Email acheteur non envoyé:', e); }
 
     // Afficher succès
     document.getElementById('checkout-page').style.display = 'none';
