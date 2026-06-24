@@ -1051,16 +1051,16 @@ function initPartager() {
   // Textes prêts
   const textes = [
     {
-      titre: 'Annonce d'ouverture',
-      texte: `🎉 Ma boutique est maintenant ouverte sur Proxikau !\n\nRetrouvez tous mes produits sur ${lienActuel}\n\n${boutique.description || ''}\n\n#proxikau #producteurlocal #circuitcourt`
+      titre: "Annonce ouverture",
+      texte: "🎉 Ma boutique est maintenant ouverte sur Proxikau !\n\nRetrouvez tous mes produits sur " + lienActuel + "\n\n" + (boutique.description || '') + "\n\n#proxikau #producteurlocal #circuitcourt"
     },
     {
-      titre: 'Post produit',
-      texte: `🌿 Nouveaux produits disponibles sur ma boutique Proxikau !\n\nCommandez directement sur ${lienActuel}\nLivraison${boutique.livraison_colis ? ' par colis' : ''}${boutique.livraison_proximite ? `, à domicile (~${boutique.rayon_proximite_km}km)` : ''}${boutique.livraison_enlevement ? ', ou à emporter' : ''}.\n\n#proxikau #local #artisan`
+      titre: "Post produit",
+      texte: "🌿 Nouveaux produits disponibles sur ma boutique Proxikau !\n\nCommandez directement sur " + lienActuel + "\n\n#proxikau #local #artisan"
     },
     {
-      titre: 'Story / Réel court',
-      texte: `🛒 Commandez mes produits en ligne !\n👉 ${lienActuel}\n\n#proxikau`
+      titre: "Story courte",
+      texte: "🛒 Commandez mes produits en ligne !\n👉 " + lienActuel + "\n\n#proxikau"
     }
   ];
 
