@@ -398,21 +398,26 @@ tr:last-child td{border-bottom:none;}
       <div class="page-title">Partager ma boutique</div>
       <div class="page-sub">Fais ta pub sur les réseaux sociaux et attire des clients !</div>
 
-      <div class="card">
-        <div class="card-title" style="margin-bottom:6px;">🔗 Ton lien boutique</div>
-        <p style="font-size:13px;color:var(--ink2);margin-bottom:14px;">Copie et partage ce lien partout — c'est l'adresse de ta vitrine.</p>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-          <div style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-size:14px;font-weight:600;color:var(--vert);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="lien-boutique">...</div>
-          <button class="btn btn-primary btn-sm" onclick="copierLien()">📋 Copier</button>
+      <!-- HERO PARTAGE -->
+      <div style="background:linear-gradient(135deg,#1B4332 0%,#2D6A4F 60%,#40916C 100%);border-radius:16px;padding:28px 24px;margin-bottom:16px;position:relative;overflow:hidden;">
+        <div style="position:absolute;right:-20px;top:-20px;font-size:120px;opacity:0.08;pointer-events:none;">📣</div>
+        <div style="position:relative;z-index:1;">
+          <div style="display:inline-block;background:rgba(255,255,255,.15);color:#FFD166;font-size:11px;font-weight:700;padding:4px 12px;border-radius:20px;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">💡 Astuce vendeur</div>
+          <h2 style="color:#fff;font-size:22px;font-weight:800;line-height:1.3;margin-bottom:8px;">Fais ta pub,<br>attire tes premiers clients !</h2>
+          <p style="color:rgba(255,255,255,.75);font-size:14px;line-height:1.6;margin-bottom:20px;">Les vendeurs qui partagent leur boutique sur les réseaux sociaux reçoivent <strong style="color:#FFD166;">5x plus de commandes</strong>. C'est gratuit, ça prend 30 secondes.</p>
+          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+            <div style="flex:1;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.25);border-radius:10px;padding:11px 14px;font-size:14px;font-weight:700;color:#fff;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="lien-boutique">...</div>
+            <button onclick="copierLien()" style="background:#FFD166;color:#1B4332;border:none;border-radius:10px;padding:11px 18px;font-family:var(--sans);font-size:14px;font-weight:800;cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s;" onmouseover="this.style.background='#fff'" onmouseout="this.style.background='#FFD166'">📋 Copier</button>
+          </div>
+          <div id="copie-ok" style="display:none;font-size:13px;color:#FFD166;margin-top:8px;font-weight:600;">✓ Lien copié ! Maintenant colle-le sur tes réseaux 🚀</div>
         </div>
-        <div id="copie-ok" style="display:none;font-size:13px;color:var(--vert);margin-top:8px;">✓ Lien copié !</div>
       </div>
 
+      <!-- RESEAUX -->
       <div class="card">
-        <div class="card-title" style="margin-bottom:16px;">📲 Partager sur les réseaux</div>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;" id="reseaux-grid">
-          <!-- Généré par JS -->
-        </div>
+        <div class="card-title" style="margin-bottom:6px;">📲 Partage en un clic</div>
+        <p style="font-size:13px;color:var(--ink2);margin-bottom:16px;">Clique sur un réseau pour partager directement ta boutique.</p>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;" id="reseaux-grid"></div>
       </div>
 
       <div class="card">
