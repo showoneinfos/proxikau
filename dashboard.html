@@ -398,33 +398,31 @@ tr:last-child td{border-bottom:none;}
     <!-- PARTAGER -->
     <div class="section" id="section-partager">
 
-      <!-- IMAGE PARTAGE -->
-      <div style="border-radius:16px;overflow:hidden;margin-bottom:16px;box-shadow:0 4px 20px rgba(0,0,0,.12);">
-        <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;max-width:420px;display:block;margin:0 auto;">
-      </div>
-
-      <!-- PARTAGE SUR LES RESEAUX -->
-      <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
-        <div style="font-size:13px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:14px;">PARTAGE SUR :</div>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:0;" id="reseaux-grid"></div>
-      </div>
-
-      <!-- LIEN BOUTIQUE -->
-      <div style="background:var(--vert-light);border:2px solid var(--vert);border-radius:16px;padding:20px;margin-bottom:16px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-          <div style="width:36px;height:36px;border-radius:50%;background:var(--vert);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔗</div>
-          <div style="font-size:15px;font-weight:800;color:var(--vert2);">TA BOUTIQUE :</div>
+      <!-- LIEN EN HAUT -->
+      <div style="background:var(--vert-light);border:2px solid var(--vert);border-radius:14px;padding:16px;margin-bottom:12px;">
+        <div style="font-size:13px;font-weight:800;color:var(--vert2);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
+          <span>🔗</span> TON LIEN BOUTIQUE
         </div>
-        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14px;font-weight:700;color:var(--vert);margin-bottom:12px;word-break:break-all;display:flex;align-items:center;gap:8px;">
-          <span style="font-size:16px;">🌐</span>
-          <span id="lien-boutique" style="flex:1;">...</span>
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;font-weight:700;color:var(--vert);margin-bottom:10px;word-break:break-all;">
+          <span id="lien-boutique">...</span>
         </div>
-        <button onclick="copierLien()" style="width:100%;padding:15px;background:var(--vert);color:#fff;border:none;border-radius:12px;font-family:var(--sans);font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:.3px;box-shadow:0 4px 14px rgba(45,106,79,.35);">
-          <span style="font-size:20px;">📋</span> COPIER MON LIEN
+        <button onclick="copierLien()" style="width:100%;padding:13px;background:var(--vert);color:#fff;border:none;border-radius:10px;font-family:var(--sans);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(45,106,79,.3);">
+          📋 COPIER MON LIEN
         </button>
-        <div id="copie-ok" style="display:none;margin-top:12px;padding:12px;background:var(--vert);border-radius:8px;font-size:14px;font-weight:700;color:#fff;text-align:center;">
-          ✅ Copié ! Colle ce lien sur tes réseaux maintenant 🚀
+        <div id="copie-ok" style="display:none;margin-top:10px;padding:10px;background:var(--vert);border-radius:8px;font-size:13px;font-weight:700;color:#fff;text-align:center;">
+          ✅ Copié ! Colle ce lien sur tes réseaux 🚀
         </div>
+      </div>
+
+      <!-- IMAGE CENTREE -->
+      <div style="text-align:center;margin-bottom:12px;">
+        <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;max-width:420px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:inline-block;">
+      </div>
+
+      <!-- RESEAUX EN BAS -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;">
+        <div style="font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:12px;">PARTAGE SUR :</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;" id="reseaux-grid"></div>
       </div>
 
       <div class="card">
