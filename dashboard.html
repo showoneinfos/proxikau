@@ -397,28 +397,56 @@ tr:last-child td{border-bottom:none;}
 
     <!-- PARTAGER -->
     <div class="section" id="section-partager">
-      <div class="page-title">📣 Fais ta pub !</div>
-      <div class="page-sub">Partage ta boutique et attire des clients dès aujourd'hui.</div>
 
-      <!-- LIEN -->
-      <div style="background:var(--white);border:2px solid var(--vert);border-radius:16px;padding:24px;margin-bottom:16px;text-align:center;">
-        <div style="font-size:48px;margin-bottom:12px;">🔗</div>
-        <div style="font-size:18px;font-weight:800;color:var(--ink);margin-bottom:6px;">Ton adresse de boutique</div>
-        <div style="font-size:13px;color:var(--ink2);margin-bottom:16px;">C'est ce lien que tu copies et partages partout</div>
-        <div style="background:var(--bg);border:2px solid var(--border);border-radius:10px;padding:14px;font-size:15px;font-weight:700;color:var(--vert);margin-bottom:14px;word-break:break-all;" id="lien-boutique">...</div>
-        <button onclick="copierLien()" style="width:100%;padding:16px;background:var(--vert);color:#fff;border:none;border-radius:12px;font-family:var(--sans);font-size:18px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;">
-          📋 COPIER MON LIEN
-        </button>
-        <div id="copie-ok" style="display:none;margin-top:12px;padding:12px;background:var(--vert-light);border-radius:8px;font-size:15px;font-weight:700;color:var(--vert);">
-          ✅ Copié ! Maintenant colle ce lien sur Facebook, WhatsApp ou Instagram 🚀
+      <!-- HERO PARTAGE -->
+      <div style="background:linear-gradient(160deg,#0D2B1F 0%,#1B4332 50%,#2D6A4F 100%);border-radius:20px;padding:28px 20px 24px;margin-bottom:16px;position:relative;overflow:hidden;text-align:center;">
+        <!-- Bulles déco -->
+        <div style="position:absolute;top:-30px;right:-30px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none;"></div>
+        <div style="position:absolute;bottom:-20px;left:-20px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none;"></div>
+        <!-- Icone megaphone -->
+        <div style="font-size:52px;margin-bottom:12px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.3));">📣</div>
+        <div style="color:#FFD166;font-size:11px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;">💡 Astuce vendeur</div>
+        <h2 style="color:#fff;font-size:26px;font-weight:900;line-height:1.2;margin-bottom:8px;letter-spacing:-0.5px;">PARTAGE TA BOUTIQUE<br>SUR LES RÉSEAUX !</h2>
+        <p style="color:rgba(255,255,255,.75);font-size:14px;line-height:1.6;max-width:320px;margin:0 auto 20px;">Plus tu partages ta boutique, plus tu as de chances de <strong style="color:#FFD166;">vendre</strong> tes produits.</p>
+        <!-- Stats -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:20px;">
+          <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:10px 6px;">
+            <div style="font-size:18px;margin-bottom:4px;">👁</div>
+            <div style="color:#FFD166;font-size:10px;font-weight:800;text-transform:uppercase;">Plus de visibilité</div>
+          </div>
+          <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:10px 6px;">
+            <div style="font-size:18px;margin-bottom:4px;">👥</div>
+            <div style="color:#FFD166;font-size:10px;font-weight:800;text-transform:uppercase;">Plus de clients</div>
+          </div>
+          <div style="background:rgba(255,255,255,.08);border-radius:10px;padding:10px 6px;">
+            <div style="font-size:18px;margin-bottom:4px;">🛒</div>
+            <div style="color:#FFD166;font-size:10px;font-weight:800;text-transform:uppercase;">Plus de ventes</div>
+          </div>
         </div>
       </div>
 
-      <!-- RESEAUX -->
+      <!-- PARTAGE SUR LES RESEAUX -->
       <div style="background:var(--white);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;">
-        <div style="font-size:16px;font-weight:800;color:var(--ink);margin-bottom:4px;">📲 Partage en 1 clic</div>
-        <div style="font-size:13px;color:var(--ink2);margin-bottom:16px;">Choisis ton réseau et ta boutique sera partagée automatiquement</div>
-        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;" id="reseaux-grid"></div>
+        <div style="font-size:13px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:14px;">PARTAGE SUR :</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:0;" id="reseaux-grid"></div>
+      </div>
+
+      <!-- LIEN BOUTIQUE -->
+      <div style="background:var(--vert-light);border:2px solid var(--vert);border-radius:16px;padding:20px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+          <div style="width:36px;height:36px;border-radius:50%;background:var(--vert);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">🔗</div>
+          <div style="font-size:15px;font-weight:800;color:var(--vert2);">TA BOUTIQUE :</div>
+        </div>
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-size:14px;font-weight:700;color:var(--vert);margin-bottom:12px;word-break:break-all;display:flex;align-items:center;gap:8px;">
+          <span style="font-size:16px;">🌐</span>
+          <span id="lien-boutique" style="flex:1;">...</span>
+        </div>
+        <button onclick="copierLien()" style="width:100%;padding:15px;background:var(--vert);color:#fff;border:none;border-radius:12px;font-family:var(--sans);font-size:16px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;letter-spacing:.3px;box-shadow:0 4px 14px rgba(45,106,79,.35);">
+          <span style="font-size:20px;">📋</span> COPIER MON LIEN
+        </button>
+        <div id="copie-ok" style="display:none;margin-top:12px;padding:12px;background:var(--vert);border-radius:8px;font-size:14px;font-weight:700;color:#fff;text-align:center;">
+          ✅ Copié ! Colle ce lien sur tes réseaux maintenant 🚀
+        </div>
       </div>
 
       <div class="card">
@@ -1043,12 +1071,11 @@ function initPartager() {
 
   document.getElementById('reseaux-grid').innerHTML = reseaux.map(r => `
     <button onclick="${r.url ? `window.open('${r.url}','_blank')` : `copierLien()`}"
-      style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:16px 8px;border-radius:12px;border:2px solid ${r.couleur}20;background:${r.couleur}10;cursor:pointer;font-family:var(--sans);font-size:13px;font-weight:700;color:var(--ink);transition:all .2s;text-align:center;"
-      onmouseover="this.style.background='${r.couleur}22';this.style.transform='scale(1.03)'"
-      onmouseout="this.style.background='${r.couleur}10';this.style.transform='scale(1)'">
-      <span style="font-size:32px;">${r.emoji}</span>
-      <div style="font-size:14px;font-weight:800;">${r.nom}</div>
-      ${r.action === 'copier' ? '<div style="font-size:11px;color:var(--ink3);">→ Copier le lien</div>' : ''}
+      style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:12px;border:none;background:transparent;cursor:pointer;font-family:var(--sans);transition:transform .15s;-webkit-tap-highlight-color:transparent;"
+      onmouseover="this.style.transform='scale(1.08)'"
+      onmouseout="this.style.transform='scale(1)'">
+      <div style="width:52px;height:52px;border-radius:50%;background:${r.couleur};display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 3px 10px ${r.couleur}55;">${r.emoji}</div>
+      <div style="font-size:11px;font-weight:700;color:var(--ink);">${r.nom}</div>
     </button>
   `).join('');
 
