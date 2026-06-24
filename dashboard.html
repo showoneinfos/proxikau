@@ -414,20 +414,15 @@ tr:last-child td{border-bottom:none;}
         </div>
       </div>
 
-      <!-- LAYOUT 2 COLONNES -->
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+      <!-- IMAGE PLEINE LARGEUR -->
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);margin-bottom:12px;">
+        <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;display:block;">
+      </div>
 
-        <!-- GAUCHE : Réseaux -->
-        <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:14px;">
-          <div style="font-size:11px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:10px;">PARTAGE SUR :</div>
-          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;" id="reseaux-grid"></div>
-        </div>
-
-        <!-- DROITE : Image rognée même hauteur -->
-        <div style="border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);aspect-ratio:3/4;max-height:380px;">
-          <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block;">
-        </div>
-
+      <!-- RESEAUX EN BAS -->
+      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;">
+        <div style="font-size:11px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:12px;">PARTAGE SUR :</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;" id="reseaux-grid"></div>
       </div>
 
       <div class="card">
