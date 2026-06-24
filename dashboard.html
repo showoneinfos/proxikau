@@ -243,6 +243,13 @@ tr:last-child td{border-bottom:none;}
         Booster ma boutique
       </button>
     </div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Partage</div>
+      <button class="sidebar-item" onclick="showSection('partager',this)">
+        <svg viewBox="0 0 24 24"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Partager ma boutique
+      </button>
+    </div>
   </aside>
 
   <main class="main">
@@ -383,6 +390,60 @@ tr:last-child td{border-bottom:none;}
         <div class="upload-progress" id="logo-progress"><div class="upload-progress-bar" id="logo-bar"></div></div>
 
         <button class="btn btn-primary" style="margin-top:20px;" onclick="sauvegarderBoutique()">Sauvegarder</button>
+      </div>
+    </div>
+
+    <!-- PARTAGER -->
+    <div class="section" id="section-partager">
+      <div class="page-title">Partager ma boutique</div>
+      <div class="page-sub">Fais ta pub sur les réseaux sociaux et attire des clients !</div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:6px;">🔗 Ton lien boutique</div>
+        <p style="font-size:13px;color:var(--ink2);margin-bottom:14px;">Copie et partage ce lien partout — c'est l'adresse de ta vitrine.</p>
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+          <div style="flex:1;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-size:14px;font-weight:600;color:var(--vert);min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="lien-boutique">...</div>
+          <button class="btn btn-primary btn-sm" onclick="copierLien()">📋 Copier</button>
+        </div>
+        <div id="copie-ok" style="display:none;font-size:13px;color:var(--vert);margin-top:8px;">✓ Lien copié !</div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:16px;">📲 Partager sur les réseaux</div>
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;" id="reseaux-grid">
+          <!-- Généré par JS -->
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px;">💡 Conseils pour faire ta pub</div>
+        <div style="display:flex;flex-direction:column;gap:12px;">
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="font-size:20px;flex-shrink:0;">📸</span>
+            <div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Poste des photos de tes produits</div><div style="font-size:13px;color:var(--ink2);">Les photos authentiques de tes légumes, ton atelier ou ta ferme attirent beaucoup plus que les photos de catalogue.</div></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="font-size:20px;flex-shrink:0;">📍</span>
+            <div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Géolocalise tes posts</div><div style="font-size:13px;color:var(--ink2);">Ajoute ta ville dans tes publications pour toucher les clients proches de chez toi.</div></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="font-size:20px;flex-shrink:0;">🏷️</span>
+            <div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Utilise des hashtags</div><div style="font-size:13px;color:var(--ink2);">#proxikau #producteurlocal #circuitcourt #corse #artisan — adapte à ta région et tes produits.</div></div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;">
+            <span style="font-size:20px;flex-shrink:0;">🔄</span>
+            <div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Poste régulièrement</div><div style="font-size:13px;color:var(--ink2);">Une publication par semaine minimum. Montre tes nouveaux produits, tes récoltes, les coulisses de ta production.</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TEXTES PRÊTS À COPIER -->
+      <div class="card">
+        <div class="card-title" style="margin-bottom:12px;">✏️ Textes prêts à publier</div>
+        <p style="font-size:13px;color:var(--ink2);margin-bottom:16px;">Copie et adapte ces textes pour tes posts.</p>
+        <div style="display:flex;flex-direction:column;gap:12px;" id="textes-container">
+          <!-- Généré par JS -->
+        </div>
       </div>
     </div>
 
@@ -568,6 +629,7 @@ function showSection(id, btn) {
   if (btn) btn.classList.add('active');
   if (window.innerWidth < 769) toggleSidebar();
   window.scrollTo(0,0);
+  if (id === 'partager') initPartager();
 }
 
 // ============================================
@@ -924,6 +986,109 @@ async function sauvegarderBoutique() {
 // ============================================
 // BOOST
 // ============================================
+function initPartager() {
+  if (!boutique) return;
+  const url = 'https://proxikau.com/' + boutique.slug;
+  const urlVercel = 'https://proxikau.vercel.app/' + boutique.slug;
+  const lienActuel = urlVercel; // Changer en proxikau.com quand domaine actif
+
+  document.getElementById('lien-boutique').textContent = lienActuel;
+
+  const reseaux = [
+    {
+      nom: 'Facebook',
+      couleur: '#1877F2',
+      emoji: '📘',
+      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lienActuel)}&quote=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur Proxikau !')}`
+    },
+    {
+      nom: 'Instagram',
+      couleur: '#E1306C',
+      emoji: '📷',
+      url: null, // Instagram ne supporte pas le partage direct de lien
+      action: 'copier'
+    },
+    {
+      nom: 'WhatsApp',
+      couleur: '#25D366',
+      emoji: '💬',
+      url: `https://wa.me/?text=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur Proxikau : ' + lienActuel)}`
+    },
+    {
+      nom: 'TikTok',
+      couleur: '#000',
+      emoji: '🎵',
+      url: null,
+      action: 'copier'
+    },
+    {
+      nom: 'X (Twitter)',
+      couleur: '#000',
+      emoji: '✖️',
+      url: `https://twitter.com/intent/tweet?text=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur @Proxikau 🌿')}&url=${encodeURIComponent(lienActuel)}`
+    },
+    {
+      nom: 'Email',
+      couleur: '#555',
+      emoji: '📧',
+      url: `mailto:?subject=${encodeURIComponent('Ma boutique sur Proxikau')}&body=${encodeURIComponent('Bonjour, découvrez ma boutique ' + boutique.nom + ' sur Proxikau : ' + lienActuel)}`
+    }
+  ];
+
+  document.getElementById('reseaux-grid').innerHTML = reseaux.map(r => `
+    <button onclick="${r.url ? `window.open('${r.url}','_blank')` : `copierLien()`}"
+      style="display:flex;align-items:center;gap:10px;padding:12px;border-radius:10px;border:1.5px solid var(--border);background:var(--white);cursor:pointer;font-family:var(--sans);font-size:14px;font-weight:600;color:var(--ink);transition:all .15s;text-align:left;"
+      onmouseover="this.style.borderColor='${r.couleur}';this.style.color='${r.couleur}'"
+      onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--ink)'">
+      <span style="font-size:22px;">${r.emoji}</span>
+      <div>
+        <div>${r.nom}</div>
+        ${r.action === 'copier' ? '<div style="font-size:11px;color:var(--ink3);">Copier le lien</div>' : ''}
+      </div>
+    </button>
+  `).join('');
+
+  // Textes prêts
+  const textes = [
+    {
+      titre: 'Annonce d'ouverture',
+      texte: `🎉 Ma boutique est maintenant ouverte sur Proxikau !\n\nRetrouvez tous mes produits sur ${lienActuel}\n\n${boutique.description || ''}\n\n#proxikau #producteurlocal #circuitcourt`
+    },
+    {
+      titre: 'Post produit',
+      texte: `🌿 Nouveaux produits disponibles sur ma boutique Proxikau !\n\nCommandez directement sur ${lienActuel}\nLivraison${boutique.livraison_colis ? ' par colis' : ''}${boutique.livraison_proximite ? `, à domicile (~${boutique.rayon_proximite_km}km)` : ''}${boutique.livraison_enlevement ? ', ou à emporter' : ''}.\n\n#proxikau #local #artisan`
+    },
+    {
+      titre: 'Story / Réel court',
+      texte: `🛒 Commandez mes produits en ligne !\n👉 ${lienActuel}\n\n#proxikau`
+    }
+  ];
+
+  document.getElementById('textes-container').innerHTML = textes.map((t, i) => `
+    <div style="background:var(--bg);border-radius:10px;padding:14px;">
+      <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">${t.titre}</div>
+      <div style="font-size:13px;color:var(--ink2);line-height:1.6;white-space:pre-line;margin-bottom:10px;">${t.texte}</div>
+      <button onclick="copierTexte(${i})" class="btn btn-secondary btn-sm">📋 Copier ce texte</button>
+    </div>
+  `).join('');
+
+  window._textes = textes;
+}
+
+function copierLien() {
+  const lien = document.getElementById('lien-boutique').textContent;
+  navigator.clipboard.writeText(lien).then(() => {
+    document.getElementById('copie-ok').style.display = 'block';
+    setTimeout(() => document.getElementById('copie-ok').style.display = 'none', 2000);
+  });
+}
+
+function copierTexte(i) {
+  navigator.clipboard.writeText(window._textes[i].texte).then(() => {
+    alert('✓ Texte copié !');
+  });
+}
+
 function selectBoost(type, el) {
   document.querySelectorAll('.boost-card').forEach(c => c.classList.remove('selected'));
   el.classList.add('selected');
