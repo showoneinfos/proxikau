@@ -1006,25 +1006,29 @@ function initPartager() {
 
   const reseaux = [
     {
+      id: 'facebook',
       nom: 'Facebook',
       couleur: '#1877F2',
       emoji: '📘',
       url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lienActuel)}&quote=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur Proxikau !')}`
     },
     {
+      id: 'instagram',
       nom: 'Instagram',
       couleur: '#E1306C',
       emoji: '📷',
-      url: null, // Instagram ne supporte pas le partage direct de lien
+      url: null,
       action: 'copier'
     },
     {
+      id: 'whatsapp',
       nom: 'WhatsApp',
       couleur: '#25D366',
       emoji: '💬',
       url: `https://wa.me/?text=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur Proxikau : ' + lienActuel)}`
     },
     {
+      id: 'tiktok',
       nom: 'TikTok',
       couleur: '#000',
       emoji: '🎵',
@@ -1032,12 +1036,14 @@ function initPartager() {
       action: 'copier'
     },
     {
+      id: 'twitter',
       nom: 'X (Twitter)',
       couleur: '#000',
       emoji: '✖️',
       url: `https://twitter.com/intent/tweet?text=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur @Proxikau 🌿')}&url=${encodeURIComponent(lienActuel)}`
     },
     {
+      id: 'email',
       nom: 'Email',
       couleur: '#555',
       emoji: '📧',
@@ -1046,7 +1052,7 @@ function initPartager() {
   ];
 
   document.getElementById('reseaux-grid').innerHTML = reseaux.map(r => `
-    <button onclick="${r.url ? `window.open('${r.url}','_blank')` : `copierLien()`}"
+    <button onclick="${r.url ? `window.open('${r.url}','_blank')` : `copierLien('${r.id}')`}"
       style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:12px;border:none;background:transparent;cursor:pointer;font-family:var(--sans);transition:transform .15s;-webkit-tap-highlight-color:transparent;"
       onmouseover="this.style.transform='scale(1.08)'"
       onmouseout="this.style.transform='scale(1)'">
@@ -1082,11 +1088,19 @@ function initPartager() {
   window._textes = textes;
 }
 
-function copierLien() {
+function copierLien(reseau) {
   const lien = document.getElementById('lien-boutique').textContent;
   navigator.clipboard.writeText(lien).then(() => {
-    document.getElementById('copie-ok').style.display = 'block';
-    setTimeout(() => document.getElementById('copie-ok').style.display = 'none', 2000);
+    const el = document.getElementById('copie-ok');
+    if (reseau === 'tiktok') {
+      el.innerHTML = '✅ Lien copié !<br><span style="font-size:13px;font-weight:400;">👉 Ouvre TikTok → Va dans ton profil → Modifie ta bio → Colle le lien</span>';
+    } else if (reseau === 'instagram') {
+      el.innerHTML = '✅ Lien copié !<br><span style="font-size:13px;font-weight:400;">👉 Ouvre Instagram → Va dans ton profil → Modifie ta bio → Colle le lien</span>';
+    } else {
+      el.innerHTML = '✅ Lien copié ! Colle-le sur tes réseaux maintenant 🚀';
+    }
+    el.style.display = 'block';
+    setTimeout(() => el.style.display = 'none', 5000);
   });
 }
 
