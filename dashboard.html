@@ -414,15 +414,20 @@ tr:last-child td{border-bottom:none;}
         </div>
       </div>
 
-      <!-- IMAGE CENTREE -->
-      <div style="text-align:center;margin-bottom:12px;">
-        <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;max-width:680px;border-radius:16px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:inline-block;">
-      </div>
+      <!-- LAYOUT 2 COLONNES -->
+      <div style="display:grid;grid-template-columns:1fr 1.4fr;gap:14px;margin-bottom:12px;align-items:start;">
 
-      <!-- RESEAUX EN BAS -->
-      <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;">
-        <div style="font-size:12px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:12px;">PARTAGE SUR :</div>
-        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;" id="reseaux-grid"></div>
+        <!-- GAUCHE : Réseaux -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;">
+          <div style="font-size:11px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:12px;">PARTAGE SUR :</div>
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;" id="reseaux-grid"></div>
+        </div>
+
+        <!-- DROITE : Image -->
+        <div style="border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,.12);">
+          <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;display:block;">
+        </div>
+
       </div>
 
       <div class="card">
