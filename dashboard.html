@@ -398,7 +398,12 @@ tr:last-child td{border-bottom:none;}
     <!-- PARTAGER -->
     <div class="section" id="section-partager">
 
-      <!-- LIEN EN HAUT -->
+      <!-- IMAGE EN HAUT -->
+      <div style="border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);margin-bottom:12px;">
+        <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;display:block;">
+      </div>
+
+      <!-- LIEN JUSTE SOUS L IMAGE -->
       <div style="background:var(--vert-light);border:2px solid var(--vert);border-radius:14px;padding:16px;margin-bottom:12px;">
         <div style="font-size:13px;font-weight:800;color:var(--vert2);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
           <span>🔗</span> TON LIEN BOUTIQUE
@@ -409,14 +414,9 @@ tr:last-child td{border-bottom:none;}
         <button onclick="copierLien()" style="width:100%;padding:13px;background:var(--vert);color:#fff;border:none;border-radius:10px;font-family:var(--sans);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(45,106,79,.3);">
           📋 COPIER MON LIEN
         </button>
-        <div id="copie-ok" style="display:none;margin-top:10px;padding:10px;background:var(--vert);border-radius:8px;font-size:13px;font-weight:700;color:#fff;text-align:center;">
-          ✅ Copié ! Colle ce lien sur tes réseaux 🚀
+        <div id="copie-ok" style="display:none;margin-top:10px;padding:12px;background:var(--vert);border-radius:8px;font-size:13px;font-weight:700;color:#fff;text-align:center;line-height:1.6;">
+          ✅ Lien copié !
         </div>
-      </div>
-
-      <!-- IMAGE PLEINE LARGEUR -->
-      <div style="border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);margin-bottom:12px;">
-        <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;display:block;">
       </div>
 
       <!-- RESEAUX EN BAS -->
