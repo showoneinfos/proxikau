@@ -19,8 +19,6 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);-webkit-tap-highlight-color:transparent;}
-
-/* NAV */
 nav{background:var(--vert2);height:var(--nav-h);display:flex;align-items:center;padding:0 16px;gap:12px;position:sticky;top:0;z-index:100;}
 .logo{font-size:20px;font-weight:700;color:#fff;text-decoration:none;letter-spacing:-0.5px;flex-shrink:0;}
 .logo span{color:#95D5B2;}
@@ -30,11 +28,7 @@ nav{background:var(--vert2);height:var(--nav-h);display:flex;align-items:center;
 .btn-deco{font-size:12px;color:#95D5B2;background:none;border:none;cursor:pointer;font-family:var(--sans);padding:4px;}
 .btn-menu{display:none;background:none;border:none;cursor:pointer;padding:4px;}
 .btn-menu svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;}
-
-/* LAYOUT */
 .layout{display:flex;min-height:calc(100vh - var(--nav-h));}
-
-/* SIDEBAR */
 .sidebar{width:var(--sidebar-w);background:var(--white);border-right:1px solid var(--border);padding:20px 0;flex-shrink:0;transition:transform .25s;}
 .sidebar-section{padding:0 12px;margin-bottom:8px;}
 .sidebar-label{font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;padding:8px 8px 4px;}
@@ -43,8 +37,6 @@ nav{background:var(--vert2);height:var(--nav-h);display:flex;align-items:center;
 .sidebar-item.active{background:var(--vert-light);color:var(--vert2);}
 .sidebar-item svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;flex-shrink:0;}
 .sidebar-badge{margin-left:auto;background:var(--terre);color:#fff;font-size:11px;font-weight:600;padding:2px 7px;border-radius:10px;}
-
-/* MOBILE NAV */
 @media(max-width:768px){
   .btn-menu{display:flex;}
   .btn-voir{display:none;}
@@ -54,16 +46,10 @@ nav{background:var(--vert2);height:var(--nav-h);display:flex;align-items:center;
   .sidebar-overlay{display:none;position:fixed;inset:0;top:var(--nav-h);background:rgba(0,0,0,.4);z-index:89;}
   .sidebar-overlay.open{display:block;}
 }
-
-/* MAIN */
 .main{flex:1;padding:24px 20px;max-width:100%;overflow-x:hidden;}
 @media(min-width:769px){.main{padding:32px;max-width:calc(100% - var(--sidebar-w));}}
-
-/* PAGE TITLE */
 .page-title{font-size:22px;font-weight:700;color:var(--ink);margin-bottom:4px;}
 .page-sub{font-size:14px;color:var(--ink2);margin-bottom:24px;}
-
-/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:24px;}
 @media(min-width:600px){.stats-grid{grid-template-columns:repeat(4,1fr);}}
 .stat-card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:16px;}
@@ -72,17 +58,11 @@ nav{background:var(--vert2);height:var(--nav-h);display:flex;align-items:center;
 .stat-sub{font-size:11px;color:var(--ink3);margin-top:3px;}
 .stat-card.vert .stat-value{color:var(--vert);}
 .stat-card.terre .stat-value{color:var(--terre);}
-
-/* SECTION */
 .section{display:none;}
 .section.active{display:block;}
-
-/* CARD */
 .card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:16px;}
 .card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;flex-wrap:wrap;}
 .card-title{font-size:15px;font-weight:700;color:var(--ink);}
-
-/* BTN */
 .btn{display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:8px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;border:none;text-decoration:none;white-space:nowrap;}
 .btn-primary{background:var(--vert);color:#fff;}
 .btn-primary:hover{background:var(--vert2);}
@@ -92,8 +72,6 @@ nav{background:var(--vert2);height:var(--nav-h);display:flex;align-items:center;
 .btn-sm{padding:6px 12px;font-size:13px;}
 .btn:disabled{opacity:.5;cursor:not-allowed;}
 .btn svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2;}
-
-/* FORM */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:500px){.form-grid{grid-template-columns:1fr;}}
 .field{margin-bottom:14px;}
@@ -103,8 +81,6 @@ nav{background:var(--vert2);height:var(--nav-h);display:flex;align-items:center;
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--vert);}
 .field textarea{resize:vertical;min-height:80px;}
 .field-hint{font-size:12px;color:var(--ink3);margin-top:4px;}
-
-/* PHOTO UPLOAD */
 .photo-upload-zone{border:2px dashed var(--border);border-radius:10px;padding:20px;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg);position:relative;}
 .photo-upload-zone:hover{border-color:var(--vert);background:var(--vert-light);}
 .photo-upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
@@ -117,15 +93,11 @@ nav{background:var(--vert2);height:var(--nav-h);display:flex;align-items:center;
 .photo-preview-item .remove-photo{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;background:rgba(0,0,0,.6);color:#fff;border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;}
 .upload-progress{height:4px;background:var(--border);border-radius:2px;margin-top:8px;overflow:hidden;display:none;}
 .upload-progress-bar{height:100%;background:var(--vert);border-radius:2px;transition:width .3s;}
-
-/* TABLE */
 .table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 table{width:100%;border-collapse:collapse;min-width:500px;}
 th{text-align:left;font-size:11px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;padding:10px 12px;border-bottom:2px solid var(--border);}
 td{padding:11px 12px;border-bottom:1px solid var(--border);font-size:14px;color:var(--ink);}
 tr:last-child td{border-bottom:none;}
-
-/* BADGE */
 .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:12px;font-weight:600;}
 .badge-dispo{background:var(--vert-light);color:var(--vert2);}
 .badge-indispo{background:#FFEBEE;color:var(--error);}
@@ -135,23 +107,15 @@ tr:last-child td{border-bottom:none;}
 .badge-preparee{background:#EDE7F6;color:#4527A0;}
 .badge-livree{background:var(--vert-light);color:var(--vert2);}
 .badge-annulee{background:#FFEBEE;color:var(--error);}
-
-/* PRODUIT ROW */
 .produit-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
 .produit-row:last-child{border-bottom:none;}
 .produit-thumb{width:52px;height:52px;border-radius:8px;background:var(--bg);border:1px solid var(--border);object-fit:cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;}
-.produit-thumb img{width:52px;height:52px;border-radius:8px;object-fit:cover;}
 .produit-info{flex:1;min-width:0;}
 .produit-nom{font-weight:600;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .produit-meta{font-size:12px;color:var(--ink3);margin-top:2px;}
 .produit-prix{font-weight:700;color:var(--vert);font-size:15px;white-space:nowrap;flex-shrink:0;}
 .produit-actions{display:flex;gap:6px;flex-shrink:0;}
-@media(max-width:500px){
-  .produit-prix{display:none;}
-  .produit-actions .btn-secondary{display:none;}
-}
-
-/* MODAL */
+@media(max-width:500px){.produit-prix{display:none;}.produit-actions .btn-secondary{display:none;}}
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center;padding:0;}
 .modal-overlay.open{display:flex;}
 @media(min-width:600px){.modal-overlay{align-items:center;padding:20px;}}
@@ -162,14 +126,10 @@ tr:last-child td{border-bottom:none;}
 .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
 .modal-title{font-size:18px;font-weight:700;}
 .modal-close{width:32px;height:32px;border-radius:50%;border:none;background:var(--bg);cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
-
-/* ALERT */
 .alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;}
 .alert.error{background:#FFEBEE;color:var(--error);}
 .alert.success{background:var(--vert-light);color:var(--vert2);}
 .alert.show{display:block;}
-
-/* TOGGLE */
 .toggle-wrap{display:flex;align-items:center;gap:10px;padding:4px 0;}
 .toggle{position:relative;width:44px;height:24px;flex-shrink:0;}
 .toggle input{opacity:0;width:0;height:0;}
@@ -177,8 +137,6 @@ tr:last-child td{border-bottom:none;}
 .toggle-slider::before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.3s;}
 .toggle input:checked + .toggle-slider{background:var(--vert);}
 .toggle input:checked + .toggle-slider::before{transform:translateX(20px);}
-
-/* BOOST */
 .boost-cards{display:grid;grid-template-columns:1fr;gap:12px;}
 @media(min-width:500px){.boost-cards{grid-template-columns:repeat(3,1fr);}}
 .boost-card{border:2px solid var(--border);border-radius:12px;padding:16px;text-align:center;cursor:pointer;transition:all .15s;}
@@ -188,13 +146,16 @@ tr:last-child td{border-bottom:none;}
 .boost-desc{font-size:12px;color:var(--ink2);margin-bottom:10px;}
 .boost-prix{font-size:20px;font-weight:700;color:var(--vert);}
 .boost-periode{font-size:11px;color:var(--ink3);}
-
-/* EMPTY */
+/* STRIPE */
+.stripe-block{margin-top:24px;padding:20px;background:#F0EEFF;border:1.5px solid #635BFF44;border-radius:12px;}
+.stripe-block-title{font-size:14px;font-weight:700;margin-bottom:4px;color:#3D3580;}
+.stripe-block-desc{font-size:13px;color:var(--ink2);margin-bottom:14px;line-height:1.5;}
+.btn-stripe{background:#635BFF;color:#fff;border:none;}
+.btn-stripe:hover{background:#4B44CC;}
 .empty{text-align:center;padding:40px 20px;color:var(--ink3);}
 .empty-icon{font-size:40px;margin-bottom:10px;}
 .empty h3{font-size:15px;font-weight:600;color:var(--ink2);margin-bottom:6px;}
 .empty p{font-size:13px;margin-bottom:16px;}
-
 .loading-spinner{text-align:center;padding:32px;color:var(--ink3);font-size:14px;}
 </style>
 </head>
@@ -261,26 +222,10 @@ tr:last-child td{border-bottom:none;}
       <div class="page-title">Bonjour <span id="prenom-user"></span> 👋</div>
       <div class="page-sub" id="boutique-nom-sub">Chargement...</div>
       <div class="stats-grid">
-        <div class="stat-card vert">
-          <div class="stat-label">Produits</div>
-          <div class="stat-value" id="stat-produits">0</div>
-          <div class="stat-sub">en vente</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Commandes</div>
-          <div class="stat-value" id="stat-commandes">0</div>
-          <div class="stat-sub">au total</div>
-        </div>
-        <div class="stat-card terre">
-          <div class="stat-label">Revenus</div>
-          <div class="stat-value" id="stat-revenus">0€</div>
-          <div class="stat-sub">après commission</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">Note</div>
-          <div class="stat-value" id="stat-note">—</div>
-          <div class="stat-sub" id="stat-nb-avis">aucun avis</div>
-        </div>
+        <div class="stat-card vert"><div class="stat-label">Produits</div><div class="stat-value" id="stat-produits">0</div><div class="stat-sub">en vente</div></div>
+        <div class="stat-card"><div class="stat-label">Commandes</div><div class="stat-value" id="stat-commandes">0</div><div class="stat-sub">au total</div></div>
+        <div class="stat-card terre"><div class="stat-label">Revenus</div><div class="stat-value" id="stat-revenus">0€</div><div class="stat-sub">après commission</div></div>
+        <div class="stat-card"><div class="stat-label">Note</div><div class="stat-value" id="stat-note">—</div><div class="stat-sub" id="stat-nb-avis">aucun avis</div></div>
       </div>
       <div class="card">
         <div class="card-head">
@@ -325,10 +270,7 @@ tr:last-child td{border-bottom:none;}
       <div class="card">
         <div class="alert" id="alert-boutique"></div>
         <div class="form-grid">
-          <div class="field">
-            <label>Nom <span>*</span></label>
-            <input type="text" id="edit-nom">
-          </div>
+          <div class="field"><label>Nom <span>*</span></label><input type="text" id="edit-nom"></div>
           <div class="field">
             <label>Catégorie <span>*</span></label>
             <select id="edit-categorie">
@@ -341,14 +283,11 @@ tr:last-child td{border-bottom:none;}
               <option value="huiles-condiments">🫒 Huiles & Condiments</option>
               <option value="savons-cosmetiques">🧴 Savons & Cosmétiques</option>
               <option value="bougies-deco">🕯️ Bougies & Déco</option>
-          <option value="oeufs-volaille">🥚 Œufs & Volaille</option>
+              <option value="oeufs-volaille">🥚 Œufs & Volaille</option>
             </select>
           </div>
         </div>
-        <div class="field">
-          <label>Description</label>
-          <textarea id="edit-description" rows="3"></textarea>
-        </div>
+        <div class="field"><label>Description</label><textarea id="edit-description" rows="3"></textarea></div>
         <div class="form-grid">
           <div class="field"><label>Ville</label><input type="text" id="edit-ville"></div>
           <div class="field"><label>Région</label><input type="text" id="edit-region"></div>
@@ -392,68 +331,48 @@ tr:last-child td{border-bottom:none;}
         <div class="upload-progress" id="logo-progress"><div class="upload-progress-bar" id="logo-bar"></div></div>
 
         <button class="btn btn-primary" style="margin-top:20px;" onclick="sauvegarderBoutique()">Sauvegarder</button>
+
+        <!-- STRIPE CONNECT -->
+        <div class="stripe-block">
+          <div class="stripe-block-title">💳 Paiements en ligne</div>
+          <div class="stripe-block-desc">Connecte ton compte bancaire pour recevoir les paiements de tes clients directement sur ton IBAN. Proxikau prend 5% de commission, tu reçois le reste automatiquement à J+30.</div>
+          <div id="stripe-status"></div>
+          <button class="btn btn-stripe" id="btn-stripe" onclick="connecterStripe()">
+            🔗 Connecter mon compte Stripe
+          </button>
+        </div>
+
       </div>
     </div>
 
     <!-- PARTAGER -->
     <div class="section" id="section-partager">
-
-      <!-- IMAGE EN HAUT -->
       <div style="border-radius:14px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.12);margin-bottom:12px;">
         <img src="/proxikauimmage.png" alt="Partage ta boutique" style="width:100%;display:block;">
       </div>
-
-      <!-- LIEN JUSTE SOUS L IMAGE -->
       <div style="background:var(--vert-light);border:2px solid var(--vert);border-radius:14px;padding:16px;margin-bottom:12px;">
-        <div style="font-size:13px;font-weight:800;color:var(--vert2);margin-bottom:10px;display:flex;align-items:center;gap:8px;">
-          <span>🔗</span> TON LIEN BOUTIQUE
-        </div>
-        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;font-weight:700;color:var(--vert);margin-bottom:10px;word-break:break-all;">
-          <span id="lien-boutique">...</span>
-        </div>
-        <button onclick="copierLien()" style="width:100%;padding:13px;background:var(--vert);color:#fff;border:none;border-radius:10px;font-family:var(--sans);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(45,106,79,.3);">
-          📋 COPIER MON LIEN
-        </button>
-        <div id="copie-ok" style="display:none;margin-top:10px;padding:12px;background:var(--vert);border-radius:8px;font-size:13px;font-weight:700;color:#fff;text-align:center;line-height:1.6;">
-          ✅ Lien copié !
-        </div>
+        <div style="font-size:13px;font-weight:800;color:var(--vert2);margin-bottom:10px;display:flex;align-items:center;gap:8px;"><span>🔗</span> TON LIEN BOUTIQUE</div>
+        <div style="background:var(--white);border:1.5px solid var(--border);border-radius:10px;padding:11px 14px;font-size:14px;font-weight:700;color:var(--vert);margin-bottom:10px;word-break:break-all;"><span id="lien-boutique">...</span></div>
+        <button onclick="copierLien()" style="width:100%;padding:13px;background:var(--vert);color:#fff;border:none;border-radius:10px;font-family:var(--sans);font-size:15px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 12px rgba(45,106,79,.3);">📋 COPIER MON LIEN</button>
+        <div id="copie-ok" style="display:none;margin-top:10px;padding:12px;background:var(--vert);border-radius:8px;font-size:13px;font-weight:700;color:#fff;text-align:center;line-height:1.6;">✅ Lien copié !</div>
       </div>
-
-      <!-- RESEAUX EN BAS -->
       <div style="background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px;">
         <div style="font-size:11px;font-weight:800;color:var(--ink3);text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:12px;">PARTAGE SUR :</div>
         <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;" id="reseaux-grid"></div>
       </div>
-
       <div class="card">
         <div class="card-title" style="margin-bottom:12px;">💡 Conseils pour faire ta pub</div>
         <div style="display:flex;flex-direction:column;gap:12px;">
-          <div style="display:flex;gap:10px;align-items:flex-start;">
-            <span style="font-size:20px;flex-shrink:0;">📸</span>
-            <div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Poste des photos de tes produits</div><div style="font-size:13px;color:var(--ink2);">Les photos authentiques de tes légumes, ton atelier ou ta ferme attirent beaucoup plus que les photos de catalogue.</div></div>
-          </div>
-          <div style="display:flex;gap:10px;align-items:flex-start;">
-            <span style="font-size:20px;flex-shrink:0;">📍</span>
-            <div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Géolocalise tes posts</div><div style="font-size:13px;color:var(--ink2);">Ajoute ta ville dans tes publications pour toucher les clients proches de chez toi.</div></div>
-          </div>
-          <div style="display:flex;gap:10px;align-items:flex-start;">
-            <span style="font-size:20px;flex-shrink:0;">🏷️</span>
-            <div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Utilise des hashtags</div><div style="font-size:13px;color:var(--ink2);">#proxikau #producteurlocal #circuitcourt #corse #artisan — adapte à ta région et tes produits.</div></div>
-          </div>
-          <div style="display:flex;gap:10px;align-items:flex-start;">
-            <span style="font-size:20px;flex-shrink:0;">🔄</span>
-            <div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Poste régulièrement</div><div style="font-size:13px;color:var(--ink2);">Une publication par semaine minimum. Montre tes nouveaux produits, tes récoltes, les coulisses de ta production.</div></div>
-          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:20px;flex-shrink:0;">📸</span><div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Poste des photos de tes produits</div><div style="font-size:13px;color:var(--ink2);">Les photos authentiques de tes légumes, ton atelier ou ta ferme attirent beaucoup plus que les photos de catalogue.</div></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:20px;flex-shrink:0;">📍</span><div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Géolocalise tes posts</div><div style="font-size:13px;color:var(--ink2);">Ajoute ta ville dans tes publications pour toucher les clients proches de chez toi.</div></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:20px;flex-shrink:0;">🏷️</span><div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Utilise des hashtags</div><div style="font-size:13px;color:var(--ink2);">#proxikau #producteurlocal #circuitcourt #corse #artisan</div></div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start;"><span style="font-size:20px;flex-shrink:0;">🔄</span><div><div style="font-size:14px;font-weight:600;margin-bottom:2px;">Poste régulièrement</div><div style="font-size:13px;color:var(--ink2);">Une publication par semaine minimum. Montre tes nouveaux produits, tes récoltes, les coulisses de ta production.</div></div></div>
         </div>
       </div>
-
-      <!-- TEXTES PRÊTS À COPIER -->
       <div class="card">
         <div class="card-title" style="margin-bottom:12px;">✏️ Textes prêts à publier</div>
         <p style="font-size:13px;color:var(--ink2);margin-bottom:16px;">Copie et adapte ces textes pour tes posts.</p>
-        <div style="display:flex;flex-direction:column;gap:12px;" id="textes-container">
-          <!-- Généré par JS -->
-        </div>
+        <div style="display:flex;flex-direction:column;gap:12px;" id="textes-container"></div>
       </div>
     </div>
 
@@ -462,27 +381,9 @@ tr:last-child td{border-bottom:none;}
       <div class="page-title">Booster ma boutique</div>
       <div class="page-sub">Apparais en tête dans ta région, France ou Europe.</div>
       <div class="boost-cards">
-        <div class="boost-card" onclick="selectBoost('region',this)">
-          <div class="boost-emoji">📍</div>
-          <div class="boost-name">Ma Région</div>
-          <div class="boost-desc">Priorité dans ta région</div>
-          <div class="boost-prix">10€</div>
-          <div class="boost-periode">/ semaine</div>
-        </div>
-        <div class="boost-card" onclick="selectBoost('france',this)">
-          <div class="boost-emoji">🇫🇷</div>
-          <div class="boost-name">France</div>
-          <div class="boost-desc">Priorité dans toute la France</div>
-          <div class="boost-prix">15€</div>
-          <div class="boost-periode">/ semaine</div>
-        </div>
-        <div class="boost-card" onclick="selectBoost('europe',this)">
-          <div class="boost-emoji">🌍</div>
-          <div class="boost-name">Europe</div>
-          <div class="boost-desc">Priorité dans toute l'Europe</div>
-          <div class="boost-prix">20€</div>
-          <div class="boost-periode">/ semaine</div>
-        </div>
+        <div class="boost-card" onclick="selectBoost('region',this)"><div class="boost-emoji">📍</div><div class="boost-name">Ma Région</div><div class="boost-desc">Priorité dans ta région</div><div class="boost-prix">10€</div><div class="boost-periode">/ semaine</div></div>
+        <div class="boost-card" onclick="selectBoost('france',this)"><div class="boost-emoji">🇫🇷</div><div class="boost-name">France</div><div class="boost-desc">Priorité dans toute la France</div><div class="boost-prix">15€</div><div class="boost-periode">/ semaine</div></div>
+        <div class="boost-card" onclick="selectBoost('europe',this)"><div class="boost-emoji">🌍</div><div class="boost-name">Europe</div><div class="boost-desc">Priorité dans toute l'Europe</div><div class="boost-prix">20€</div><div class="boost-periode">/ semaine</div></div>
       </div>
       <div class="card" style="margin-top:20px;display:none;" id="boost-recap">
         <div class="card-title" style="margin-bottom:14px;">Récapitulatif</div>
@@ -504,8 +405,6 @@ tr:last-child td{border-bottom:none;}
     </div>
     <div class="alert" id="alert-produit"></div>
     <input type="hidden" id="produit-id-edit">
-
-    <!-- PHOTOS -->
     <div class="field">
       <label>Photos du produit</label>
       <div class="photo-upload-zone" id="upload-zone" onclick="document.getElementById('photo-input').click()">
@@ -517,15 +416,8 @@ tr:last-child td{border-bottom:none;}
       <div class="upload-progress" id="upload-progress"><div class="upload-progress-bar" id="upload-bar"></div></div>
       <div class="photo-preview-grid" id="photo-previews"></div>
     </div>
-
-    <div class="field">
-      <label>Nom du produit <span>*</span></label>
-      <input type="text" id="p-nom" placeholder="Ex: Lonzu 300g">
-    </div>
-    <div class="field">
-      <label>Description</label>
-      <textarea id="p-description" placeholder="Origine, fabrication, conseils..."></textarea>
-    </div>
+    <div class="field"><label>Nom du produit <span>*</span></label><input type="text" id="p-nom" placeholder="Ex: Lonzu 300g"></div>
+    <div class="field"><label>Description</label><textarea id="p-description" placeholder="Origine, fabrication, conseils..."></textarea></div>
     <div class="form-grid">
       <div class="field">
         <label>Catégorie <span>*</span></label>
@@ -559,15 +451,8 @@ tr:last-child td{border-bottom:none;}
       </div>
     </div>
     <div class="form-grid">
-      <div class="field">
-        <label>Prix (€) <span>*</span></label>
-        <input type="number" id="p-prix" placeholder="12.50" min="0.01" step="0.01" inputmode="decimal">
-      </div>
-      <div class="field">
-        <label>Stock <span>*</span></label>
-        <input type="number" id="p-stock" placeholder="10" min="0" inputmode="numeric">
-        <div class="field-hint">0 = illimité</div>
-      </div>
+      <div class="field"><label>Prix (€) <span>*</span></label><input type="number" id="p-prix" placeholder="12.50" min="0.01" step="0.01" inputmode="decimal"></div>
+      <div class="field"><label>Stock <span>*</span></label><input type="number" id="p-stock" placeholder="10" min="0" inputmode="numeric"><div class="field-hint">0 = illimité</div></div>
     </div>
     <div class="field">
       <label>Poids</label>
@@ -596,19 +481,13 @@ tr:last-child td{border-bottom:none;}
 let boutique = null;
 let produits = [];
 let commandes = [];
-let photosEnAttente = []; // URLs déjà uploadées
+let photosEnAttente = [];
 let boostSelectionne = null;
 
-// ============================================
-// INIT
-// ============================================
 document.addEventListener('DOMContentLoaded', async () => {
   const user = await getUtilisateurConnecte();
   if (!user) { window.location.href = 'connexion.html'; return; }
-  try {
-    const profil = await getProfil(user.id);
-    if (profil) document.getElementById('prenom-user').textContent = profil.prenom || '';
-  } catch(e) {}
+  try { const profil = await getProfil(user.id); if (profil) document.getElementById('prenom-user').textContent = profil.prenom || ''; } catch(e) {}
   boutique = await getBoutiqueParUserId(user.id);
   if (!boutique) { window.location.href = 'inscription.html'; return; }
   document.getElementById('nav-slug').textContent = 'proxikau.com/' + boutique.slug;
@@ -619,19 +498,77 @@ document.addEventListener('DOMContentLoaded', async () => {
   await chargerProduits();
   await chargerCommandes();
   remplirFormBoutique();
+  verifierStripeRetour();
 });
 
-// ============================================
-// SIDEBAR MOBILE
-// ============================================
+// STRIPE
+function verifierStripeRetour() {
+  const p = new URLSearchParams(window.location.search);
+  if (p.get('stripe') === 'success') {
+    showSection('boutique', null);
+    setTimeout(() => {
+      document.getElementById('stripe-status').innerHTML = '<div style="padding:10px;background:var(--vert-light);border-radius:8px;font-size:13px;color:var(--vert2);margin-bottom:12px;">✅ Compte Stripe connecté ! Tu vas recevoir les paiements sur ton IBAN.</div>';
+      document.getElementById('btn-stripe').textContent = '✅ Compte connecté';
+      document.getElementById('btn-stripe').disabled = true;
+      document.getElementById('btn-stripe').style.background = '#2D6A4F';
+    }, 300);
+    window.history.replaceState({}, '', 'dashboard.html');
+  }
+  if (p.get('stripe') === 'refresh') {
+    showSection('boutique', null);
+    setTimeout(afficherStatutStripe, 300);
+    window.history.replaceState({}, '', 'dashboard.html');
+  }
+}
+
+function afficherStatutStripe() {
+  if (!boutique) return;
+  const statusEl = document.getElementById('stripe-status');
+  const btn = document.getElementById('btn-stripe');
+  if (boutique.stripe_verified) {
+    statusEl.innerHTML = '<div style="padding:10px;background:var(--vert-light);border-radius:8px;font-size:13px;color:var(--vert2);margin-bottom:12px;">✅ Compte Stripe vérifié — tu reçois les paiements directement !</div>';
+    btn.textContent = '✅ Compte connecté';
+    btn.style.background = '#2D6A4F';
+    btn.disabled = true;
+  } else if (boutique.stripe_account_id) {
+    statusEl.innerHTML = '<div style="padding:10px;background:#FFF3E0;border-radius:8px;font-size:13px;color:#F57C00;margin-bottom:12px;">⏳ Finalise ton inscription Stripe pour recevoir les paiements.</div>';
+  }
+}
+
+async function connecterStripe() {
+  const btn = document.getElementById('btn-stripe');
+  const statusEl = document.getElementById('stripe-status');
+  btn.disabled = true;
+  btn.textContent = 'Connexion en cours...';
+  try {
+    const user = await getUtilisateurConnecte();
+    let res, data;
+    if (boutique.stripe_account_id && !boutique.stripe_verified) {
+      res = await fetch('/api/stripe?action=onboarding-link', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ stripe_account_id: boutique.stripe_account_id })
+      });
+    } else {
+      res = await fetch('/api/stripe?action=onboarding', {
+        method: 'POST', headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({ boutique_id: boutique.id, boutique_nom: boutique.nom, email: user.email })
+      });
+    }
+    data = await res.json();
+    if (data.url) { window.location.href = data.url; return; }
+    throw new Error(data.error || 'Erreur inconnue');
+  } catch(e) {
+    statusEl.innerHTML = `<div style="padding:10px;background:#FFEBEE;border-radius:8px;font-size:13px;color:var(--error);margin-bottom:12px;">❌ Erreur : ${e.message}</div>`;
+    btn.disabled = false;
+    btn.textContent = '🔗 Connecter mon compte Stripe';
+  }
+}
+
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
   document.getElementById('sidebar-overlay').classList.toggle('open');
 }
 
-// ============================================
-// NAVIGATION
-// ============================================
 function showSection(id, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.sidebar-item').forEach(s => s.classList.remove('active'));
@@ -640,495 +577,214 @@ function showSection(id, btn) {
   if (window.innerWidth < 769) toggleSidebar();
   window.scrollTo(0,0);
   if (id === 'partager') initPartager();
+  if (id === 'boutique') afficherStatutStripe();
 }
 
-// ============================================
-// PHOTOS
-// ============================================
 async function handlePhotos(input) {
   const files = Array.from(input.files);
   if (!files.length) return;
   const prog = document.getElementById('upload-progress');
   const bar = document.getElementById('upload-bar');
-  prog.style.display = 'block';
-  bar.style.width = '0%';
+  prog.style.display = 'block'; bar.style.width = '0%';
   for (let i = 0; i < files.length; i++) {
     const file = files[i];
-    if (file.size > 5 * 1024 * 1024) { alert('Photo trop lourde (max 5MB) : ' + file.name); continue; }
-    try {
-      bar.style.width = ((i / files.length) * 80) + '%';
-      const url = await uploadPhoto(file, 'produits');
-      photosEnAttente.push(url);
-    } catch(e) { console.error('Upload error:', e); }
-    bar.style.width = (((i+1) / files.length) * 100) + '%';
+    if (file.size > 5*1024*1024) { alert('Photo trop lourde (max 5MB) : ' + file.name); continue; }
+    try { bar.style.width = ((i/files.length)*80)+'%'; const url = await uploadPhoto(file,'produits'); photosEnAttente.push(url); } catch(e) {}
+    bar.style.width = (((i+1)/files.length)*100)+'%';
   }
-  setTimeout(() => { prog.style.display = 'none'; }, 500);
-  afficherPreviews();
-  input.value = '';
+  setTimeout(() => { prog.style.display='none'; }, 500);
+  afficherPreviews(); input.value = '';
 }
 
 function afficherPreviews() {
-  const el = document.getElementById('photo-previews');
-  el.innerHTML = photosEnAttente.map((url, i) => `
-    <div class="photo-preview-item">
-      <img src="${url}" alt="photo">
-      <button class="remove-photo" onclick="removePhoto(${i})">✕</button>
-    </div>
-  `).join('');
+  document.getElementById('photo-previews').innerHTML = photosEnAttente.map((url,i) =>
+    `<div class="photo-preview-item"><img src="${url}"><button class="remove-photo" onclick="removePhoto(${i})">✕</button></div>`
+  ).join('');
 }
 
-function removePhoto(i) {
-  photosEnAttente.splice(i, 1);
-  afficherPreviews();
-}
+function removePhoto(i) { photosEnAttente.splice(i,1); afficherPreviews(); }
 
-// ============================================
-// PRODUITS
-// ============================================
 async function chargerProduits() {
   if (!boutique) return;
   produits = await getProduitsBoutiqueVendeur(boutique.id);
   afficherProduits();
-  document.getElementById('stat-produits').textContent = produits.filter(p => p.disponible).length;
-  document.getElementById('count-produits').textContent = produits.length + ' produit' + (produits.length > 1 ? 's' : '');
+  document.getElementById('stat-produits').textContent = produits.filter(p=>p.disponible).length;
+  document.getElementById('count-produits').textContent = produits.length + ' produit' + (produits.length>1?'s':'');
 }
 
 function getEmoji(cat) {
-  return {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️'}[cat] || '📦';
+  return {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'}[cat]||'📦';
 }
 
 function afficherProduits() {
   const el = document.getElementById('liste-produits');
-  if (!produits.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">📦</div><h3>Aucun produit</h3><p>Ajoute ton premier produit.</p><button class="btn btn-primary" onclick="ouvrirModalProduit()">+ Ajouter</button></div>';
-    return;
-  }
+  if (!produits.length) { el.innerHTML='<div class="empty"><div class="empty-icon">📦</div><h3>Aucun produit</h3><p>Ajoute ton premier produit.</p><button class="btn btn-primary" onclick="ouvrirModalProduit()">+ Ajouter</button></div>'; return; }
   el.innerHTML = produits.map(p => {
-    const photo = p.photos && p.photos.length ? `<img src="${p.photos[0]}" alt="${p.nom}" style="width:52px;height:52px;border-radius:8px;object-fit:cover;border:1px solid var(--border);">` : `<div class="produit-thumb">${getEmoji(p.categorie)}</div>`;
-    const stockLabel = p.stock_illimite ? '∞' : p.stock + ' en stock';
-    const stockClass = !p.stock_illimite && p.stock === 0 ? 'color:var(--error)' : !p.stock_illimite && p.stock < 5 ? 'color:var(--warning)' : '';
-    return `<div class="produit-row">
-      <div style="flex-shrink:0">${photo}</div>
-      <div class="produit-info">
-        <div class="produit-nom">${p.nom}</div>
-        <div class="produit-meta"><span style="${stockClass}">${stockLabel}</span> · <span class="badge ${p.disponible ? 'badge-dispo' : 'badge-indispo'}" style="font-size:11px;">${p.disponible ? 'En vente' : 'Masqué'}</span></div>
-      </div>
-      <div class="produit-prix">${parseFloat(p.prix).toFixed(2)}€</div>
-      <div class="produit-actions">
-        <button class="btn btn-secondary btn-sm" onclick="editerProduit('${p.id}')">✏️</button>
-        <button class="btn btn-danger btn-sm" onclick="supprimerProduitConfirm('${p.id}','${p.nom.replace(/'/g,"\\'")}')">✕</button>
-      </div>
-    </div>`;
+    const photo = p.photos&&p.photos.length ? `<img src="${p.photos[0]}" style="width:52px;height:52px;border-radius:8px;object-fit:cover;border:1px solid var(--border);">` : `<div class="produit-thumb">${getEmoji(p.categorie)}</div>`;
+    const stockLabel = p.stock_illimite ? '∞' : p.stock+' en stock';
+    const stockClass = !p.stock_illimite&&p.stock===0?'color:var(--error)':!p.stock_illimite&&p.stock<5?'color:var(--warning)':'';
+    return `<div class="produit-row"><div style="flex-shrink:0">${photo}</div><div class="produit-info"><div class="produit-nom">${p.nom}</div><div class="produit-meta"><span style="${stockClass}">${stockLabel}</span> · <span class="badge ${p.disponible?'badge-dispo':'badge-indispo'}" style="font-size:11px;">${p.disponible?'En vente':'Masqué'}</span></div></div><div class="produit-prix">${parseFloat(p.prix).toFixed(2)}€</div><div class="produit-actions"><button class="btn btn-secondary btn-sm" onclick="editerProduit('${p.id}')">✏️</button><button class="btn btn-danger btn-sm" onclick="supprimerProduitConfirm('${p.id}','${p.nom.replace(/'/g,"\\'")}')">✕</button></div></div>`;
   }).join('');
 }
 
 function ouvrirModalProduit() {
-  document.getElementById('modal-titre').textContent = 'Ajouter un produit';
-  document.getElementById('btn-save').textContent = 'Ajouter';
-  document.getElementById('produit-id-edit').value = '';
-  document.getElementById('p-nom').value = '';
-  document.getElementById('p-description').value = '';
-  document.getElementById('p-prix').value = '';
-  document.getElementById('p-stock').value = '';
-  document.getElementById('p-poids').value = '';
-  document.getElementById('p-disponible').checked = true;
-  document.getElementById('p-categorie').value = boutique.categorie || 'viande-charcuterie';
-  document.getElementById('alert-produit').className = 'alert';
-  photosEnAttente = [];
-  afficherPreviews();
+  document.getElementById('modal-titre').textContent='Ajouter un produit';
+  document.getElementById('btn-save').textContent='Ajouter';
+  document.getElementById('produit-id-edit').value='';
+  ['p-nom','p-description','p-prix','p-stock','p-poids'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('p-disponible').checked=true;
+  document.getElementById('p-categorie').value=boutique.categorie||'viande-charcuterie';
+  document.getElementById('alert-produit').className='alert';
+  photosEnAttente=[]; afficherPreviews();
   document.getElementById('modal-produit').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
 
-function fermerModal() {
-  document.getElementById('modal-produit').classList.remove('open');
-  document.body.style.overflow = '';
-}
+function fermerModal() { document.getElementById('modal-produit').classList.remove('open'); document.body.style.overflow=''; }
 
 function editerProduit(id) {
-  const p = produits.find(x => x.id === id);
-  if (!p) return;
-  document.getElementById('modal-titre').textContent = 'Modifier le produit';
-  document.getElementById('btn-save').textContent = 'Sauvegarder';
-  document.getElementById('produit-id-edit').value = p.id;
-  document.getElementById('p-nom').value = p.nom;
-  document.getElementById('p-description').value = p.description || '';
-  document.getElementById('p-categorie').value = p.categorie;
-  document.getElementById('p-unite').value = p.unite;
-  document.getElementById('p-prix').value = p.prix;
-  document.getElementById('p-stock').value = p.stock;
-  // Afficher poids intelligemment
-  if (p.poids_grammes) {
-    if (p.poids_grammes >= 1000) {
-      document.getElementById('p-poids').value = (p.poids_grammes / 1000).toFixed(1).replace('.0','');
-      document.getElementById('p-poids-unite').value = 'kg';
-    } else {
-      document.getElementById('p-poids').value = p.poids_grammes;
-      document.getElementById('p-poids-unite').value = 'g';
-    }
-  } else {
-    document.getElementById('p-poids').value = '';
-    document.getElementById('p-poids-unite').value = 'g';
-  }
-  document.getElementById('p-disponible').checked = p.disponible;
-  photosEnAttente = p.photos ? [...p.photos] : [];
-  afficherPreviews();
-  document.getElementById('alert-produit').className = 'alert';
+  const p = produits.find(x=>x.id===id); if(!p) return;
+  document.getElementById('modal-titre').textContent='Modifier le produit';
+  document.getElementById('btn-save').textContent='Sauvegarder';
+  document.getElementById('produit-id-edit').value=p.id;
+  document.getElementById('p-nom').value=p.nom;
+  document.getElementById('p-description').value=p.description||'';
+  document.getElementById('p-categorie').value=p.categorie;
+  document.getElementById('p-unite').value=p.unite;
+  document.getElementById('p-prix').value=p.prix;
+  document.getElementById('p-stock').value=p.stock;
+  if(p.poids_grammes){if(p.poids_grammes>=1000){document.getElementById('p-poids').value=(p.poids_grammes/1000).toFixed(1).replace('.0','');document.getElementById('p-poids-unite').value='kg';}else{document.getElementById('p-poids').value=p.poids_grammes;document.getElementById('p-poids-unite').value='g';}}else{document.getElementById('p-poids').value='';document.getElementById('p-poids-unite').value='g';}
+  document.getElementById('p-disponible').checked=p.disponible;
+  photosEnAttente=p.photos?[...p.photos]:[]; afficherPreviews();
+  document.getElementById('alert-produit').className='alert';
   document.getElementById('modal-produit').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
 
 async function sauvegarderProduit() {
-  const nom = document.getElementById('p-nom').value.trim();
-  const prix = parseFloat(document.getElementById('p-prix').value);
-  const stock = parseInt(document.getElementById('p-stock').value) || 0;
-  const alertEl = document.getElementById('alert-produit');
-  if (!nom || isNaN(prix) || prix <= 0) {
-    alertEl.textContent = 'Nom et prix obligatoires.';
-    alertEl.className = 'alert error show';
-    return;
-  }
-  const btn = document.getElementById('btn-save');
-  btn.disabled = true;
-  const data = {
-    boutique_id: boutique.id,
-    nom, prix, stock,
-    stock_illimite: stock === 0,
-    description: document.getElementById('p-description').value.trim(),
-    categorie: document.getElementById('p-categorie').value,
-    unite: document.getElementById('p-unite').value,
-    poids_grammes: (() => {
-      const val = parseFloat(document.getElementById('p-poids').value);
-      const unite = document.getElementById('p-poids-unite').value;
-      if (!val) return null;
-      if (unite === 'kg') return Math.round(val * 1000);
-      if (unite === 'l') return Math.round(val * 1000);
-      return Math.round(val);
-    })(),
-    disponible: document.getElementById('p-disponible').checked,
-    photos: photosEnAttente,
-  };
-  try {
-    const editId = document.getElementById('produit-id-edit').value;
-    if (editId) { await majProduit(editId, data); }
-    else { await creerProduit(data); }
-    fermerModal();
-    await chargerProduits();
-  } catch(e) {
-    alertEl.textContent = 'Erreur : ' + e.message;
-    alertEl.className = 'alert error show';
-  }
-  btn.disabled = false;
+  const nom=document.getElementById('p-nom').value.trim();
+  const prix=parseFloat(document.getElementById('p-prix').value);
+  const stock=parseInt(document.getElementById('p-stock').value)||0;
+  const alertEl=document.getElementById('alert-produit');
+  if(!nom||isNaN(prix)||prix<=0){alertEl.textContent='Nom et prix obligatoires.';alertEl.className='alert error show';return;}
+  const btn=document.getElementById('btn-save'); btn.disabled=true;
+  const data={boutique_id:boutique.id,nom,prix,stock,stock_illimite:stock===0,description:document.getElementById('p-description').value.trim(),categorie:document.getElementById('p-categorie').value,unite:document.getElementById('p-unite').value,poids_grammes:(()=>{const val=parseFloat(document.getElementById('p-poids').value);const unite=document.getElementById('p-poids-unite').value;if(!val)return null;if(unite==='kg')return Math.round(val*1000);if(unite==='l')return Math.round(val*1000);return Math.round(val);})(),disponible:document.getElementById('p-disponible').checked,photos:photosEnAttente};
+  try{const editId=document.getElementById('produit-id-edit').value;if(editId){await majProduit(editId,data);}else{await creerProduit(data);}fermerModal();await chargerProduits();}catch(e){alertEl.textContent='Erreur : '+e.message;alertEl.className='alert error show';}
+  btn.disabled=false;
 }
 
-async function supprimerProduitConfirm(id, nom) {
-  if (!confirm('Supprimer "' + nom + '" ?')) return;
-  try { await supprimerProduit(id); await chargerProduits(); }
-  catch(e) { alert('Erreur : ' + e.message); }
-}
+async function supprimerProduitConfirm(id,nom){if(!confirm('Supprimer "'+nom+'" ?'))return;try{await supprimerProduit(id);await chargerProduits();}catch(e){alert('Erreur : '+e.message);}}
 
-// ============================================
-// COMMANDES
-// ============================================
 async function chargerCommandes() {
-  if (!boutique) return;
-  try {
-    commandes = await getCommandesBoutique(boutique.id);
-    const enAttente = commandes.filter(c => ['en_attente','payee','preparee'].includes(c.statut)).length;
-    document.getElementById('stat-commandes').textContent = commandes.length;
-    const revenus = commandes.filter(c => !['annulee','remboursee'].includes(c.statut)).reduce((s,c) => s + parseFloat(c.montant_vendeur || 0), 0);
-    document.getElementById('stat-revenus').textContent = revenus.toFixed(2) + '€';
-    if (enAttente > 0) { const b = document.getElementById('badge-commandes'); b.textContent = enAttente; b.style.display = 'inline'; }
-    afficherCommandes();
-    afficherDernieres();
-  } catch(e) { afficherDernieres(); }
+  if(!boutique)return;
+  try{
+    commandes=await getCommandesBoutique(boutique.id);
+    const enAttente=commandes.filter(c=>['en_attente','payee','preparee'].includes(c.statut)).length;
+    document.getElementById('stat-commandes').textContent=commandes.length;
+    const revenus=commandes.filter(c=>!['annulee','remboursee'].includes(c.statut)).reduce((s,c)=>s+parseFloat(c.montant_vendeur||0),0);
+    document.getElementById('stat-revenus').textContent=revenus.toFixed(2)+'€';
+    if(enAttente>0){const b=document.getElementById('badge-commandes');b.textContent=enAttente;b.style.display='inline';}
+    afficherCommandes(); afficherDernieres();
+  }catch(e){afficherDernieres();}
 }
 
-function afficherCommandes() {
-  const el = document.getElementById('liste-commandes');
-  if (!commandes.length) { el.innerHTML = '<div class="empty"><div class="empty-icon">🛍️</div><h3>Aucune commande</h3><p>Tes commandes apparaîtront ici.</p></div>'; return; }
-  const livLabel = {colis:'📦',enlevement:'🏠',proximite:'🚗'};
-  const statutLabel = {'en_attente':'En attente','payee':'Payée','preparee':'En préparation','expediee':'Expédiée','disponible':'Disponible','livree':'Livrée','terminee':'Terminée','annulee':'Annulée','remboursee':'Remboursée'};
-
-  function getBoutonAction(c) {
-    if (c.statut === 'en_attente' || c.statut === 'payee') return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','preparee')">✅ Préparer</button>`;
-    if (c.statut === 'preparee') {
-      if (c.mode_livraison === 'colis') return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','expediee')">📦 Expédier</button>`;
-      if (c.mode_livraison === 'enlevement') return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','disponible')">🏠 Prêt</button>`;
-      return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','expediee')">🚗 En route</button>`;
-    }
-    if (c.statut === 'expediee' || c.statut === 'disponible') return `<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','livree')">✅ Livré</button>`;
-    return '';
+function afficherCommandes(){
+  const el=document.getElementById('liste-commandes');
+  if(!commandes.length){el.innerHTML='<div class="empty"><div class="empty-icon">🛍️</div><h3>Aucune commande</h3><p>Tes commandes apparaîtront ici.</p></div>';return;}
+  const livLabel={colis:'📦',enlevement:'🏠',proximite:'🚗'};
+  const statutLabel={'en_attente':'En attente','payee':'Payée','preparee':'En préparation','expediee':'Expédiée','disponible':'Disponible','livree':'Livrée','terminee':'Terminée','annulee':'Annulée','remboursee':'Remboursée'};
+  function getBoutonAction(c){
+    if(c.statut==='en_attente'||c.statut==='payee')return`<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','preparee')">✅ Préparer</button>`;
+    if(c.statut==='preparee'){if(c.mode_livraison==='colis')return`<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','expediee')">📦 Expédier</button>`;if(c.mode_livraison==='enlevement')return`<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','disponible')">🏠 Prêt</button>`;return`<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','expediee')">🚗 En route</button>`;}
+    if(c.statut==='expediee'||c.statut==='disponible')return`<button class="btn btn-secondary btn-sm" onclick="majStatut('${c.id}','livree')">✅ Livré</button>`;
+    return'';
   }
-
-  el.innerHTML = `<table><thead><tr><th>Date</th><th>Client</th><th>Montant</th><th>Livraison</th><th>Statut</th><th></th></tr></thead><tbody>
-  ${commandes.map(c => `<tr>
-    <td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</td>
-    <td>${c.utilisateurs?.prenom || '—'} ${c.utilisateurs?.nom || ''}</td>
-    <td><strong>${parseFloat(c.montant_total).toFixed(2)}€</strong></td>
-    <td>${livLabel[c.mode_livraison] || ''} ${c.mode_livraison}</td>
-    <td><span class="badge badge-${c.statut}">${statutLabel[c.statut] || c.statut}</span></td>
-    <td>${getBoutonAction(c)}</td>
-  </tr>`).join('')}</tbody></table>`;
+  el.innerHTML=`<table><thead><tr><th>Date</th><th>Client</th><th>Montant</th><th>Livraison</th><th>Statut</th><th></th></tr></thead><tbody>${commandes.map(c=>`<tr><td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</td><td>${c.utilisateurs?.prenom||'—'} ${c.utilisateurs?.nom||''}</td><td><strong>${parseFloat(c.montant_total).toFixed(2)}€</strong></td><td>${livLabel[c.mode_livraison]||''} ${c.mode_livraison}</td><td><span class="badge badge-${c.statut}">${statutLabel[c.statut]||c.statut}</span></td><td>${getBoutonAction(c)}</td></tr>`).join('')}</tbody></table>`;
 }
 
-function afficherDernieres() {
-  const el = document.getElementById('dernieres-commandes');
-  if (!commandes.length) { el.innerHTML = '<div class="empty" style="padding:20px"><div class="empty-icon">🛍️</div><p>Aucune commande pour l\'instant.</p></div>'; return; }
-  const dernieres = commandes.slice(0,5);
-  el.innerHTML = `<table><thead><tr><th>Date</th><th>Client</th><th>Montant</th><th>Statut</th></tr></thead><tbody>
-  ${dernieres.map(c => `<tr><td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</td><td>${c.utilisateurs?.prenom || '—'}</td><td>${parseFloat(c.montant_total).toFixed(2)}€</td><td><span class="badge badge-${c.statut}">${c.statut}</span></td></tr>`).join('')}</tbody></table>`;
+function afficherDernieres(){
+  const el=document.getElementById('dernieres-commandes');
+  if(!commandes.length){el.innerHTML='<div class="empty" style="padding:20px"><div class="empty-icon">🛍️</div><p>Aucune commande pour l\'instant.</p></div>';return;}
+  el.innerHTML=`<table><thead><tr><th>Date</th><th>Client</th><th>Montant</th><th>Statut</th></tr></thead><tbody>${commandes.slice(0,5).map(c=>`<tr><td>${new Date(c.created_at).toLocaleDateString('fr-FR')}</td><td>${c.utilisateurs?.prenom||'—'}</td><td>${parseFloat(c.montant_total).toFixed(2)}€</td><td><span class="badge badge-${c.statut}">${c.statut}</span></td></tr>`).join('')}</tbody></table>`;
 }
 
-async function majStatut(id, statut) {
-  try { const { error } = await db.from('commandes').update({ statut }).eq('id', id); if (error) throw error; await chargerCommandes(); }
-  catch(e) { alert('Erreur : ' + e.message); }
+async function majStatut(id,statut){try{const{error}=await db.from('commandes').update({statut}).eq('id',id);if(error)throw error;await chargerCommandes();}catch(e){alert('Erreur : '+e.message);}}
+
+function remplirFormBoutique(){
+  if(!boutique)return;
+  ['nom','description','ville','region','telephone'].forEach(k=>{const el=document.getElementById('edit-'+k);if(el)el.value=boutique[k]||'';});
+  document.getElementById('edit-categorie').value=boutique.categorie||'';
+  document.getElementById('edit-email-contact').value=boutique.email_contact||'';
+  document.getElementById('edit-colis').checked=boutique.livraison_colis||false;
+  document.getElementById('edit-enlevement').checked=boutique.livraison_enlevement||false;
+  document.getElementById('edit-proximite').checked=boutique.livraison_proximite||false;
+  document.getElementById('edit-rayon').value=boutique.rayon_proximite_km||30;
+  if(boutique.photo_banniere){document.getElementById('banniere-img').src=boutique.photo_banniere;document.getElementById('banniere-preview').style.display='block';document.getElementById('banniere-zone').style.display='none';}
+  if(boutique.photo_logo){document.getElementById('logo-img').src=boutique.photo_logo;document.getElementById('logo-preview').style.display='flex';document.getElementById('logo-zone').style.display='none';}
 }
 
-// ============================================
-// BOUTIQUE
-// ============================================
-function remplirFormBoutique() {
-  if (!boutique) return;
-  ['nom','description','ville','region','telephone'].forEach(k => { const el = document.getElementById('edit-'+k); if(el) el.value = boutique[k] || ''; });
-  document.getElementById('edit-categorie').value = boutique.categorie || '';
-  document.getElementById('edit-email-contact').value = boutique.email_contact || '';
-  document.getElementById('edit-colis').checked = boutique.livraison_colis || false;
-  document.getElementById('edit-enlevement').checked = boutique.livraison_enlevement || false;
-  document.getElementById('edit-proximite').checked = boutique.livraison_proximite || false;
-  document.getElementById('edit-rayon').value = boutique.rayon_proximite_km || 30;
-  // Afficher bannière existante
-  if (boutique.photo_banniere) {
-    document.getElementById('banniere-img').src = boutique.photo_banniere;
-    document.getElementById('banniere-preview').style.display = 'block';
-    document.getElementById('banniere-zone').style.display = 'none';
-  }
-  // Afficher logo existant
-  if (boutique.photo_logo) {
-    document.getElementById('logo-img').src = boutique.photo_logo;
-    document.getElementById('logo-preview').style.display = 'flex';
-    document.getElementById('logo-zone').style.display = 'none';
-  }
+async function uploadBanniere(input){const file=input.files[0];if(!file)return;if(file.size>5*1024*1024){alert('Photo trop lourde (max 5MB)');return;}const prog=document.getElementById('banniere-progress');const bar=document.getElementById('banniere-bar');prog.style.display='block';bar.style.width='50%';try{const url=await uploadPhoto(file,'bannieres');bar.style.width='100%';await majBoutique(boutique.id,{photo_banniere:url});boutique.photo_banniere=url;document.getElementById('banniere-img').src=url;document.getElementById('banniere-preview').style.display='block';document.getElementById('banniere-zone').style.display='none';setTimeout(()=>prog.style.display='none',500);}catch(e){alert('Erreur upload : '+e.message);prog.style.display='none';}}
+
+async function supprimerBanniere(){if(!confirm('Supprimer la bannière ?'))return;await majBoutique(boutique.id,{photo_banniere:null});boutique.photo_banniere=null;document.getElementById('banniere-preview').style.display='none';document.getElementById('banniere-zone').style.display='block';}
+
+async function uploadLogo(input){const file=input.files[0];if(!file)return;if(file.size>2*1024*1024){alert('Logo trop lourd (max 2MB)');return;}const prog=document.getElementById('logo-progress');const bar=document.getElementById('logo-bar');prog.style.display='block';bar.style.width='50%';try{const url=await uploadPhoto(file,'logos');bar.style.width='100%';await majBoutique(boutique.id,{photo_logo:url});boutique.photo_logo=url;document.getElementById('logo-img').src=url;document.getElementById('logo-preview').style.display='flex';document.getElementById('logo-zone').style.display='none';setTimeout(()=>prog.style.display='none',500);}catch(e){alert('Erreur upload : '+e.message);prog.style.display='none';}}
+
+async function supprimerLogo(){if(!confirm('Supprimer le logo ?'))return;await majBoutique(boutique.id,{photo_logo:null});boutique.photo_logo=null;document.getElementById('logo-preview').style.display='none';document.getElementById('logo-zone').style.display='block';}
+
+async function sauvegarderBoutique(){
+  const alertEl=document.getElementById('alert-boutique');
+  try{
+    await majBoutique(boutique.id,{nom:document.getElementById('edit-nom').value.trim(),categorie:document.getElementById('edit-categorie').value,description:document.getElementById('edit-description').value.trim(),ville:document.getElementById('edit-ville').value.trim(),region:document.getElementById('edit-region').value.trim(),telephone:document.getElementById('edit-telephone').value.trim(),email_contact:document.getElementById('edit-email-contact').value.trim(),livraison_colis:document.getElementById('edit-colis').checked,livraison_enlevement:document.getElementById('edit-enlevement').checked,livraison_proximite:document.getElementById('edit-proximite').checked,rayon_proximite_km:parseInt(document.getElementById('edit-rayon').value)||30});
+    alertEl.textContent='✓ Boutique mise à jour !';alertEl.className='alert success show';
+    boutique=await getBoutiqueParUserId((await getUtilisateurConnecte()).id);
+    setTimeout(()=>alertEl.className='alert',3000);
+  }catch(e){alertEl.textContent='Erreur : '+e.message;alertEl.className='alert error show';}
 }
 
-async function uploadBanniere(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 5 * 1024 * 1024) { alert('Photo trop lourde (max 5MB)'); return; }
-  const prog = document.getElementById('banniere-progress');
-  const bar = document.getElementById('banniere-bar');
-  prog.style.display = 'block';
-  bar.style.width = '50%';
-  try {
-    const url = await uploadPhoto(file, 'bannieres');
-    bar.style.width = '100%';
-    await majBoutique(boutique.id, { photo_banniere: url });
-    boutique.photo_banniere = url;
-    document.getElementById('banniere-img').src = url;
-    document.getElementById('banniere-preview').style.display = 'block';
-    document.getElementById('banniere-zone').style.display = 'none';
-    setTimeout(() => prog.style.display = 'none', 500);
-  } catch(e) { alert('Erreur upload : ' + e.message); prog.style.display = 'none'; }
+function selectBoost(type,el){
+  document.querySelectorAll('.boost-card').forEach(c=>c.classList.remove('selected'));el.classList.add('selected');boostSelectionne=type;
+  const prix={region:10,france:15,europe:20}[type];const label={region:'Ma Région',france:'France',europe:'Europe'}[type];
+  const recap=document.getElementById('boost-recap');recap.style.display='block';
+  document.getElementById('boost-recap-content').innerHTML=`<div><strong>Type :</strong> ${label}</div><div><strong>Durée :</strong> 1 semaine</div><div><strong>Prix :</strong> ${prix}€</div>`;
 }
 
-async function supprimerBanniere() {
-  if (!confirm('Supprimer la bannière ?')) return;
-  await majBoutique(boutique.id, { photo_banniere: null });
-  boutique.photo_banniere = null;
-  document.getElementById('banniere-preview').style.display = 'none';
-  document.getElementById('banniere-zone').style.display = 'block';
-}
+async function acheterBoost(){alert('Paiement Stripe à venir prochainement.');}
 
-async function uploadLogo(input) {
-  const file = input.files[0];
-  if (!file) return;
-  if (file.size > 2 * 1024 * 1024) { alert('Logo trop lourd (max 2MB)'); return; }
-  const prog = document.getElementById('logo-progress');
-  const bar = document.getElementById('logo-bar');
-  prog.style.display = 'block';
-  bar.style.width = '50%';
-  try {
-    const url = await uploadPhoto(file, 'logos');
-    bar.style.width = '100%';
-    await majBoutique(boutique.id, { photo_logo: url });
-    boutique.photo_logo = url;
-    document.getElementById('logo-img').src = url;
-    document.getElementById('logo-preview').style.display = 'flex';
-    document.getElementById('logo-zone').style.display = 'none';
-    setTimeout(() => prog.style.display = 'none', 500);
-  } catch(e) { alert('Erreur upload : ' + e.message); prog.style.display = 'none'; }
-}
-
-async function supprimerLogo() {
-  if (!confirm('Supprimer le logo ?')) return;
-  await majBoutique(boutique.id, { photo_logo: null });
-  boutique.photo_logo = null;
-  document.getElementById('logo-preview').style.display = 'none';
-  document.getElementById('logo-zone').style.display = 'block';
-}
-
-async function sauvegarderBoutique() {
-  const alertEl = document.getElementById('alert-boutique');
-  try {
-    await majBoutique(boutique.id, {
-      nom: document.getElementById('edit-nom').value.trim(),
-      categorie: document.getElementById('edit-categorie').value,
-      description: document.getElementById('edit-description').value.trim(),
-      ville: document.getElementById('edit-ville').value.trim(),
-      region: document.getElementById('edit-region').value.trim(),
-      telephone: document.getElementById('edit-telephone').value.trim(),
-      email_contact: document.getElementById('edit-email-contact').value.trim(),
-      livraison_colis: document.getElementById('edit-colis').checked,
-      livraison_enlevement: document.getElementById('edit-enlevement').checked,
-      livraison_proximite: document.getElementById('edit-proximite').checked,
-      rayon_proximite_km: parseInt(document.getElementById('edit-rayon').value) || 30,
-    });
-    alertEl.textContent = '✓ Boutique mise à jour !';
-    alertEl.className = 'alert success show';
-    boutique = await getBoutiqueParUserId((await getUtilisateurConnecte()).id);
-    setTimeout(() => alertEl.className = 'alert', 3000);
-  } catch(e) {
-    alertEl.textContent = 'Erreur : ' + e.message;
-    alertEl.className = 'alert error show';
-  }
-}
-
-// ============================================
-// BOOST
-// ============================================
-function initPartager() {
-  if (!boutique) return;
-  const url = 'https://proxikau.com/' + boutique.slug;
-  const urlVercel = 'https://proxikau.vercel.app/' + boutique.slug;
-  const lienActuel = urlVercel; // Changer en proxikau.com quand domaine actif
-
-  document.getElementById('lien-boutique').textContent = lienActuel;
-
-  const reseaux = [
-    {
-      id: 'facebook',
-      nom: 'Facebook',
-      couleur: '#1877F2',
-      emoji: '📘',
-      url: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lienActuel)}&quote=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur Proxikau !')}`
-    },
-    {
-      id: 'instagram',
-      nom: 'Instagram',
-      couleur: '#E1306C',
-      emoji: '📷',
-      url: null,
-      action: 'copier'
-    },
-    {
-      id: 'whatsapp',
-      nom: 'WhatsApp',
-      couleur: '#25D366',
-      emoji: '💬',
-      url: `https://wa.me/?text=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur Proxikau : ' + lienActuel)}`
-    },
-    {
-      id: 'tiktok',
-      nom: 'TikTok',
-      couleur: '#000',
-      emoji: '🎵',
-      url: null,
-      action: 'copier'
-    },
-    {
-      id: 'twitter',
-      nom: 'X (Twitter)',
-      couleur: '#000',
-      emoji: '✖️',
-      url: `https://twitter.com/intent/tweet?text=${encodeURIComponent('Découvrez ma boutique ' + boutique.nom + ' sur @Proxikau 🌿')}&url=${encodeURIComponent(lienActuel)}`
-    },
-    {
-      id: 'email',
-      nom: 'Email',
-      couleur: '#555',
-      emoji: '📧',
-      url: `mailto:?subject=${encodeURIComponent('Ma boutique sur Proxikau')}&body=${encodeURIComponent('Bonjour, découvrez ma boutique ' + boutique.nom + ' sur Proxikau : ' + lienActuel)}`
-    }
+function initPartager(){
+  if(!boutique)return;
+  const lienActuel='https://proxikau.vercel.app/'+boutique.slug;
+  document.getElementById('lien-boutique').textContent=lienActuel;
+  const reseaux=[
+    {id:'facebook',nom:'Facebook',couleur:'#1877F2',emoji:'📘',url:`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(lienActuel)}`},
+    {id:'instagram',nom:'Instagram',couleur:'#E1306C',emoji:'📷',url:null},
+    {id:'whatsapp',nom:'WhatsApp',couleur:'#25D366',emoji:'💬',url:`https://wa.me/?text=${encodeURIComponent('Découvrez ma boutique '+boutique.nom+' sur Proxikau : '+lienActuel)}`},
+    {id:'tiktok',nom:'TikTok',couleur:'#000',emoji:'🎵',url:null},
+    {id:'email',nom:'Email',couleur:'#555',emoji:'📧',url:`mailto:?subject=${encodeURIComponent('Ma boutique sur Proxikau')}&body=${encodeURIComponent('Découvrez ma boutique '+boutique.nom+' : '+lienActuel)}`}
   ];
-
-  document.getElementById('reseaux-grid').innerHTML = reseaux.map(r => `
-    <button onclick="${r.url ? `window.open('${r.url}','_blank')` : `copierLien('${r.id}')`}"
-      style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:12px;border:none;background:transparent;cursor:pointer;font-family:var(--sans);transition:transform .15s;-webkit-tap-highlight-color:transparent;"
-      onmouseover="this.style.transform='scale(1.08)'"
-      onmouseout="this.style.transform='scale(1)'">
-      <div style="width:52px;height:52px;border-radius:50%;background:${r.couleur};display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 3px 10px ${r.couleur}55;">${r.emoji}</div>
-      <div style="font-size:11px;font-weight:700;color:var(--ink);">${r.nom}</div>
-    </button>
-  `).join('');
-
-  // Textes prêts
-  const textes = [
-    {
-      titre: "Annonce ouverture",
-      texte: "🎉 Ma boutique est maintenant ouverte sur Proxikau !\n\nRetrouvez tous mes produits sur " + lienActuel + "\n\n" + (boutique.description || '') + "\n\n#proxikau #producteurlocal #circuitcourt"
-    },
-    {
-      titre: "Post produit",
-      texte: "🌿 Nouveaux produits disponibles sur ma boutique Proxikau !\n\nCommandez directement sur " + lienActuel + "\n\n#proxikau #local #artisan"
-    },
-    {
-      titre: "Story courte",
-      texte: "🛒 Commandez mes produits en ligne !\n👉 " + lienActuel + "\n\n#proxikau"
-    }
+  document.getElementById('reseaux-grid').innerHTML=reseaux.map(r=>`<button onclick="${r.url?`window.open('${r.url}','_blank')`:`copierLien('${r.id}')`}" style="display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px;border-radius:12px;border:none;background:transparent;cursor:pointer;font-family:var(--sans);transition:transform .15s;" onmouseover="this.style.transform='scale(1.08)'" onmouseout="this.style.transform='scale(1)'"><div style="width:52px;height:52px;border-radius:50%;background:${r.couleur};display:flex;align-items:center;justify-content:center;font-size:26px;box-shadow:0 3px 10px ${r.couleur}55;">${r.emoji}</div><div style="font-size:11px;font-weight:700;color:var(--ink);">${r.nom}</div></button>`).join('');
+  const textes=[
+    {titre:"Annonce ouverture",texte:"🎉 Ma boutique est maintenant ouverte sur Proxikau !\n\nRetrouvez tous mes produits sur "+lienActuel+"\n\n"+(boutique.description||'')+"\n\n#proxikau #producteurlocal #circuitcourt"},
+    {titre:"Post produit",texte:"🌿 Nouveaux produits disponibles sur ma boutique Proxikau !\n\nCommandez directement sur "+lienActuel+"\n\n#proxikau #local #artisan"},
+    {titre:"Story courte",texte:"🛒 Commandez mes produits en ligne !\n👉 "+lienActuel+"\n\n#proxikau"}
   ];
-
-  document.getElementById('textes-container').innerHTML = textes.map((t, i) => `
-    <div style="background:var(--bg);border-radius:10px;padding:14px;">
-      <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">${t.titre}</div>
-      <div style="font-size:13px;color:var(--ink2);line-height:1.6;white-space:pre-line;margin-bottom:10px;">${t.texte}</div>
-      <button onclick="copierTexte(${i})" class="btn btn-secondary btn-sm">📋 Copier ce texte</button>
-    </div>
-  `).join('');
-
-  window._textes = textes;
+  document.getElementById('textes-container').innerHTML=textes.map((t,i)=>`<div style="background:var(--bg);border-radius:10px;padding:14px;"><div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;">${t.titre}</div><div style="font-size:13px;color:var(--ink2);line-height:1.6;white-space:pre-line;margin-bottom:10px;">${t.texte}</div><button onclick="copierTexte(${i})" class="btn btn-secondary btn-sm">📋 Copier ce texte</button></div>`).join('');
+  window._textes=textes;
 }
 
-function copierLien(reseau) {
-  const lien = document.getElementById('lien-boutique').textContent;
-  navigator.clipboard.writeText(lien).then(() => {
-    const el = document.getElementById('copie-ok');
-    if (reseau === 'tiktok') {
-      el.innerHTML = '✅ Lien copié !<br><span style="font-size:13px;font-weight:400;">👉 Ouvre TikTok → Va dans ton profil → Modifie ta bio → Colle le lien</span>';
-    } else if (reseau === 'instagram') {
-      el.innerHTML = '✅ Lien copié !<br><span style="font-size:13px;font-weight:400;">👉 Ouvre Instagram → Va dans ton profil → Modifie ta bio → Colle le lien</span>';
-    } else {
-      el.innerHTML = '✅ Lien copié ! Colle-le sur tes réseaux maintenant 🚀';
-    }
-    el.style.display = 'block';
-    setTimeout(() => el.style.display = 'none', 5000);
+function copierLien(reseau){
+  const lien=document.getElementById('lien-boutique').textContent;
+  navigator.clipboard.writeText(lien).then(()=>{
+    const el=document.getElementById('copie-ok');
+    if(reseau==='tiktok'){el.innerHTML='✅ Lien copié !<br><span style="font-size:13px;font-weight:400;">👉 Ouvre TikTok → Va dans ton profil → Modifie ta bio → Colle le lien</span>';}
+    else if(reseau==='instagram'){el.innerHTML='✅ Lien copié !<br><span style="font-size:13px;font-weight:400;">👉 Ouvre Instagram → Va dans ton profil → Modifie ta bio → Colle le lien</span>';}
+    else{el.innerHTML='✅ Lien copié ! Colle-le sur tes réseaux maintenant 🚀';}
+    el.style.display='block';setTimeout(()=>el.style.display='none',5000);
   });
 }
 
-function copierTexte(i) {
-  navigator.clipboard.writeText(window._textes[i].texte).then(() => {
-    alert('✓ Texte copié !');
-  });
-}
+function copierTexte(i){navigator.clipboard.writeText(window._textes[i].texte).then(()=>{alert('✓ Texte copié !');});}
 
-function selectBoost(type, el) {
-  document.querySelectorAll('.boost-card').forEach(c => c.classList.remove('selected'));
-  el.classList.add('selected');
-  boostSelectionne = type;
-  const prix = {region:10,france:15,europe:20}[type];
-  const label = {region:'Ma Région',france:'France',europe:'Europe'}[type];
-  const recap = document.getElementById('boost-recap');
-  recap.style.display = 'block';
-  document.getElementById('boost-recap-content').innerHTML = `<div><strong>Type :</strong> ${label}</div><div><strong>Durée :</strong> 1 semaine</div><div><strong>Prix :</strong> ${prix}€</div>`;
-}
-
-async function acheterBoost() {
-  alert('Paiement Stripe à venir prochainement.');
-}
-
-async function seDeconnecter() {
-  await deconnecterUtilisateur();
-  window.location.href = 'index.html';
-}
+async function seDeconnecter(){await deconnecterUtilisateur();window.location.href='index.html';}
 </script>
 </body>
 </html>
