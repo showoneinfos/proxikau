@@ -10,8 +10,7 @@
 <style>
 :root{
   --vert:#2D6A4F;--vert2:#1B4332;--vert-light:#D8F3DC;
-  --terre:#BC6C25;--terre-light:#FDEBD0;
-  --ink:#1A1A1A;--ink2:#555;--ink3:#999;
+  --terre:#BC6C25;--ink:#1A1A1A;--ink2:#555;--ink3:#999;
   --border:#E0E0E0;--bg:#F9F7F4;--white:#fff;
   --error:#D32F2F;--sans:'Inter',system-ui,sans-serif;
 }
@@ -21,27 +20,17 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .logo{font-size:20px;font-weight:800;color:var(--vert);text-decoration:none;}
 .logo span{color:var(--terre);}
 .nav-etape{margin-left:auto;font-size:13px;color:var(--ink3);}
-
 .page{max-width:900px;margin:0 auto;padding:24px 16px 60px;}
 .page-title{font-size:22px;font-weight:800;margin-bottom:6px;}
 .page-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;}
-
-/* LAYOUT */
 .layout{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start;}
 @media(max-width:700px){.layout{grid-template-columns:1fr;}}
-
-/* CARD */
 .card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-
-/* BOUTIQUE SECTION */
-.boutique-section{margin-bottom:20px;}
 .boutique-header-checkout{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border-radius:10px;margin-bottom:12px;}
 .boutique-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--vert),var(--vert2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;}
-.boutique-checkout-nom{font-size:14px;font-weight:700;color:var(--ink);}
+.boutique-checkout-nom{font-size:14px;font-weight:700;}
 .boutique-checkout-sub{font-size:12px;color:var(--ink3);}
-
-/* PRODUIT LIGNE */
 .produit-ligne{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
 .produit-ligne:last-child{border-bottom:none;}
 .produit-ligne-photo{width:48px;height:48px;border-radius:8px;background:var(--bg);object-fit:cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
@@ -49,8 +38,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .produit-ligne-nom{font-size:14px;font-weight:600;margin-bottom:2px;}
 .produit-ligne-qty{font-size:12px;color:var(--ink3);}
 .produit-ligne-prix{font-size:15px;font-weight:700;color:var(--vert);flex-shrink:0;}
-
-/* LIVRAISON */
 .livraison-choix{display:flex;flex-direction:column;gap:8px;margin-top:12px;}
 .liv-opt{display:flex;align-items:flex-start;gap:10px;padding:12px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:all .15s;}
 .liv-opt:hover{border-color:var(--vert);}
@@ -58,104 +45,88 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .liv-opt input{accent-color:var(--vert);margin-top:2px;width:16px;height:16px;flex-shrink:0;}
 .liv-opt-label{font-size:14px;font-weight:600;}
 .liv-opt-desc{font-size:12px;color:var(--ink2);margin-top:2px;}
-
-/* FORM */
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;}
 .field label span{color:var(--error);}
-.field input,.field textarea,.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;transition:border-color .15s;-webkit-appearance:none;}
+.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;transition:border-color .15s;-webkit-appearance:none;}
 .field input:focus{border-color:var(--vert);}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:500px){.form-grid{grid-template-columns:1fr;}}
-
-/* RECAP STICKY */
 .recap-sticky{position:sticky;top:20px;}
 .recap-ligne{display:flex;justify-content:space-between;font-size:14px;padding:6px 0;border-bottom:1px solid var(--border);}
 .recap-ligne:last-child{border-bottom:none;}
 .recap-ligne.total{font-size:16px;font-weight:800;padding-top:12px;margin-top:4px;}
 .recap-ligne.commission{font-size:12px;color:var(--ink3);}
 .recap-boutique-label{font-size:12px;font-weight:700;color:var(--vert);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 4px;}
-
-/* BTN */
-.btn-commander{width:100%;padding:15px;border-radius:12px;background:var(--vert);color:#fff;border:none;font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;transition:background .15s;margin-top:16px;}
-.btn-commander:hover{background:var(--vert2);}
+.btn-commander{width:100%;padding:15px;border-radius:12px;background:#635BFF;color:#fff;border:none;font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;transition:background .15s;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-commander:hover{background:#4B44CC;}
 .btn-commander:disabled{background:var(--ink3);cursor:not-allowed;}
-
-/* ALERT */
-.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;}
+.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:14px;}
 .alert.error{background:#FFEBEE;color:var(--error);display:block;}
-.alert.success{background:var(--vert-light);color:var(--vert2);display:block;}
-
-/* SUCCESS */
+.alert.hidden{display:none;}
+.badge-stripe{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink3);justify-content:center;margin-top:12px;}
 .success-page{text-align:center;padding:60px 20px;display:none;}
 .success-icon{width:72px;height:72px;border-radius:50%;background:var(--vert-light);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;}
 .success-page h2{font-size:24px;font-weight:800;margin-bottom:10px;}
 .success-page p{font-size:15px;color:var(--ink2);margin-bottom:24px;line-height:1.6;}
 .btn-retour{display:inline-block;padding:12px 28px;border-radius:10px;background:var(--vert);color:#fff;text-decoration:none;font-weight:600;}
-
-.badge-stripe{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink3);justify-content:center;margin-top:12px;}
 </style>
 </head>
 <body>
 
 <nav>
   <a href="index.html" class="logo">Proxi<span>kau</span></a>
-  <div class="nav-etape">Étape finale — Récapitulatif commande</div>
+  <div class="nav-etape">Étape finale — Paiement sécurisé</div>
 </nav>
 
 <div class="page" id="checkout-page">
   <div class="page-title">Finaliser ma commande</div>
-  <div class="page-sub">Vérifie tes articles et choisis la livraison pour chaque boutique.</div>
-
+  <div class="page-sub">Vérifie tes articles, choisis la livraison et paie en sécurité.</div>
   <div class="layout">
     <div id="col-gauche">
-      <!-- Généré dynamiquement par JS -->
       <div class="card" style="text-align:center;color:var(--ink3);padding:40px;">Chargement...</div>
     </div>
-
     <div class="recap-sticky">
       <div class="card">
         <div class="card-title">📋 Récapitulatif</div>
         <div id="recap-contenu"></div>
-        <div class="alert" id="alert-checkout"></div>
+        <div class="alert hidden" id="alert-checkout"></div>
         <button class="btn-commander" id="btn-commander" onclick="confirmerCommande()">
-          ✅ Confirmer la commande
+          🔒 Payer par carte
         </button>
-        <div class="badge-stripe">🔒 Paiement sécurisé — Stripe (bientôt)</div>
+        <div class="badge-stripe">🔒 Paiement sécurisé par Stripe</div>
       </div>
       <a href="javascript:history.back()" style="display:block;text-align:center;font-size:13px;color:var(--ink3);margin-top:12px;text-decoration:none;">← Retour au panier</a>
     </div>
   </div>
 </div>
 
-<!-- PAGE SUCCÈS -->
 <div class="success-page" id="success-page">
   <div class="success-icon">✅</div>
   <h2>Commande confirmée !</h2>
-  <p id="success-msg">Tes commandes ont été transmises aux vendeurs.<br>Tu recevras une confirmation bientôt.</p>
+  <p id="success-msg">Tes commandes ont été transmises aux vendeurs.</p>
   <a href="index.html" class="btn-retour">Retour à l'accueil</a>
 </div>
 
 <script>
-// ============================================
-// STATE
-// ============================================
 let panier = [];
-let boutiquesData = {}; // boutique_id → données boutique
-let livraisonsChoisies = {}; // boutique_id → mode livraison
-let infosClient = {};
+let boutiquesData = {};
+let livraisonsChoisies = {};
 
-// ============================================
-// INIT
-// ============================================
 document.addEventListener('DOMContentLoaded', async () => {
+  // Vérifier retour Stripe
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('paiement') === 'ok') {
+    document.getElementById('checkout-page').style.display = 'none';
+    document.getElementById('success-page').style.display = 'block';
+    localStorage.removeItem('proxikau_panier');
+    return;
+  }
+
   // Charger panier
   try {
     const saved = localStorage.getItem('proxikau_panier');
-    if (saved) {
-      const data = JSON.parse(saved);
-      panier = data.items || [];
-    }
+    if (saved) panier = JSON.parse(saved).items || [];
   } catch(e) {}
 
   if (!panier.length) {
@@ -165,11 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     return;
   }
 
-  // Grouper par boutique
-  const groupes = grouperParBoutique();
-
-  // Charger infos boutiques depuis Supabase
-  const boutique_ids = Object.keys(groupes);
+  const boutique_ids = [...new Set(panier.map(i => i.boutique_id))];
   for (const bid of boutique_ids) {
     try {
       const { data } = await db.from('boutiques').select('*').eq('id', bid).single();
@@ -181,40 +148,31 @@ document.addEventListener('DOMContentLoaded', async () => {
   afficherRecap();
 });
 
-// ============================================
-// GROUPER PAR BOUTIQUE
-// ============================================
 function grouperParBoutique() {
   const groupes = {};
   panier.forEach(item => {
-    const bid = item.boutique_id;
-    if (!groupes[bid]) groupes[bid] = { nom: item.boutique_nom, slug: item.boutique_slug, items: [] };
-    groupes[bid].items.push(item);
+    if (!groupes[item.boutique_id]) groupes[item.boutique_id] = { nom: item.boutique_nom, slug: item.boutique_slug, items: [] };
+    groupes[item.boutique_id].items.push(item);
   });
   return groupes;
 }
 
-// ============================================
-// AFFICHER CHECKOUT
-// ============================================
 function afficherCheckout() {
   const groupes = grouperParBoutique();
   const col = document.getElementById('col-gauche');
   col.innerHTML = '';
 
-  // 1. Infos client
   col.innerHTML += `
     <div class="card">
       <div class="card-title">👤 Tes coordonnées</div>
       <div class="form-grid">
-        <div class="field"><label>Prénom <span>*</span></label><input type="text" id="c-prenom" placeholder="Jean" inputmode="text"></div>
-        <div class="field"><label>Nom <span>*</span></label><input type="text" id="c-nom" placeholder="Dupont" inputmode="text"></div>
+        <div class="field"><label>Prénom <span>*</span></label><input type="text" id="c-prenom" placeholder="Jean"></div>
+        <div class="field"><label>Nom <span>*</span></label><input type="text" id="c-nom" placeholder="Dupont"></div>
       </div>
       <div class="field"><label>Email <span>*</span></label><input type="email" id="c-email" placeholder="jean@exemple.fr" inputmode="email"></div>
       <div class="field"><label>Téléphone <span>*</span></label><input type="tel" id="c-tel" placeholder="+33 6 00 00 00 00" inputmode="tel"></div>
     </div>`;
 
-  // 2. Adresse livraison (si colis)
   col.innerHTML += `
     <div class="card" id="card-adresse" style="display:none;">
       <div class="card-title">📦 Adresse de livraison</div>
@@ -226,43 +184,34 @@ function afficherCheckout() {
       <div class="field"><label>Pays</label><input type="text" id="c-pays" value="France"></div>
     </div>`;
 
-  // 3. Une section par boutique
   Object.entries(groupes).forEach(([bid, groupe]) => {
     const b = boutiquesData[bid] || {};
     const initiales = groupe.nom.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
-
     const produitsHTML = groupe.items.map(item => `
       <div class="produit-ligne">
-        <div class="produit-ligne-photo">${item.photo ? `<img src="${item.photo}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;">` : item.emoji}</div>
+        <div class="produit-ligne-photo">${item.photo ? `<img src="${item.photo}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;">` : (item.emoji || '📦')}</div>
         <div class="produit-ligne-info">
           <div class="produit-ligne-nom">${item.nom}</div>
           <div class="produit-ligne-qty">x${item.qty} · ${item.unite}</div>
         </div>
         <div class="produit-ligne-prix">${(item.prix * item.qty).toFixed(2)}€</div>
-      </div>
-    `).join('');
+      </div>`).join('');
 
-    const livraisonsHTML = () => {
-      let html = '<div class="livraison-choix">';
-      if (b.livraison_colis) html += livOpt(bid, 'colis', '📦 Envoi par colis', 'Livraison à ton adresse');
-      if (b.livraison_enlevement) html += livOpt(bid, 'enlevement', '🏠 Enlèvement sur place', `Chez ${groupe.nom}${b.ville ? ' à ' + b.ville : ''}`);
-      if (b.livraison_proximite) html += livOpt(bid, 'proximite', '🚗 Livraison à proximité', `Dans un rayon de ${b.rayon_proximite_km || 30}km`);
-      html += '</div>';
-      return html;
-    };
+    let livraisonsHTML = '<div class="livraison-choix">';
+    if (b.livraison_colis) livraisonsHTML += livOpt(bid,'colis','📦 Envoi par colis','Livraison à ton adresse');
+    if (b.livraison_enlevement) livraisonsHTML += livOpt(bid,'enlevement','🏠 Enlèvement sur place',`Chez ${groupe.nom}${b.ville?' à '+b.ville:''}`);
+    if (b.livraison_proximite) livraisonsHTML += livOpt(bid,'proximite','🚗 Livraison à proximité',`Dans un rayon de ${b.rayon_proximite_km||30}km`);
+    livraisonsHTML += '</div>';
 
     col.innerHTML += `
       <div class="card">
         <div class="boutique-header-checkout">
           <div class="boutique-avatar">${initiales}</div>
-          <div>
-            <div class="boutique-checkout-nom">${groupe.nom}</div>
-            <div class="boutique-checkout-sub">${groupe.items.length} article${groupe.items.length > 1 ? 's' : ''}</div>
-          </div>
+          <div><div class="boutique-checkout-nom">${groupe.nom}</div><div class="boutique-checkout-sub">${groupe.items.length} article${groupe.items.length>1?'s':''}</div></div>
         </div>
         ${produitsHTML}
         <div style="margin-top:14px;font-size:13px;font-weight:600;color:var(--ink);">Mode de livraison</div>
-        ${livraisonsHTML()}
+        ${livraisonsHTML}
       </div>`;
   });
 }
@@ -270,73 +219,43 @@ function afficherCheckout() {
 function livOpt(bid, val, label, desc) {
   return `<label class="liv-opt" onclick="selectLivraison('${bid}','${val}',this)">
     <input type="radio" name="liv_${bid}" value="${val}">
-    <div>
-      <div class="liv-opt-label">${label}</div>
-      <div class="liv-opt-desc">${desc}</div>
-    </div>
+    <div><div class="liv-opt-label">${label}</div><div class="liv-opt-desc">${desc}</div></div>
   </label>`;
 }
 
 function selectLivraison(bid, val, el) {
   livraisonsChoisies[bid] = val;
-  // Mettre à jour le style
-  document.querySelectorAll(`input[name="liv_${bid}"]`).forEach(r => {
-    r.closest('.liv-opt').classList.remove('selected');
-  });
+  document.querySelectorAll(`input[name="liv_${bid}"]`).forEach(r => r.closest('.liv-opt').classList.remove('selected'));
   el.classList.add('selected');
   el.querySelector('input').checked = true;
-
-  // Afficher adresse si colis OU proximite
   const needsAdresse = Object.values(livraisonsChoisies).some(v => v === 'colis' || v === 'proximite');
   document.getElementById('card-adresse').style.display = needsAdresse ? 'block' : 'none';
-
   afficherRecap();
 }
 
-// ============================================
-// RÉCAP
-// ============================================
 function afficherRecap() {
   const groupes = grouperParBoutique();
   let html = '';
   let grandTotal = 0;
-
   Object.entries(groupes).forEach(([bid, groupe]) => {
     const sous_total = groupe.items.reduce((s,i) => s + i.prix * i.qty, 0);
     const commission = Math.round(sous_total * 0.05 * 100) / 100;
     grandTotal += sous_total;
     const livraison = livraisonsChoisies[bid];
     const livLabel = livraison ? {colis:'📦 Colis',enlevement:'🏠 Enlèvement',proximite:'🚗 Proximité'}[livraison] : '<span style="color:var(--error);font-size:11px;">À choisir</span>';
-
-    html += `
-      <div class="recap-boutique-label">${groupe.nom}</div>
-      ${groupe.items.map(i => `
-        <div class="recap-ligne">
-          <span>${i.nom} x${i.qty}</span>
-          <span>${(i.prix * i.qty).toFixed(2)}€</span>
-        </div>`).join('')}
-      <div class="recap-ligne">
-        <span>Livraison</span>
-        <span>${livLabel}</span>
-      </div>
-      <div class="recap-ligne commission">
-        <span>Commission Proxikau (5%)</span>
-        <span>${commission.toFixed(2)}€</span>
-      </div>`;
+    html += `<div class="recap-boutique-label">${groupe.nom}</div>`;
+    groupe.items.forEach(i => { html += `<div class="recap-ligne"><span>${i.nom} x${i.qty}</span><span>${(i.prix*i.qty).toFixed(2)}€</span></div>`; });
+    html += `<div class="recap-ligne"><span>Livraison</span><span>${livLabel}</span></div>`;
+    html += `<div class="recap-ligne commission"><span>Commission Proxikau (5%)</span><span>${commission.toFixed(2)}€</span></div>`;
   });
-
   html += `<div class="recap-ligne total"><span>Total</span><span>${grandTotal.toFixed(2)}€</span></div>`;
   document.getElementById('recap-contenu').innerHTML = html;
 }
 
-// ============================================
-// CONFIRMER COMMANDE
-// ============================================
 async function confirmerCommande() {
   const alertEl = document.getElementById('alert-checkout');
-  alertEl.className = 'alert';
+  alertEl.className = 'alert hidden';
 
-  // Vérif infos client
   const prenom = document.getElementById('c-prenom')?.value.trim();
   const nom = document.getElementById('c-nom')?.value.trim();
   const email = document.getElementById('c-email')?.value.trim();
@@ -349,7 +268,6 @@ async function confirmerCommande() {
     return;
   }
 
-  // Vérif livraisons choisies
   const groupes = grouperParBoutique();
   const boutique_ids = Object.keys(groupes);
   for (const bid of boutique_ids) {
@@ -360,7 +278,6 @@ async function confirmerCommande() {
     }
   }
 
-  // Vérif adresse si colis ou proximite
   const hasColis = Object.values(livraisonsChoisies).some(v => v === 'colis' || v === 'proximite');
   if (hasColis) {
     const adresse = document.getElementById('c-adresse')?.value.trim();
@@ -375,34 +292,28 @@ async function confirmerCommande() {
 
   const btn = document.getElementById('btn-commander');
   btn.disabled = true;
-  btn.textContent = 'Confirmation en cours...';
+  btn.textContent = 'Création de la commande...';
 
   try {
-    // Vérifier connexion
-    let user = await getUtilisateurConnecte();
-
-    // Créer les commandes dans Supabase (une par boutique)
+    const user = await getUtilisateurConnecte();
     const commandesCreees = [];
+    const adresseCommande = {
+      rue: document.getElementById('c-adresse')?.value || '',
+      cp: document.getElementById('c-cp')?.value || '',
+      ville: document.getElementById('c-ville')?.value || '',
+      pays: document.getElementById('c-pays')?.value || 'France'
+    };
+
+    // 1. Créer les commandes dans Supabase
     for (const bid of boutique_ids) {
       const groupe = groupes[bid];
       const montant_produits = groupe.items.reduce((s,i) => s + i.prix * i.qty, 0);
       const commission = Math.round(montant_produits * 0.05 * 100) / 100;
-
-      // Adresse livraison
-      let adresse_livraison = null;
-      if (livraisonsChoisies[bid] === 'colis') {
-        adresse_livraison = {
-          prenom, nom, email, telephone: tel,
-          rue: document.getElementById('c-adresse')?.value.trim(),
-          cp: document.getElementById('c-cp')?.value.trim(),
-          ville: document.getElementById('c-ville')?.value.trim(),
-          pays: document.getElementById('c-pays')?.value.trim() || 'France'
-        };
-      } else {
-        adresse_livraison = { prenom, nom, email, telephone: tel };
+      let adresse_livraison = { prenom, nom, email, telephone: tel };
+      if (['colis','proximite'].includes(livraisonsChoisies[bid])) {
+        adresse_livraison = { ...adresse_livraison, ...adresseCommande };
       }
 
-      // Insérer commande sans auth (mode test sans Stripe)
       const { data: commande, error } = await db.from('commandes').insert([{
         acheteur_id: user ? user.id : null,
         boutique_id: bid,
@@ -413,12 +324,11 @@ async function confirmerCommande() {
         mode_livraison: livraisonsChoisies[bid],
         adresse_livraison,
         statut: 'en_attente',
-        paiement_vendeur_at: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString()
+        paiement_vendeur_at: new Date(Date.now() + 30*24*60*60*1000).toISOString()
       }]).select();
 
       if (error) throw error;
 
-      // Insérer les lignes de commande
       if (commande && commande[0]) {
         const lignes = groupe.items.map(item => ({
           commande_id: commande[0].id,
@@ -429,27 +339,14 @@ async function confirmerCommande() {
           sous_total: Math.round(item.prix * item.qty * 100) / 100
         }));
         await db.from('commande_lignes').insert(lignes);
-        commandesCreees.push(commande[0]);
+        commandesCreees.push({ ...commande[0], boutique_nom: groupe.nom, items: groupe.items });
       }
     }
 
-    // Vider le panier
-    localStorage.removeItem('proxikau_panier');
-
-    // Envoyer email vendeur pour chaque boutique
-    const adresseCommande = {
-      rue: document.getElementById('c-adresse')?.value || '',
-      cp: document.getElementById('c-cp')?.value || '',
-      ville: document.getElementById('c-ville')?.value || '',
-      pays: document.getElementById('c-pays')?.value || 'France'
-    };
-
-    for (let i = 0; i < commandesCreees.length; i++) {
-      const commande = commandesCreees[i];
-      const bid = boutique_ids[i];
-      const groupe = groupes[bid];
-      const b = boutiquesData[bid] || {};
-      const vendeurEmail = b._email_vendeur || b.email_contact || '';
+    // 2. Envoyer emails vendeurs
+    for (const cmd of commandesCreees) {
+      const b = boutiquesData[cmd.boutique_id] || {};
+      const vendeurEmail = b.email_contact || '';
       if (vendeurEmail) {
         try {
           await fetch('/api/send-email', {
@@ -457,57 +354,56 @@ async function confirmerCommande() {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               vendeur_email: vendeurEmail,
-              boutique_nom: groupe.nom,
-              commande_id: commande.id,
-              produits: groupe.items.map(it => ({ nom: it.nom, qty: it.qty, prix: it.prix })),
-              mode_livraison: livraisonsChoisies[bid],
-              adresse: ['colis','proximite'].includes(livraisonsChoisies[bid]) ? adresseCommande : null,
+              boutique_nom: cmd.boutique_nom,
+              commande_id: cmd.id,
+              produits: cmd.items.map(it => ({ nom: it.nom, qty: it.qty, prix: it.prix })),
+              mode_livraison: livraisonsChoisies[cmd.boutique_id],
+              adresse: ['colis','proximite'].includes(livraisonsChoisies[cmd.boutique_id]) ? adresseCommande : null,
               acheteur_nom: prenom + ' ' + nom,
               acheteur_email: email,
               acheteur_tel: tel,
-              montant_total: groupe.items.reduce((s,it) => s + it.prix * it.qty, 0)
+              montant_total: cmd.montant_total
             })
           });
-        } catch(e) { console.log('Email vendeur non envoyé:', e); }
+        } catch(e) {}
       }
     }
 
-    // Envoyer UN SEUL email récap à l'acheteur avec toutes les boutiques
-    try {
-      await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type: 'acheteur_recap',
-          acheteur_nom: prenom + ' ' + nom,
-          acheteur_email: email,
-          acheteur_tel: tel,
-          toutes_commandes: boutique_ids.map((bid, i) => ({
-            boutique_nom: groupes[bid].nom,
-            commande_id: commandesCreees[i].id,
-            produits: groupes[bid].items.map(it => ({ nom: it.nom, qty: it.qty, prix: it.prix })),
-            mode_livraison: livraisonsChoisies[bid],
-            adresse: ['colis','proximite'].includes(livraisonsChoisies[bid]) ? adresseCommande : null,
-            montant: groupes[bid].items.reduce((s,it) => s + it.prix * it.qty, 0)
-          }))
-        })
-      });
-    } catch(e) { console.log('Email acheteur non envoyé:', e); }
+    // 3. Rediriger vers Stripe Checkout
+    btn.textContent = 'Redirection vers le paiement...';
 
-    // Afficher succès
-    document.getElementById('checkout-page').style.display = 'none';
-    const successPage = document.getElementById('success-page');
-    successPage.style.display = 'block';
-    document.getElementById('success-msg').innerHTML = `
-      ${commandesCreees.length} commande${commandesCreees.length > 1 ? 's' : ''} confirmée${commandesCreees.length > 1 ? 's' : ''} !<br>
-      Les vendeurs ont été notifiés et vont préparer tes articles.<br>
-      <span style="font-size:13px;color:var(--ink3);">Le paiement en ligne sera disponible prochainement.</span>`;
+    const stripePayload = {
+      commandes: commandesCreees.map(cmd => ({
+        commande_id: cmd.id,
+        boutique_id: cmd.boutique_id,
+        boutique_nom: cmd.boutique_nom,
+        items: cmd.items.map(it => ({ nom: it.nom, qty: it.qty, prix: it.prix }))
+      })),
+      acheteur_email: email,
+      success_url: `${window.location.origin}/mes-commandes.html?paiement=ok`,
+      cancel_url: `${window.location.origin}/checkout.html?paiement=annule`
+    };
+
+    const stripeRes = await fetch('/api/stripe?action=checkout', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(stripePayload)
+    });
+
+    const stripeData = await stripeRes.json();
+
+    if (stripeData.url) {
+      localStorage.removeItem('proxikau_panier');
+      window.location.href = stripeData.url;
+    } else {
+      throw new Error(stripeData.error || 'Erreur Stripe');
+    }
 
   } catch(e) {
     alertEl.textContent = 'Erreur : ' + e.message;
     alertEl.className = 'alert error';
     btn.disabled = false;
-    btn.textContent = '✅ Confirmer la commande';
+    btn.textContent = '🔒 Payer par carte';
   }
 }
 </script>
