@@ -17,10 +17,47 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .nav-right{margin-left:auto;display:flex;gap:8px;align-items:center;}
 .btn-retour{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
 .btn-deco{font-size:13px;color:var(--error);background:none;border:none;cursor:pointer;font-family:var(--sans);}
+.nav-user{font-size:13px;color:var(--ink2);display:none;}
 
 .page{max-width:720px;margin:0 auto;padding:28px 16px 60px;}
 .page-title{font-size:22px;font-weight:800;margin-bottom:4px;}
 .page-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;}
+
+/* AUTH CARD */
+.auth-card{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:440px;margin:0 auto;}
+.auth-tabs{display:flex;border-bottom:1px solid var(--border);}
+.auth-tab{flex:1;padding:14px;text-align:center;font-size:14px;font-weight:600;color:var(--ink3);cursor:pointer;border:none;background:none;font-family:var(--sans);transition:all .15s;}
+.auth-tab.active{color:var(--vert);border-bottom:2px solid var(--vert);margin-bottom:-1px;}
+.auth-body{padding:28px 24px;}
+.auth-title{font-size:18px;font-weight:700;margin-bottom:6px;}
+.auth-sub{font-size:13px;color:var(--ink2);margin-bottom:20px;line-height:1.5;}
+
+/* GUEST SECTION */
+.guest-section{margin-top:20px;padding-top:20px;border-top:1px dashed var(--border);}
+.guest-title{font-size:13px;font-weight:600;color:var(--ink3);text-align:center;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
+
+/* FORM */
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;}
+.field label span{color:var(--error);}
+.field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:var(--sans);font-size:14px;outline:none;transition:border-color .15s;-webkit-appearance:none;}
+.field input:focus{border-color:var(--vert);}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:400px){.form-grid{grid-template-columns:1fr;}}
+
+/* BTN */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 20px;border-radius:10px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;border:none;width:100%;margin-top:4px;}
+.btn-vert{background:var(--vert);color:#fff;}
+.btn-vert:hover{background:var(--vert2);}
+.btn-outline{background:transparent;color:var(--vert);border:1.5px solid var(--vert);}
+.btn-outline:hover{background:var(--vert-light);}
+.btn-ghost{background:var(--bg);color:var(--ink2);border:1px solid var(--border);}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+
+/* ALERT */
+.alert{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;}
+.alert.error{background:#FFEBEE;color:var(--error);display:block;}
+.alert.success{background:var(--vert-light);color:var(--vert2);display:block;}
 
 /* COMMANDE CARD */
 .commande-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px;}
@@ -31,7 +68,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .commande-body{padding:16px 20px;}
 .commande-produit{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--border);}
 .commande-produit:last-child{border-bottom:none;}
-.commande-produit-photo{width:44px;height:44px;border-radius:8px;background:var(--bg);object-fit:cover;flex-shrink:0;font-size:18px;display:flex;align-items:center;justify-content:center;}
+.commande-produit-photo{width:44px;height:44px;border-radius:8px;background:var(--bg);flex-shrink:0;font-size:18px;display:flex;align-items:center;justify-content:center;}
 .commande-produit-info{flex:1;}
 .commande-produit-nom{font-size:14px;font-weight:600;}
 .commande-produit-qty{font-size:12px;color:var(--ink3);}
@@ -50,15 +87,27 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .badge-annulee,.badge-remboursee{background:#FFEBEE;color:var(--error);}
 
 /* TIMELINE */
-.timeline{display:flex;align-items:center;gap:0;margin-top:12px;overflow-x:auto;padding:4px 0;}
+.timeline{display:flex;align-items:center;margin-top:12px;overflow-x:auto;padding:4px 0;}
 .tl-step{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
-.tl-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .2s;}
+.tl-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:13px;}
 .tl-dot.done{border-color:var(--vert);background:var(--vert);}
 .tl-dot.active{border-color:var(--vert);background:var(--vert-light);}
 .tl-label{font-size:10px;color:var(--ink3);margin-top:4px;white-space:nowrap;}
 .tl-label.done,.tl-label.active{color:var(--vert2);font-weight:600;}
 .tl-line{flex:1;height:2px;background:var(--border);min-width:20px;}
 .tl-line.done{background:var(--vert);}
+
+/* USER INFO */
+.user-info-bar{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.user-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--vert),var(--vert2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0;}
+.user-name{font-size:14px;font-weight:700;}
+.user-email{font-size:12px;color:var(--ink3);}
+
+/* SUCCESS */
+.success-banner{background:var(--vert-light);border:1.5px solid var(--vert);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
+.success-banner-icon{font-size:28px;flex-shrink:0;}
+.success-banner-title{font-size:15px;font-weight:700;color:var(--vert2);}
+.success-banner-sub{font-size:13px;color:var(--vert2);margin-top:2px;}
 
 /* EMPTY */
 .empty{text-align:center;padding:60px 20px;}
@@ -67,17 +116,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .empty p{font-size:14px;color:var(--ink2);margin-bottom:24px;}
 .btn-shop{display:inline-block;padding:12px 24px;border-radius:10px;background:var(--vert);color:#fff;text-decoration:none;font-weight:600;}
 
-/* LOGIN */
-.login-card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:32px;max-width:400px;margin:0 auto;text-align:center;}
-.login-card h2{font-size:20px;font-weight:700;margin-bottom:8px;}
-.login-card p{font-size:14px;color:var(--ink2);margin-bottom:24px;}
-.field{margin-bottom:14px;text-align:left;}
-.field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;}
-.field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:var(--sans);font-size:14px;outline:none;-webkit-appearance:none;}
-.field input:focus{border-color:var(--vert);}
-.btn-login{width:100%;padding:13px;border-radius:10px;background:var(--vert);color:#fff;border:none;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;}
-.alert-err{background:#FFEBEE;color:var(--error);padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;}
 .loading{text-align:center;padding:40px;color:var(--ink3);}
+.divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--ink3);font-size:12px;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 </style>
 </head>
 <body>
@@ -85,6 +126,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 <nav>
   <a href="index.html" class="logo">Proxi<span>kau</span></a>
   <div class="nav-right">
+    <span class="nav-user" id="nav-user"></span>
     <a href="index.html" class="btn-retour">← Retour</a>
     <button class="btn-deco" id="btn-deco" onclick="seDeconnecter()" style="display:none;">Déconnexion</button>
   </div>
@@ -92,18 +134,86 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 
 <div class="page">
   <div id="loading" class="loading">Chargement...</div>
-  <div id="login-section" style="display:none;">
-    <div class="login-card">
-      <h2>Mes commandes</h2>
-      <p>Connecte-toi pour voir tes commandes Proxikau.</p>
-      <div class="alert-err" id="alert-login"></div>
-      <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="ton@email.fr" inputmode="email"></div>
-      <div class="field"><label>Mot de passe</label><input type="password" id="login-mdp" onkeydown="if(event.key==='Enter')seConnecter()"></div>
-      <button class="btn-login" onclick="seConnecter()">Se connecter</button>
+
+  <!-- SECTION AUTH -->
+  <div id="auth-section" style="display:none;">
+    <div style="text-align:center;margin-bottom:24px;">
+      <div style="font-size:32px;margin-bottom:10px;">🛍️</div>
+      <div style="font-size:22px;font-weight:800;margin-bottom:6px;">Mes commandes</div>
+      <div style="font-size:14px;color:var(--ink2);">Connecte-toi ou crée un compte pour suivre tes commandes.</div>
+    </div>
+
+    <div class="auth-card">
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-connexion" onclick="switchTab('connexion')">Se connecter</button>
+        <button class="auth-tab" id="tab-inscription" onclick="switchTab('inscription')">Créer un compte</button>
+      </div>
+
+      <!-- CONNEXION -->
+      <div class="auth-body" id="body-connexion">
+        <div class="alert" id="alert-connexion"></div>
+        <div class="field"><label>Email <span>*</span></label><input type="email" id="co-email" placeholder="ton@email.fr" inputmode="email"></div>
+        <div class="field"><label>Mot de passe <span>*</span></label><input type="password" id="co-mdp" onkeydown="if(event.key==='Enter')seConnecter()"></div>
+        <button class="btn btn-vert" onclick="seConnecter()" id="btn-connexion">Se connecter</button>
+
+        <div class="guest-section">
+          <div class="guest-title">Pas de compte ?</div>
+          <div style="font-size:13px;color:var(--ink2);text-align:center;margin-bottom:12px;">Retrouve tes commandes passées en guest avec ton email.</div>
+          <div class="field"><label>Ton email de commande</label><input type="email" id="guest-email" placeholder="email utilisé lors de la commande" inputmode="email"></div>
+          <button class="btn btn-outline" onclick="rechercherGuest()" id="btn-guest">🔍 Voir mes commandes</button>
+        </div>
+      </div>
+
+      <!-- INSCRIPTION -->
+      <div class="auth-body" id="body-inscription" style="display:none;">
+        <div class="alert" id="alert-inscription"></div>
+        <div class="form-grid">
+          <div class="field"><label>Prénom <span>*</span></label><input type="text" id="in-prenom" placeholder="Jean"></div>
+          <div class="field"><label>Nom <span>*</span></label><input type="text" id="in-nom" placeholder="Dupont"></div>
+        </div>
+        <div class="field"><label>Email <span>*</span></label><input type="email" id="in-email" placeholder="ton@email.fr" inputmode="email"></div>
+        <div class="field"><label>Mot de passe <span>*</span></label><input type="password" id="in-mdp" placeholder="8 caractères minimum"></div>
+        <div class="field"><label>Confirmer le mot de passe <span>*</span></label><input type="password" id="in-mdp2" onkeydown="if(event.key==='Enter')sInscrire()"></div>
+        <button class="btn btn-vert" onclick="sInscrire()" id="btn-inscription">Créer mon compte</button>
+        <p style="font-size:12px;color:var(--ink3);text-align:center;margin-top:12px;line-height:1.5;">En créant un compte, tu acceptes nos <a href="cgv.html" style="color:var(--vert);">CGV</a> et notre politique de confidentialité.</p>
+      </div>
     </div>
   </div>
 
+  <!-- SECTION COMMANDES -->
   <div id="commandes-section" style="display:none;">
+    <div id="success-banner" style="display:none;">
+      <div class="success-banner">
+        <div class="success-banner-icon">🎉</div>
+        <div>
+          <div class="success-banner-title">Paiement confirmé !</div>
+          <div class="success-banner-sub">Ta commande a bien été reçue. Les vendeurs vont préparer tes articles.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="user-info-bar" style="display:none;" class="user-info-bar">
+      <div class="user-avatar" id="user-avatar">?</div>
+      <div>
+        <div class="user-name" id="user-name"></div>
+        <div class="user-email" id="user-email-display"></div>
+      </div>
+      <div style="margin-left:auto;">
+        <button onclick="seDeconnecter()" style="font-size:12px;color:var(--ink3);background:none;border:none;cursor:pointer;">Déconnexion</button>
+      </div>
+    </div>
+
+    <div id="guest-info-bar" style="display:none;" class="user-info-bar" style="background:var(--terre-light);border-color:var(--terre);">
+      <div style="font-size:24px;">👤</div>
+      <div>
+        <div style="font-size:14px;font-weight:700;">Commandes guest</div>
+        <div style="font-size:12px;color:var(--ink3);" id="guest-email-display"></div>
+      </div>
+      <div style="margin-left:auto;">
+        <button onclick="switchTab('inscription');document.getElementById('auth-section').style.display='block';document.getElementById('commandes-section').style.display='none';" style="font-size:12px;color:var(--vert);background:none;border:1px solid var(--vert);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--sans);font-weight:600;">Créer un compte</button>
+      </div>
+    </div>
+
     <div class="page-title">Mes commandes</div>
     <div class="page-sub" id="nb-commandes"></div>
     <div id="liste-commandes"></div>
@@ -112,55 +222,30 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 
 <script>
 const statutLabels = {
-  'en_attente': 'En attente',
-  'payee': 'Payée',
-  'preparee': 'En préparation',
-  'expediee': 'Expédiée',
-  'disponible': 'Prête à enlever',
-  'livree': 'Livrée ✅',
-  'terminee': 'Terminée',
-  'annulee': 'Annulée',
-  'remboursee': 'Remboursée'
+  'en_attente':'En attente','payee':'Payée','preparee':'En préparation',
+  'expediee':'Expédiée','disponible':'Prête à enlever','livree':'Livrée ✅',
+  'terminee':'Terminée','annulee':'Annulée','remboursee':'Remboursée'
 };
-
 const livLabels = {
-  'colis': '📦 Envoi par colis',
-  'enlevement': '🏠 Enlèvement sur place',
-  'proximite': '🚗 Livraison à proximité'
+  'colis':'📦 Envoi par colis','enlevement':'🏠 Enlèvement sur place','proximite':'🚗 Livraison à proximité'
+};
+const emojis = {
+  'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷',
+  'epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯',
+  'huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'
 };
 
-// Timeline steps par mode de livraison
 function getTimeline(statut, mode) {
   const steps = {
-    colis: [
-      { key: 'en_attente', label: 'Reçue', icon: '📋' },
-      { key: 'preparee', label: 'Préparée', icon: '📦' },
-      { key: 'expediee', label: 'Expédiée', icon: '🚚' },
-      { key: 'livree', label: 'Livrée', icon: '✅' }
-    ],
-    enlevement: [
-      { key: 'en_attente', label: 'Reçue', icon: '📋' },
-      { key: 'preparee', label: 'Préparée', icon: '🔧' },
-      { key: 'disponible', label: 'Disponible', icon: '🏠' },
-      { key: 'livree', label: 'Récupérée', icon: '✅' }
-    ],
-    proximite: [
-      { key: 'en_attente', label: 'Reçue', icon: '📋' },
-      { key: 'preparee', label: 'Préparée', icon: '🔧' },
-      { key: 'expediee', label: 'En route', icon: '🚗' },
-      { key: 'livree', label: 'Livrée', icon: '✅' }
-    ]
+    colis:[{key:'en_attente',label:'Reçue',icon:'📋'},{key:'preparee',label:'Préparée',icon:'📦'},{key:'expediee',label:'Expédiée',icon:'🚚'},{key:'livree',label:'Livrée',icon:'✅'}],
+    enlevement:[{key:'en_attente',label:'Reçue',icon:'📋'},{key:'preparee',label:'Préparée',icon:'🔧'},{key:'disponible',label:'Disponible',icon:'🏠'},{key:'livree',label:'Récupérée',icon:'✅'}],
+    proximite:[{key:'en_attente',label:'Reçue',icon:'📋'},{key:'preparee',label:'Préparée',icon:'🔧'},{key:'expediee',label:'En route',icon:'🚗'},{key:'livree',label:'Livrée',icon:'✅'}]
   };
-
   const ordre = ['en_attente','payee','preparee','expediee','disponible','livree','terminee'];
   const statutIdx = ordre.indexOf(statut);
-  const stps = steps[mode] || steps.colis;
-
-  return stps.map((s, i) => {
+  return (steps[mode]||steps.colis).map(s => {
     const sIdx = ordre.indexOf(s.key);
-    const isDone = sIdx < statutIdx;
-    const isActive = sIdx === statutIdx || (s.key === statut);
-    return { ...s, isDone, isActive };
+    return {...s, isDone: sIdx < statutIdx, isActive: s.key === statut || (statut === 'payee' && s.key === 'en_attente')};
   });
 }
 
@@ -168,119 +253,262 @@ function getTimeline(statut, mode) {
 // INIT
 // ============================================
 document.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+
   const user = await getUtilisateurConnecte();
   document.getElementById('loading').style.display = 'none';
-  if (!user) {
-    document.getElementById('login-section').style.display = 'block';
-    return;
+
+  if (user) {
+    // Utilisateur connecté
+    document.getElementById('btn-deco').style.display = 'block';
+    // Afficher infos user dans nav
+    try {
+      const profil = await getProfil(user.id);
+      if (profil) {
+        document.getElementById('nav-user').textContent = profil.prenom || '';
+        document.getElementById('nav-user').style.display = 'block';
+        document.getElementById('user-avatar').textContent = (profil.prenom?.[0] || '?').toUpperCase();
+        document.getElementById('user-name').textContent = (profil.prenom || '') + ' ' + (profil.nom || '');
+        document.getElementById('user-email-display').textContent = user.email;
+        document.getElementById('user-info-bar').style.display = 'flex';
+      }
+    } catch(e) {}
+
+    if (params.get('paiement') === 'ok') {
+      document.getElementById('success-banner').style.display = 'block';
+    }
+    await chargerCommandes({ type: 'user', id: user.id });
+  } else {
+    // Non connecté
+    document.getElementById('auth-section').style.display = 'block';
+
+    // Si retour paiement sans compte → chercher par email dans localStorage
+    if (params.get('paiement') === 'ok') {
+      const lastEmail = localStorage.getItem('proxikau_last_email');
+      if (lastEmail) {
+        document.getElementById('auth-section').style.display = 'none';
+        document.getElementById('success-banner').style.display = 'block';
+        document.getElementById('guest-email-display').textContent = lastEmail;
+        document.getElementById('guest-info-bar').style.display = 'flex';
+        await chargerCommandes({ type: 'guest', email: lastEmail });
+        return;
+      }
+    }
   }
-  document.getElementById('btn-deco').style.display = 'block';
-  await chargerCommandes(user.id);
 });
 
 // ============================================
-// LOGIN
+// TABS
+// ============================================
+function switchTab(tab) {
+  document.getElementById('tab-connexion').classList.toggle('active', tab === 'connexion');
+  document.getElementById('tab-inscription').classList.toggle('active', tab === 'inscription');
+  document.getElementById('body-connexion').style.display = tab === 'connexion' ? 'block' : 'none';
+  document.getElementById('body-inscription').style.display = tab === 'inscription' ? 'block' : 'none';
+}
+
+// ============================================
+// CONNEXION
 // ============================================
 async function seConnecter() {
-  const email = document.getElementById('login-email').value.trim();
-  const mdp = document.getElementById('login-mdp').value;
-  const alertEl = document.getElementById('alert-login');
-  if (!email || !mdp) { alertEl.textContent = 'Remplis tous les champs.'; alertEl.style.display = 'block'; return; }
+  const email = document.getElementById('co-email').value.trim();
+  const mdp = document.getElementById('co-mdp').value;
+  const alertEl = document.getElementById('alert-connexion');
+  alertEl.className = 'alert';
+  if (!email || !mdp) { alertEl.textContent = 'Remplis tous les champs.'; alertEl.className = 'alert error'; return; }
+  const btn = document.getElementById('btn-connexion');
+  btn.disabled = true; btn.textContent = 'Connexion...';
   try {
     const { data } = await connecterUtilisateur(email, mdp);
-    document.getElementById('login-section').style.display = 'none';
+    // Récupérer profil
+    let prenom = '', nom = '';
+    try { const profil = await getProfil(data.user.id); prenom = profil?.prenom || ''; nom = profil?.nom || ''; } catch(e) {}
+    document.getElementById('auth-section').style.display = 'none';
     document.getElementById('btn-deco').style.display = 'block';
-    await chargerCommandes(data.user.id);
+    document.getElementById('user-avatar').textContent = (prenom?.[0] || '?').toUpperCase();
+    document.getElementById('user-name').textContent = prenom + ' ' + nom;
+    document.getElementById('user-email-display').textContent = email;
+    document.getElementById('user-info-bar').style.display = 'flex';
+    await chargerCommandes({ type: 'user', id: data.user.id });
   } catch(e) {
     alertEl.textContent = 'Email ou mot de passe incorrect.';
-    alertEl.style.display = 'block';
+    alertEl.className = 'alert error';
+    btn.disabled = false; btn.textContent = 'Se connecter';
   }
 }
 
+// ============================================
+// INSCRIPTION
+// ============================================
+async function sInscrire() {
+  const prenom = document.getElementById('in-prenom').value.trim();
+  const nom = document.getElementById('in-nom').value.trim();
+  const email = document.getElementById('in-email').value.trim();
+  const mdp = document.getElementById('in-mdp').value;
+  const mdp2 = document.getElementById('in-mdp2').value;
+  const alertEl = document.getElementById('alert-inscription');
+  alertEl.className = 'alert';
+
+  if (!prenom || !nom || !email || !mdp) { alertEl.textContent = 'Remplis tous les champs.'; alertEl.className = 'alert error'; return; }
+  if (mdp.length < 8) { alertEl.textContent = 'Le mot de passe doit faire 8 caractères minimum.'; alertEl.className = 'alert error'; return; }
+  if (mdp !== mdp2) { alertEl.textContent = 'Les mots de passe ne correspondent pas.'; alertEl.className = 'alert error'; return; }
+
+  const btn = document.getElementById('btn-inscription');
+  btn.disabled = true; btn.textContent = 'Création...';
+
+  try {
+    // Créer le compte Supabase
+    const { data, error } = await db.auth.signUp({ email, password: mdp });
+    if (error) throw error;
+
+    // Créer le profil utilisateur
+    await db.from('utilisateurs').insert([{
+      id: data.user.id,
+      email,
+      prenom,
+      nom,
+      role: 'acheteur'
+    }]);
+
+    // Relier les anciennes commandes guest à ce compte
+    await db.from('commandes').update({ acheteur_id: data.user.id })
+      .is('acheteur_id', null)
+      .contains('adresse_livraison', { email });
+
+    document.getElementById('auth-section').style.display = 'none';
+    document.getElementById('btn-deco').style.display = 'block';
+    document.getElementById('user-avatar').textContent = prenom[0].toUpperCase();
+    document.getElementById('user-name').textContent = prenom + ' ' + nom;
+    document.getElementById('user-email-display').textContent = email;
+    document.getElementById('user-info-bar').style.display = 'flex';
+    await chargerCommandes({ type: 'user', id: data.user.id });
+  } catch(e) {
+    alertEl.textContent = e.message.includes('already') ? 'Cet email est déjà utilisé.' : 'Erreur : ' + e.message;
+    alertEl.className = 'alert error';
+    btn.disabled = false; btn.textContent = 'Créer mon compte';
+  }
+}
+
+// ============================================
+// GUEST
+// ============================================
+async function rechercherGuest() {
+  const email = document.getElementById('guest-email').value.trim();
+  if (!email) { alert('Entre ton email.'); return; }
+  const btn = document.getElementById('btn-guest');
+  btn.disabled = true; btn.textContent = 'Recherche...';
+  localStorage.setItem('proxikau_last_email', email);
+  document.getElementById('auth-section').style.display = 'none';
+  document.getElementById('guest-email-display').textContent = email;
+  document.getElementById('guest-info-bar').style.display = 'flex';
+  await chargerCommandes({ type: 'guest', email });
+  btn.disabled = false; btn.textContent = '🔍 Voir mes commandes';
+}
+
+// ============================================
+// DÉCONNEXION
+// ============================================
 async function seDeconnecter() {
   await deconnecterUtilisateur();
+  localStorage.removeItem('proxikau_last_email');
   window.location.reload();
 }
 
 // ============================================
-// COMMANDES
+// CHARGER COMMANDES
 // ============================================
-async function chargerCommandes(userId) {
+async function chargerCommandes(context) {
+  document.getElementById('commandes-section').style.display = 'block';
+  document.getElementById('liste-commandes').innerHTML = '<div class="loading">Chargement de tes commandes...</div>';
+
   try {
-    const { data: commandes, error } = await db.from('commandes')
-      .select('*, boutiques(nom, slug), commande_lignes(*, produits(photos, categorie))')
-      .eq('acheteur_id', userId)
-      .order('created_at', { ascending: false });
+    let commandes;
 
-    if (error) throw error;
-
-    document.getElementById('commandes-section').style.display = 'block';
+    if (context.type === 'user') {
+      const { data, error } = await db.from('commandes')
+        .select('*, boutiques(nom, slug), commande_lignes(*, produits(photos, categorie))')
+        .eq('acheteur_id', context.id)
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      commandes = data;
+    } else {
+      // Guest : chercher par email dans adresse_livraison
+      const { data, error } = await db.from('commandes')
+        .select('*, boutiques(nom, slug), commande_lignes(*, produits(photos, categorie))')
+        .filter('adresse_livraison->>email', 'eq', context.email)
+        .order('created_at', { ascending: false });
+      if (error) throw error;
+      commandes = data;
+    }
 
     if (!commandes || !commandes.length) {
       document.getElementById('nb-commandes').textContent = '';
       document.getElementById('liste-commandes').innerHTML = `
         <div class="empty">
           <div class="empty-icon">🛒</div>
-          <h3>Aucune commande</h3>
-          <p>Tu n'as pas encore passé de commande sur Proxikau.</p>
+          <h3>Aucune commande trouvée</h3>
+          <p>${context.type === 'guest' ? 'Aucune commande trouvée pour cet email. Vérifie l\'email utilisé lors de ta commande.' : 'Tu n\'as pas encore passé de commande sur Proxikau.'}</p>
           <a href="index.html" class="btn-shop">Découvrir les boutiques →</a>
         </div>`;
+      document.getElementById('nb-commandes').textContent = '';
       return;
     }
 
     document.getElementById('nb-commandes').textContent = commandes.length + ' commande' + (commandes.length > 1 ? 's' : '');
-
-    const emojis = {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'};
-
-    document.getElementById('liste-commandes').innerHTML = commandes.map(c => {
-      const timeline = getTimeline(c.statut, c.mode_livraison);
-      const tlHTML = timeline.map((s, i) => `
-        <div class="tl-step">
-          <div class="tl-dot ${s.isDone ? 'done' : s.isActive ? 'active' : ''}">${s.isDone ? '✓' : s.icon}</div>
-          <div class="tl-label ${s.isDone ? 'done' : s.isActive ? 'active' : ''}">${s.label}</div>
-        </div>
-        ${i < timeline.length - 1 ? `<div class="tl-line ${s.isDone ? 'done' : ''}"></div>` : ''}
-      `).join('');
-
-      const lignes = c.commande_lignes || [];
-      const produitsHTML = lignes.map(l => {
-        const photo = l.produits?.photos?.[0];
-        const emoji = emojis[l.produits?.categorie] || '📦';
-        return `<div class="commande-produit">
-          <div class="commande-produit-photo">${photo ? `<img src="${photo}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">` : emoji}</div>
-          <div class="commande-produit-info">
-            <div class="commande-produit-nom">${l.nom_produit}</div>
-            <div class="commande-produit-qty">x${l.quantite}</div>
-          </div>
-          <div class="commande-produit-prix">${parseFloat(l.sous_total).toFixed(2)}€</div>
-        </div>`;
-      }).join('');
-
-      return `<div class="commande-card">
-        <div class="commande-head">
-          <div>
-            <a href="/${c.boutiques?.slug}" class="commande-boutique">🏪 ${c.boutiques?.nom || '—'}</a>
-            <div class="commande-date">Commande du ${new Date(c.created_at).toLocaleDateString('fr-FR', {day:'numeric',month:'long',year:'numeric'})}</div>
-          </div>
-          <span class="badge badge-${c.statut}">${statutLabels[c.statut] || c.statut}</span>
-        </div>
-        <div class="commande-body">
-          ${produitsHTML}
-          <div class="timeline">${tlHTML}</div>
-        </div>
-        <div class="commande-footer">
-          <div>
-            <div class="commande-livraison">${livLabels[c.mode_livraison] || c.mode_livraison}</div>
-            ${c.adresse_livraison?.rue ? `<div style="font-size:12px;color:var(--ink3);">${c.adresse_livraison.rue}, ${c.adresse_livraison.cp} ${c.adresse_livraison.ville}</div>` : ''}
-          </div>
-          <div class="commande-total">${parseFloat(c.montant_total).toFixed(2)}€</div>
-        </div>
-      </div>`;
-    }).join('');
+    document.getElementById('liste-commandes').innerHTML = commandes.map(c => renderCommande(c)).join('');
 
   } catch(e) {
     document.getElementById('liste-commandes').innerHTML = '<p style="color:var(--error);padding:20px;">Erreur : ' + e.message + '</p>';
   }
+}
+
+// ============================================
+// RENDER COMMANDE
+// ============================================
+function renderCommande(c) {
+  const timeline = getTimeline(c.statut, c.mode_livraison);
+  const tlHTML = timeline.map((s, i) => `
+    <div class="tl-step">
+      <div class="tl-dot ${s.isDone?'done':s.isActive?'active':''}">${s.isDone?'✓':s.icon}</div>
+      <div class="tl-label ${s.isDone?'done':s.isActive?'active':''}">${s.label}</div>
+    </div>
+    ${i < timeline.length-1 ? `<div class="tl-line ${s.isDone?'done':''}"></div>` : ''}
+  `).join('');
+
+  const lignes = c.commande_lignes || [];
+  const produitsHTML = lignes.map(l => {
+    const photo = l.produits?.photos?.[0];
+    const emoji = emojis[l.produits?.categorie] || '📦';
+    return `<div class="commande-produit">
+      <div class="commande-produit-photo">${photo?`<img src="${photo}" style="width:44px;height:44px;border-radius:8px;object-fit:cover;">`:`${emoji}`}</div>
+      <div class="commande-produit-info">
+        <div class="commande-produit-nom">${l.nom_produit}</div>
+        <div class="commande-produit-qty">x${l.quantite} · ${parseFloat(l.prix_unitaire).toFixed(2)}€/unité</div>
+      </div>
+      <div class="commande-produit-prix">${parseFloat(l.sous_total).toFixed(2)}€</div>
+    </div>`;
+  }).join('');
+
+  return `<div class="commande-card">
+    <div class="commande-head">
+      <div>
+        <a href="boutique.html?slug=${c.boutiques?.slug}" class="commande-boutique">🏪 ${c.boutiques?.nom||'—'}</a>
+        <div class="commande-date">Commande du ${new Date(c.created_at).toLocaleDateString('fr-FR',{day:'numeric',month:'long',year:'numeric'})}</div>
+      </div>
+      <span class="badge badge-${c.statut}">${statutLabels[c.statut]||c.statut}</span>
+    </div>
+    <div class="commande-body">
+      ${produitsHTML}
+      <div class="timeline">${tlHTML}</div>
+    </div>
+    <div class="commande-footer">
+      <div>
+        <div class="commande-livraison">${livLabels[c.mode_livraison]||c.mode_livraison}</div>
+        ${c.adresse_livraison?.rue?`<div style="font-size:12px;color:var(--ink3);">${c.adresse_livraison.rue}, ${c.adresse_livraison.cp} ${c.adresse_livraison.ville}</div>`:''}
+      </div>
+      <div class="commande-total">${parseFloat(c.montant_total).toFixed(2)}€</div>
+    </div>
+  </div>`;
 }
 </script>
 </body>
