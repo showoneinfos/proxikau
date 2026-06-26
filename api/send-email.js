@@ -1,6 +1,4 @@
 // api/send-email.js — Proxikau
-// Appelé par checkout.html après confirmation commande
-
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -45,7 +43,7 @@ export default async function handler(req, res) {
             <div style="font-size:13px;color:#1B4332;margin-bottom:4px;">Total de ta commande</div>
             <div style="font-size:24px;font-weight:800;color:#1B4332;">${totalGlobal.toFixed(2)}€</div>
           </div>
-          <p style="color:#555;font-size:13px;margin-top:20px;">Les vendeurs vont préparer tes articles et te contacter si besoin. Le paiement sécurisé sera disponible prochainement.</p>
+          <p style="color:#555;font-size:13px;margin-top:20px;">Les vendeurs vont préparer tes articles et te contacter si besoin.</p>
         </div>
         <div style="padding:16px 32px;background:#F9F7F4;border-top:1px solid #E0E0E0;font-size:12px;color:#999;text-align:center;">
           Proxikau — Marketplace des artisans et producteurs locaux
@@ -57,7 +55,7 @@ export default async function handler(req, res) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.RESEND_API_KEY}` },
         body: JSON.stringify({
-          from: 'Proxikau <onboarding@resend.dev>',
+          from: 'Proxikau <noreply@proxikau.com>',
           to: [acheteur_email],
           subject: `✅ Tes ${toutes_commandes.length} commandes Proxikau sont confirmées`,
           html: htmlAcheteur
@@ -90,7 +88,6 @@ export default async function handler(req, res) {
       <div style="padding:28px 32px;">
         <h2 style="font-size:18px;font-weight:700;color:#1A1A1A;margin:0 0 6px;">Tu as une nouvelle commande !</h2>
         <p style="color:#555;font-size:14px;margin:0 0 24px;">Commande #${commande_id.substring(0,8).toUpperCase()} pour ta boutique <strong>${boutique_nom}</strong></p>
-
         <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
           <thead><tr>
             <th style="text-align:left;font-size:12px;color:#999;text-transform:uppercase;padding-bottom:8px;border-bottom:2px solid #eee;">Produit</th>
@@ -99,28 +96,24 @@ export default async function handler(req, res) {
           </tr></thead>
           <tbody>${produitsHTML}</tbody>
         </table>
-
         <div style="background:#F9F7F4;border-radius:10px;padding:16px;margin-bottom:20px;">
           <p style="margin:0 0 8px;font-weight:700;font-size:14px;color:#1A1A1A;">Livraison : ${livLabel}</p>
           ${adresseHTML}
           <p style="margin:8px 0 0;font-size:14px;color:#555;"><strong>Montant total :</strong> <span style="color:#2D6A4F;font-weight:700;">${parseFloat(montant_total).toFixed(2)}€</span></p>
         </div>
-
         <div style="background:#fff;border:1px solid #E0E0E0;border-radius:10px;padding:16px;margin-bottom:24px;">
           <p style="margin:0 0 6px;font-weight:700;font-size:14px;">Coordonnées acheteur</p>
           <p style="margin:0;font-size:14px;color:#555;">${acheteur_nom}</p>
           <p style="margin:0;font-size:14px;color:#555;">${acheteur_email}</p>
           <p style="margin:0;font-size:14px;color:#555;">${acheteur_tel}</p>
         </div>
-
-        <a href="https://proxikau.vercel.app/dashboard" style="display:inline-block;background:#2D6A4F;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">Gérer ma commande →</a>
+        <a href="https://proxikau.com/dashboard" style="display:inline-block;background:#2D6A4F;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">Gérer ma commande →</a>
       </div>
       <div style="padding:16px 32px;background:#F9F7F4;border-top:1px solid #E0E0E0;font-size:12px;color:#999;text-align:center;">
         Proxikau — Marketplace des artisans et producteurs locaux
       </div>
     </div>`;
 
-  // Email acheteur
   const emailAcheteur = `
     <div style="font-family:Inter,sans-serif;max-width:560px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #E0E0E0;">
       <div style="background:linear-gradient(135deg,#1B4332,#2D6A4F);padding:28px 32px;">
@@ -146,24 +139,22 @@ export default async function handler(req, res) {
     </div>`;
 
   try {
-    // Email au vendeur
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.RESEND_API_KEY}` },
       body: JSON.stringify({
-        from: 'Proxikau <noreply@showone.fr>',
+        from: 'Proxikau <noreply@proxikau.com>',
         to: [vendeur_email],
         subject: `🛒 Nouvelle commande — ${boutique_nom}`,
         html: emailVendeur
       })
     });
 
-    // Email à l'acheteur
     await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.RESEND_API_KEY}` },
       body: JSON.stringify({
-        from: 'Proxikau <noreply@showone.fr>',
+        from: 'Proxikau <noreply@proxikau.com>',
         to: [acheteur_email],
         subject: `✅ Commande confirmée — ${boutique_nom}`,
         html: emailAcheteur
