@@ -409,7 +409,7 @@ async function confirmerCommande() {
       }
     }
     btn.textContent = 'Redirection vers le paiement...';
-    const stripeRes = await fetch('/api/stripe?action=checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ commandes: commandesCreees.map(cmd=>({ commande_id: cmd.id, boutique_id: cmd.boutique_id, boutique_nom: cmd.boutique_nom, items: cmd.items.map(it=>({nom:it.nom,qty:it.qty,prix:it.prix})) })), acheteur_email: email, success_url: `${window.location.origin}/mes-commandes.html?paiement=ok`, cancel_url: `${window.location.origin}/checkout.html?paiement=annule` }) });
+    const stripeRes = await fetch('/api/stripe?action=checkout', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ commandes: commandesCreees.map(cmd=>({ commande_id: cmd.id, boutique_id: cmd.boutique_id, boutique_nom: cmd.boutique_nom, items: cmd.items.map(it=>({nom:it.nom,qty:it.qty,prix:it.prix})) })), acheteur_email: email, success_url: `${window.location.origin}/mes-commandes.html?paiement=ok&email=${encodeURIComponent(email)}`, cancel_url: `${window.location.origin}/checkout.html?paiement=annule` }) });
     const stripeData = await stripeRes.json();
     if (stripeData.url) { localStorage.removeItem('proxikau_panier'); window.location.href = stripeData.url; }
     else throw new Error(stripeData.error||'Erreur Stripe');

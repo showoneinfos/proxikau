@@ -282,10 +282,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Non connecté
     document.getElementById('auth-section').style.display = 'block';
 
-    // Si retour paiement sans compte → chercher par email dans localStorage
+    // Si retour paiement sans compte → chercher par email dans URL ou localStorage
     if (params.get('paiement') === 'ok') {
-      const lastEmail = localStorage.getItem('proxikau_last_email');
+      const emailFromUrl = params.get('email');
+      const lastEmail = emailFromUrl || localStorage.getItem('proxikau_last_email');
       if (lastEmail) {
+        localStorage.setItem('proxikau_last_email', lastEmail);
         document.getElementById('auth-section').style.display = 'none';
         document.getElementById('success-banner').style.display = 'block';
         document.getElementById('guest-email-display').textContent = lastEmail;
