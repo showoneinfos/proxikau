@@ -18,8 +18,6 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);}
-
-/* NAV */
 nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:50;}
 .logo{font-size:22px;font-weight:800;color:var(--vert);text-decoration:none;letter-spacing:-0.5px;flex-shrink:0;}
 .logo span{color:var(--terre);}
@@ -34,10 +32,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .btn-panier-nav{position:relative;background:var(--vert);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;display:none;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(45,106,79,.3);text-decoration:none;}
 .btn-panier-nav.visible{display:inline-flex;}
 .panier-nav-count{background:var(--terre);color:#fff;min-width:18px;height:18px;border-radius:9px;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff;}
-@media(max-width:600px){.btn-connexion{display:none;}}
 @media(max-width:600px){.nav-search{display:none;}.btn-connexion{display:none;}}
-
-/* HERO */
 .hero{background:linear-gradient(135deg,var(--vert2) 0%,var(--vert) 100%);padding:28px 20px 36px;text-align:center;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
 .hero-tag{display:inline-block;background:rgba(255,255,255,.15);color:#fff;font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:.5px;}
@@ -52,13 +47,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .hero-stat{text-align:center;color:rgba(255,255,255,.85);}
 .hero-stat strong{display:block;font-size:22px;font-weight:800;color:#fff;}
 .hero-stat span{font-size:12px;}
-
-/* CATEGORIES */
 .section{padding:32px 20px;}
 .section-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;}
 .section-title{font-size:20px;font-weight:700;color:var(--ink);}
-.section-link{font-size:13px;color:var(--vert);text-decoration:none;font-weight:600;}
-
 .cats-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;}
 @media(max-width:600px){.cats-grid{grid-template-columns:repeat(4,1fr);gap:8px;}}
 @media(max-width:360px){.cats-grid{grid-template-columns:repeat(3,1fr);}}
@@ -68,8 +59,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .cat-icon svg{width:28px;height:28px;}
 .cat-pill-label{font-size:10px;font-weight:600;color:var(--ink2);text-align:center;line-height:1.3;}
 .cat-pill:hover .cat-pill-label,.cat-pill.active .cat-pill-label{color:var(--vert2);}
-
-/* BOUTIQUES BOOSTEES */
 .boost-strip{background:var(--terre-light);border-top:1px solid #F0C89A;border-bottom:1px solid #F0C89A;padding:20px;}
 .boost-label{font-size:11px;font-weight:700;color:var(--terre);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px;display:flex;align-items:center;gap:6px;}
 .boost-label::before{content:'⚡';}
@@ -81,14 +70,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .boost-boutique-body{padding:10px;}
 .boost-boutique-nom{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .boost-boutique-ville{font-size:11px;color:var(--ink3);}
-
-/* PRODUITS */
 .produits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 @media(min-width:500px){.produits-grid{gap:16px;}}
 @media(min-width:700px){.produits-grid{grid-template-columns:repeat(3,1fr);}}
 @media(min-width:900px){.produits-grid{grid-template-columns:repeat(4,1fr);}}
 @media(min-width:1100px){.produits-grid{grid-template-columns:repeat(5,1fr);}}
-
 .produit-card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;transition:box-shadow .15s;text-decoration:none;display:block;}
 .produit-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1);}
 .produit-photo{aspect-ratio:1;background:var(--bg);overflow:hidden;position:relative;}
@@ -101,13 +87,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .produit-footer{display:flex;align-items:center;justify-content:space-between;}
 .produit-prix{font-size:15px;font-weight:700;color:var(--vert);}
 .produit-unite{font-size:10px;color:var(--ink3);}
-.livraison-icons{display:flex;gap:3px;font-size:12px;}
-
-/* BOUTIQUES GRID */
 .boutiques-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 @media(min-width:600px){.boutiques-grid{grid-template-columns:repeat(3,1fr);gap:16px;}}
 @media(min-width:900px){.boutiques-grid{grid-template-columns:repeat(4,1fr);}}
-
 .boutique-card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;text-decoration:none;transition:box-shadow .15s;display:block;}
 .boutique-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1);}
 .boutique-card-banner{height:80px;background:linear-gradient(135deg,var(--vert),var(--vert2));display:flex;align-items:center;justify-content:center;font-size:36px;}
@@ -116,20 +98,14 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .boutique-card-meta{font-size:12px;color:var(--ink3);margin-bottom:6px;}
 .boutique-card-tags{display:flex;flex-wrap:wrap;gap:4px;}
 .boutique-tag{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--bg);color:var(--ink3);border:1px solid var(--border);}
-
-/* CTA VENDRE */
 .cta-vendre{background:linear-gradient(135deg,var(--vert2),var(--vert));margin:0 20px 32px;border-radius:16px;padding:28px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;}
 .cta-vendre h3{font-size:20px;font-weight:700;color:#fff;margin-bottom:6px;}
 .cta-vendre p{font-size:14px;color:rgba(255,255,255,.8);}
 .btn-cta{background:#fff;color:var(--vert2);padding:11px 22px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;white-space:nowrap;flex-shrink:0;}
 .btn-cta:hover{background:var(--vert-light);}
-
-/* EMPTY / LOADING */
 .loading{text-align:center;padding:40px;color:var(--ink3);grid-column:1/-1;}
 .empty-state{text-align:center;padding:40px;color:var(--ink3);grid-column:1/-1;}
 .empty-state .ei{font-size:40px;margin-bottom:10px;}
-
-/* FOOTER */
 footer{background:var(--vert2);color:rgba(255,255,255,.7);text-align:center;padding:24px 20px;font-size:13px;margin-top:40px;}
 footer a{color:rgba(255,255,255,.7);text-decoration:none;}
 footer strong{color:#fff;}
@@ -137,7 +113,6 @@ footer strong{color:#fff;}
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <a href="/" class="logo">Proxi<span>kau</span></a>
   <div class="nav-search">
@@ -148,12 +123,12 @@ footer strong{color:#fff;}
     <a href="#" class="btn-panier-nav" id="btn-panier-nav" onclick="allerAuPanier(event)">
       🛒 Panier <span class="panier-nav-count" id="panier-nav-count">0</span>
     </a>
-    <a href="connexion.html" class="btn-connexion" id="nav-compte">Se connecter</a>
+    <a href="mes-commandes.html" class="btn-connexion" id="nav-commandes">Mes commandes</a>
+    <a href="dashboard.html" class="btn-connexion" id="nav-compte" style="display:none;">Mon espace</a>
     <a href="inscription.html" class="btn-vendre">Vendre →</a>
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-tag">🌍 Marketplace mondiale des artisans</div>
   <h1>Le meilleur des producteurs locaux, près de chez vous</h1>
@@ -169,94 +144,80 @@ footer strong{color:#fff;}
   </div>
 </div>
 
-<!-- CATEGORIES -->
 <div class="section">
   <div class="section-head">
     <div class="section-title">Parcourir par catégorie</div>
   </div>
   <div class="cats-grid">
-
     <a class="cat-pill active" onclick="filtrerCat('tous',this)" href="#">
       <div class="cat-icon" style="background:#F0F4F8;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#4A5568" stroke-width="2"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 001.98 1.61h9.72a2 2 0 001.98-1.61L23 6H6"/></svg>
       </div>
       <span class="cat-pill-label">Tout voir</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('viande-charcuterie',this)" href="#">
       <div class="cat-icon" style="background:#FFF0F0;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#C0392B" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/><path d="M8 12c0-2.21 1.79-4 4-4s4 1.79 4 4-1.79 4-4 4-4-1.79-4-4z"/></svg>
       </div>
       <span class="cat-pill-label">Viande & Charcuterie</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('fromage-laitier',this)" href="#">
       <div class="cat-icon" style="background:#FFFBEA;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#D4A017" stroke-width="2"><path d="M3 19h18M3 19l3-10h12l3 10M9 19V9m6 10V9"/><circle cx="12" cy="6" r="3"/></svg>
       </div>
       <span class="cat-pill-label">Fromage & Laitier</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('vins-bieres',this)" href="#">
       <div class="cat-icon" style="background:#F5F0FF;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><path d="M8 22h8M12 11v11M5 2h14l-2 9a5 5 0 01-10 0L5 2z"/></svg>
       </div>
       <span class="cat-pill-label">Vins & Bières</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('epicerie-terroir',this)" href="#">
       <div class="cat-icon" style="background:#F0FFF4;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#2D6A4F" stroke-width="2"><path d="M3 3h18v18H3zM3 9h18M9 21V9"/></svg>
       </div>
       <span class="cat-pill-label">Épicerie Terroir</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('fruits-legumes',this)" href="#">
       <div class="cat-icon" style="background:#F0FFF4;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#27AE60" stroke-width="2"><path d="M12 2a9 9 0 019 9c0 5-4 9-9 11C7 20 3 16 3 11a9 9 0 019-9z"/><path d="M12 2v20M3.5 9h17"/></svg>
       </div>
       <span class="cat-pill-label">Fruits & Légumes</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('miel-confitures',this)" href="#">
       <div class="cat-icon" style="background:#FFFBEA;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
       </div>
       <span class="cat-pill-label">Miel & Confitures</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('huiles-condiments',this)" href="#">
       <div class="cat-icon" style="background:#F5FFF0;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#5D8A3C" stroke-width="2"><path d="M9 3h6v5a3 3 0 01-3 3 3 3 0 01-3-3V3zM6 21h12M12 11v10"/></svg>
       </div>
       <span class="cat-pill-label">Huiles & Condiments</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('savons-cosmetiques',this)" href="#">
       <div class="cat-icon" style="background:#FFF0FA;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#9D4EDD" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"/></svg>
       </div>
       <span class="cat-pill-label">Savons & Cosmétiques</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('bougies-deco',this)" href="#">
       <div class="cat-icon" style="background:#FFF8F0;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#BC6C25" stroke-width="2"><path d="M12 2c0 0-2 2-2 4.5a2 2 0 004 0C14 4 12 2 12 2z"/><rect x="8" y="8" width="8" height="14" rx="1"/><path d="M8 13h8"/></svg>
       </div>
       <span class="cat-pill-label">Bougies & Déco</span>
     </a>
-
     <a class="cat-pill" onclick="filtrerCat('oeufs-volaille',this)" href="#">
       <div class="cat-icon" style="background:#FFFDE7;">
         <svg viewBox="0 0 24 24" fill="none" stroke="#F9A825" stroke-width="2"><ellipse cx="12" cy="13" rx="6" ry="8"/><path d="M9 6c0-2 1.5-4 3-4s3 2 3 4"/></svg>
       </div>
       <span class="cat-pill-label">Œufs & Volaille</span>
     </a>
-
   </div>
 </div>
 
-<!-- BOUTIQUES BOOSTEES -->
 <div id="boost-section" style="display:none;">
   <div class="boost-strip">
     <div class="boost-label">Boutiques à la une</div>
@@ -264,7 +225,6 @@ footer strong{color:#fff;}
   </div>
 </div>
 
-<!-- PRODUITS -->
 <div class="section">
   <div class="section-head">
     <div class="section-title" id="produits-titre">Produits du moment</div>
@@ -274,7 +234,6 @@ footer strong{color:#fff;}
   </div>
 </div>
 
-<!-- BOUTIQUES -->
 <div class="section" id="boutiques-section" style="display:block;">
   <div class="section-head">
     <div class="section-title">Nos boutiques</div>
@@ -284,7 +243,6 @@ footer strong{color:#fff;}
   </div>
 </div>
 
-<!-- CTA VENDRE -->
 <div class="cta-vendre">
   <div>
     <h3>Tu es artisan ou producteur ?</h3>
@@ -293,7 +251,6 @@ footer strong{color:#fff;}
   <a href="inscription.html" class="btn-cta">Ouvrir ma boutique →</a>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <strong>Proxikau</strong> — Marketplace mondiale des artisans et producteurs locaux<br>
   <div style="margin-top:8px;display:flex;justify-content:center;gap:16px;flex-wrap:wrap;">
@@ -301,7 +258,7 @@ footer strong{color:#fff;}
     <a href="mentions-legales.html">Mentions légales</a>
     <a href="comment-ca-marche.html">Comment ça marche</a>
     <a href="inscription.html">Vendre sur Proxikau</a>
-    <a href="connexion.html">Espace vendeur</a>
+    <a href="mes-commandes.html">Mes commandes</a>
   </div>
 </footer>
 
@@ -311,11 +268,7 @@ let tousLesProduits = [];
 let toutesLesBoutiques = [];
 let catActive = 'tous';
 
-// ============================================
-// INIT
-// ============================================
 document.addEventListener('DOMContentLoaded', async () => {
-  // Lire panier du localStorage
   try {
     const saved = localStorage.getItem('proxikau_panier');
     if (saved) {
@@ -331,22 +284,21 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   } catch(e) {}
 
-  // Vérifier connexion
+  // Vérifier connexion — si vendeur, afficher "Mon espace"
   const user = await getUtilisateurConnecte();
   if (user) {
-    const el = document.getElementById('nav-compte');
-    el.textContent = 'Mon espace';
-    el.href = 'dashboard.html';
+    try {
+      const maB = await getBoutiqueParUserId(user.id);
+      if (maB) {
+        document.getElementById('nav-compte').style.display = 'inline-block';
+      }
+    } catch(e) {}
   }
 
-  // Charger données
   await Promise.all([chargerProduits(), chargerBoutiques(), chargerBoosts()]);
   majStats();
 });
 
-// ============================================
-// CHARGEMENT
-// ============================================
 async function chargerProduits() {
   try {
     const { data, error } = await db.from('produits')
@@ -396,21 +348,12 @@ function majStats() {
   document.getElementById('stat-produits').textContent = tousLesProduits.length || '0';
 }
 
-// ============================================
-// AFFICHAGE PRODUITS
-// ============================================
 function afficherProduits(list) {
   const el = document.getElementById('produits-grid');
-  if (!list.length) {
-    el.innerHTML = '<div class="empty-state"><div class="ei">📦</div><p>Aucun produit dans cette catégorie.</p></div>';
-    return;
-  }
+  if (!list.length) { el.innerHTML = '<div class="empty-state"><div class="ei">📦</div><p>Aucun produit dans cette catégorie.</p></div>'; return; }
   el.innerHTML = list.map(p => {
     const slug = p.boutiques?.slug || '';
-    const photo = p.photos && p.photos.length
-      ? `<img src="${p.photos[0]}" alt="${p.nom}" loading="lazy">`
-      : `<div class="produit-placeholder">${emojis[p.categorie] || '📦'}</div>`;
-    const livraisons = [];
+    const photo = p.photos && p.photos.length ? `<img src="${p.photos[0]}" alt="${p.nom}" loading="lazy">` : `<div class="produit-placeholder">${emojis[p.categorie] || '📦'}</div>`;
     return `<a class="produit-card" href="/${slug}">
       <div class="produit-photo">${photo}</div>
       <div class="produit-body">
@@ -428,22 +371,14 @@ function afficherProduits(list) {
   }).join('');
 }
 
-// ============================================
-// AFFICHAGE BOUTIQUES
-// ============================================
-const catLabels = {'viande-charcuterie':'🥩 Charcuterie','fromage-laitier':'🧀 Fromage','vins-bieres':'🍷 Vins & Bières','epicerie-terroir':'🫙 Épicerie','fruits-legumes':'🥦 Fruits & Légumes','miel-confitures':'🍯 Miel','huiles-condiments':'🫒 Huiles','savons-cosmetiques':'🧴 Cosmétiques','bougies-deco':'🕯️ Déco'};
+const catLabels = {'viande-charcuterie':'🥩 Charcuterie','fromage-laitier':'🧀 Fromage','vins-bieres':'🍷 Vins & Bières','epicerie-terroir':'🫙 Épicerie','fruits-legumes':'🥦 Fruits & Légumes','miel-confitures':'🍯 Miel','huiles-condiments':'🫒 Huiles','savons-cosmetiques':'🧴 Cosmétiques','bougies-deco':'🕯️ Déco','oeufs-volaille':'🥚 Œufs & Volaille'};
 
 function afficherBoutiques(list) {
   const el = document.getElementById('boutiques-grid');
-  if (!list.length) {
-    el.innerHTML = '<div class="empty-state"><div class="ei">🏪</div><p>Aucune boutique pour l\'instant.</p></div>';
-    return;
-  }
+  if (!list.length) { el.innerHTML = '<div class="empty-state"><div class="ei">🏪</div><p>Aucune boutique pour l\'instant.</p></div>'; return; }
   el.innerHTML = list.map(b => {
-    const nomCourt = b.nom.length > 14 ? b.nom.substring(0,14) : b.nom;
     const fontSize = b.nom.length > 14 ? '15px' : b.nom.length > 10 ? '18px' : '22px';
-    return `
-    <a class="boutique-card" href="/${b.slug}">
+    return `<a class="boutique-card" href="/${b.slug}">
       <div class="boutique-card-banner" style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;">
         <span style="font-family:Georgia,serif;font-style:italic;font-weight:800;font-size:${fontSize};color:#fff;text-align:center;padding:0 8px;line-height:1.3;text-shadow:0 2px 8px rgba(0,0,0,.3);">${b.nom}</span>
         <span style="background:rgba(255,255,255,.18);color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px;font-family:Inter,sans-serif;font-style:normal;">${catLabels[b.categorie] || b.categorie}</span>
@@ -463,9 +398,6 @@ function afficherBoutiques(list) {
   }).join('');
 }
 
-// ============================================
-// BOOSTS
-// ============================================
 function afficherBoosts(list) {
   document.getElementById('boost-boutiques').innerHTML = list.map(b => `
     <a class="boost-boutique-card" href="/${b.slug}">
@@ -474,13 +406,9 @@ function afficherBoosts(list) {
         <div class="boost-boutique-nom">${b.nom}</div>
         <div class="boost-boutique-ville">📍 ${b.ville || ''}</div>
       </div>
-    </a>
-  `).join('');
+    </a>`).join('');
 }
 
-// ============================================
-// FILTRES CATEGORIES
-// ============================================
 function filtrerCat(cat, el) {
   document.querySelectorAll('.cat-pill').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
@@ -488,15 +416,10 @@ function filtrerCat(cat, el) {
   const filtered = cat === 'tous' ? tousLesProduits : tousLesProduits.filter(p => p.categorie === cat);
   document.getElementById('produits-titre').textContent = cat === 'tous' ? 'Produits du moment' : (emojis[cat] || '') + ' ' + cat.replace('-', ' & ');
   afficherProduits(filtered);
-  // Scroll vers produits
   document.getElementById('produits-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ============================================
-// RECHERCHE
-// ============================================
 let searchTimeout = null;
-
 function rechercherLive(q) {
   clearTimeout(searchTimeout);
   searchTimeout = setTimeout(() => { rechercher(q); }, 400);
@@ -504,7 +427,6 @@ function rechercherLive(q) {
 
 function rechercher(q) {
   const ql = (q || '').toLowerCase().trim();
-
   if (!ql) {
     afficherProduits(tousLesProduits);
     afficherBoutiques(toutesLesBoutiques);
@@ -512,16 +434,12 @@ function rechercher(q) {
     document.getElementById('boutiques-section').style.display = 'block';
     return;
   }
-
-  // Filtrer produits
   const prodsFiltres = tousLesProduits.filter(p =>
     p.nom.toLowerCase().includes(ql) ||
     (p.description && p.description.toLowerCase().includes(ql)) ||
     (p.boutiques?.nom && p.boutiques.nom.toLowerCase().includes(ql)) ||
     p.categorie.replace(/-/g,' ').includes(ql)
   );
-
-  // Filtrer boutiques
   const boutsFiltrees = toutesLesBoutiques.filter(b =>
     b.nom.toLowerCase().includes(ql) ||
     b.slug.toLowerCase().includes(ql) ||
@@ -529,14 +447,12 @@ function rechercher(q) {
     (b.region && b.region.toLowerCase().includes(ql)) ||
     b.categorie.replace(/-/g,' ').includes(ql)
   );
-
-  document.getElementById('produits-titre').textContent =
-    prodsFiltres.length ? `${prodsFiltres.length} résultat${prodsFiltres.length > 1 ? 's' : ''} pour "${q}"` : `Aucun produit pour "${q}"`;
-
+  document.getElementById('produits-titre').textContent = prodsFiltres.length ? `${prodsFiltres.length} résultat${prodsFiltres.length > 1 ? 's' : ''} pour "${q}"` : `Aucun produit pour "${q}"`;
   afficherProduits(prodsFiltres);
   afficherBoutiques(boutsFiltrees);
   document.getElementById('boutiques-section').style.display = boutsFiltrees.length ? 'block' : 'none';
 }
+
 function allerAuPanier(e) {
   e.preventDefault();
   const btn = document.getElementById('btn-panier-nav');
