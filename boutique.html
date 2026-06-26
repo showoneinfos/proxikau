@@ -17,8 +17,6 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);}
-
-/* NAV */
 nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 20px;gap:12px;position:sticky;top:0;z-index:50;}
 .logo{font-size:20px;font-weight:700;color:var(--vert);text-decoration:none;}
 .logo span{color:var(--terre);}
@@ -30,18 +28,10 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .panier-count{position:absolute;top:-8px;right:-8px;background:var(--terre);color:#fff;min-width:20px;height:20px;border-radius:10px;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 5px;display:none;box-shadow:0 2px 6px rgba(188,108,37,.5);border:2px solid #fff;animation:pop .25s ease;}
 @keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
 .btn-connexion{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
-
-/* BANNIERE */
 .banniere{height:240px;background:linear-gradient(135deg,#0D2B1F 0%,#1B4332 40%,#2D6A4F 70%,#40916C 100%);position:relative;overflow:hidden;display:flex;align-items:flex-end;}
 @media(min-width:600px){.banniere{height:280px;}}
-.banniere-pattern{position:absolute;inset:0;width:100%;height:100%;}
-.banniere-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-.banniere-img-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,rgba(0,0,0,.1) 100%);}
 .banniere-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .banniere-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 60%);}
-.banniere-content{position:relative;z-index:2;padding:20px;width:100%;}
-
-/* PROFIL BOUTIQUE */
 .boutique-header{background:var(--white);border-bottom:1px solid var(--border);padding:16px 20px 20px;}
 .boutique-header-inner{max-width:1000px;margin:0 auto;display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;}
 .boutique-logo{width:80px;height:80px;border-radius:50%;background:linear-gradient(145deg,#40916C,#1B4332);border:4px solid var(--white);box-shadow:0 4px 16px rgba(0,0,0,.2);display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;margin-top:-24px;position:relative;z-index:2;overflow:hidden;}
@@ -53,23 +43,15 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .boutique-livraisons{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;}
 .liv-badge{font-size:12px;padding:4px 10px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--ink2);font-weight:500;}
 .note-badge{display:inline-flex;align-items:center;gap:4px;background:var(--terre-light);color:var(--terre);padding:4px 10px;border-radius:20px;font-size:13px;font-weight:600;}
-
-/* LAYOUT */
 .layout{max-width:1000px;margin:0 auto;padding:24px 16px;}
-
-/* FILTRES */
 .filtres{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;margin-bottom:20px;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
 .filtres::-webkit-scrollbar{display:none;}
 .filtre-btn{flex-shrink:0;padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:var(--white);font-family:var(--sans);font-size:13px;font-weight:500;color:var(--ink2);cursor:pointer;transition:all .15s;white-space:nowrap;}
 .filtre-btn:hover,.filtre-btn.active{border-color:var(--vert);background:var(--vert-light);color:var(--vert2);}
-
-/* PRODUITS GRID */
 .produits-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;}
 @media(min-width:500px){.produits-grid{grid-template-columns:repeat(2,1fr);gap:16px;}}
 @media(min-width:768px){.produits-grid{grid-template-columns:repeat(3,1fr);}}
 @media(min-width:900px){.produits-grid{grid-template-columns:repeat(4,1fr);}}
-
-/* PRODUIT CARD */
 .produit-card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;transition:box-shadow .15s;cursor:pointer;}
 .produit-card:hover{box-shadow:0 4px 20px rgba(0,0,0,.1);}
 .produit-photo{aspect-ratio:1;background:var(--bg);position:relative;overflow:hidden;}
@@ -85,15 +67,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn-ajouter{width:32px;height:32px;border-radius:8px;background:var(--vert);color:#fff;border:none;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .15s;}
 .btn-ajouter:hover{background:var(--vert2);}
 .stock-badge{font-size:10px;color:var(--error);font-weight:600;}
-
-/* EMPTY */
 .empty{text-align:center;padding:48px 20px;color:var(--ink3);}
 .empty-icon{font-size:48px;margin-bottom:12px;}
-
-/* LOADING */
 .loading{text-align:center;padding:48px;color:var(--ink3);}
-
-/* MODAL PRODUIT */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end;justify-content:center;}
 .modal-overlay.open{display:flex;}
 @media(min-width:600px){.modal-overlay{align-items:center;padding:20px;}}
@@ -117,8 +93,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .qty-val{font-size:18px;font-weight:700;min-width:32px;text-align:center;}
 .btn-add-panier{width:100%;padding:14px;border-radius:10px;background:var(--vert);color:#fff;border:none;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;}
 .btn-add-panier:hover{background:var(--vert2);}
-
-/* MINI PANIER */
 .panier-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300;display:none;align-items:flex-end;justify-content:flex-end;}
 .panier-overlay.open{display:flex;}
 @media(min-width:600px){.panier-overlay{padding:20px;align-items:flex-start;}}
@@ -143,12 +117,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn-commander{width:100%;padding:14px;border-radius:10px;background:var(--vert);color:#fff;border:none;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;}
 .btn-commander:hover{background:var(--vert2);}
 .panier-empty{text-align:center;padding:40px 20px;color:var(--ink3);}
-
-/* LIVRAISON CHOIX (dans panier) */
-.livraison-options{display:flex;flex-direction:column;gap:8px;margin-bottom:14px;}
-.liv-option{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;font-size:14px;transition:all .15s;}
-.liv-option.selected{border-color:var(--vert);background:var(--vert-light);}
-.liv-option input{accent-color:var(--vert);}
 </style>
 </head>
 <body>
@@ -164,48 +132,19 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
   </div>
 </nav>
 
-<!-- BANNIERE -->
 <div class="banniere" id="banniere">
-  <!-- Illustration terroir -->
   <svg style="position:absolute;inset:0;width:100%;height:100%;" viewBox="0 0 1440 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-    <!-- Collines en arrière plan -->
     <ellipse cx="200" cy="220" rx="320" ry="160" fill="rgba(64,145,108,0.22)"/>
     <ellipse cx="800" cy="240" rx="400" ry="180" fill="rgba(45,106,79,0.18)"/>
     <ellipse cx="1300" cy="210" rx="280" ry="150" fill="rgba(64,145,108,0.2)"/>
-    <!-- Soleil -->
     <circle cx="1320" cy="50" r="44" fill="rgba(255,220,100,0.15)"/>
     <circle cx="1320" cy="50" r="30" fill="rgba(255,220,100,0.2)"/>
-    <!-- Rayons soleil -->
-    <line x1="1320" y1="5" x2="1320" y2="-5" stroke="rgba(255,220,100,0.15)" stroke-width="2"/>
-    <line x1="1356" y1="14" x2="1364" y2="6" stroke="rgba(255,220,100,0.12)" stroke-width="2"/>
-    <line x1="1365" y1="50" x2="1375" y2="50" stroke="rgba(255,220,100,0.12)" stroke-width="2"/>
-    <!-- Arbre gauche -->
     <rect x="60" y="100" width="8" height="60" fill="rgba(255,255,255,0.08)"/>
     <ellipse cx="64" cy="90" rx="28" ry="36" fill="rgba(64,145,108,0.3)"/>
-    <ellipse cx="52" cy="100" rx="20" ry="26" fill="rgba(45,106,79,0.25)"/>
-    <ellipse cx="76" cy="98" rx="22" ry="28" fill="rgba(64,145,108,0.28)"/>
-    <!-- Arbre droite -->
-    <rect x="1360" y="110" width="7" height="50" fill="rgba(255,255,255,0.07)"/>
-    <ellipse cx="1363" cy="100" rx="24" ry="32" fill="rgba(64,145,108,0.28)"/>
-    <ellipse cx="1352" cy="108" rx="18" ry="22" fill="rgba(45,106,79,0.22)"/>
-    <!-- Petite maison centre -->
     <rect x="690" y="120" width="60" height="50" fill="rgba(255,255,255,0.07)" rx="2"/>
     <polygon points="685,122 720,95 755,122" fill="rgba(255,200,100,0.12)"/>
-    <rect x="706" y="138" width="14" height="18" fill="rgba(255,255,255,0.1)" rx="1"/>
-    <!-- Champs/sillons -->
-    <path d="M100 175 Q300 165 500 172 Q700 178 900 168 Q1100 158 1340 170" stroke="rgba(255,255,255,0.06)" stroke-width="1.5" fill="none"/>
-    <path d="M100 185 Q300 175 500 182 Q700 188 900 178 Q1100 168 1340 180" stroke="rgba(255,255,255,0.05)" stroke-width="1" fill="none"/>
-    <path d="M100 195 Q300 185 500 192 Q700 198 900 188 Q1100 178 1340 190" stroke="rgba(255,255,255,0.04)" stroke-width="1" fill="none"/>
-    <!-- Etoiles/points lumineux -->
-    <circle cx="400" cy="30" r="1.5" fill="rgba(255,255,255,0.2)"/>
-    <circle cx="600" cy="20" r="1" fill="rgba(255,255,255,0.15)"/>
-    <circle cx="900" cy="35" r="1.5" fill="rgba(255,255,255,0.18)"/>
-    <circle cx="200" cy="50" r="1" fill="rgba(255,255,255,0.12)"/>
-    <circle cx="1100" cy="25" r="2" fill="rgba(255,255,255,0.14)"/>
   </svg>
-  <!-- Dégradé bas pour lisibilité du texte -->
   <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,transparent 70%);"></div>
-  <!-- Banniere centree elegante -->
   <div style="position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:rgba(0,0,0,.42);">
     <div style="color:#fff;font-size:16px;font-weight:800;letter-spacing:6px;text-transform:uppercase;margin-bottom:12px;text-shadow:0 2px 8px rgba(0,0,0,.5);">✦ &nbsp;Bienvenue sur la boutique de&nbsp; ✦</div>
     <div style="height:1px;width:120px;background:rgba(255,255,255,.3);margin-bottom:14px;"></div>
@@ -215,7 +154,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
   </div>
 </div>
 
-<!-- HEADER BOUTIQUE -->
 <div class="boutique-header">
   <div class="boutique-header-inner">
     <div class="boutique-logo" id="boutique-logo">🏪</div>
@@ -234,7 +172,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
   </div>
 </div>
 
-<!-- PRODUITS -->
 <div class="layout">
   <div class="filtres" id="filtres">
     <button class="filtre-btn active" onclick="filtrer('tous',this)">Tous</button>
@@ -297,33 +234,19 @@ let produits = [];
 let produitActif = null;
 let qtyActuelle = 1;
 let panier = [];
-let livraisonSelectionnee = null;
 let filtreCourant = 'tous';
 
 const emojis = {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'};
 
-// ============================================
-// INIT
-// ============================================
 document.addEventListener('DOMContentLoaded', async () => {
-  // Charger panier sauvegardé
   try {
     const saved = localStorage.getItem('proxikau_panier');
-    if (saved) {
-      const data = JSON.parse(saved);
-      panier = data.items || [];
-      majPanierCount();
-    }
+    if (saved) { const data = JSON.parse(saved); panier = data.items || []; majPanierCount(); }
   } catch(e) {}
 
-  // Récupérer slug depuis URL
   const params = new URLSearchParams(window.location.search);
   const slug = params.get('slug') || window.location.pathname.split('/').pop().replace('.html','');
-
-  if (!slug || slug === 'boutique') {
-    document.getElementById('boutique-nom').textContent = 'Boutique introuvable';
-    return;
-  }
+  if (!slug || slug === 'boutique') { document.getElementById('boutique-nom').textContent = 'Boutique introuvable'; return; }
 
   try {
     boutique = await getBoutiqueParSlug(slug);
@@ -336,59 +259,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     document.getElementById('boutique-nom').textContent = 'Boutique introuvable';
     document.getElementById('produits-grid').innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">😕</div><p>Cette boutique n\'existe pas ou n\'est plus disponible.</p></div>';
   }
-
-  // Vérifier si connecté
-  const user = await getUtilisateurConnecte();
-  if (user) document.getElementById('nav-compte').textContent = 'Mon compte';
 });
 
-// ============================================
-// AFFICHAGE BOUTIQUE
-// ============================================
 async function afficherBoutique() {
   document.title = boutique.nom + ' — Proxikau';
   document.getElementById('boutique-nom').textContent = boutique.nom;
-  // Remplir bannière
   const banNom = document.getElementById('banniere-nom');
   const banVille = document.getElementById('banniere-ville');
   if (banNom) banNom.textContent = boutique.nom;
   if (banVille && boutique.ville) banVille.innerHTML = '📍 ' + boutique.ville + (boutique.region ? ', ' + boutique.region : '');
-  document.getElementById('boutique-logo').textContent = emojis[boutique.categorie] || '🏪';
 
   if (boutique.photo_banniere) {
     document.getElementById('banniere').innerHTML = `<img class="banniere-img" src="${boutique.photo_banniere}"><div class="banniere-overlay"></div>`;
-  } else {
-    document.getElementById('banniere').style.cssText = 'background: linear-gradient(135deg,#1B4332 0%,#2D6A4F 100%);';
   }
 
   const meta = [];
   if (boutique.ville) meta.push('📍 ' + boutique.ville + (boutique.region ? ', ' + boutique.region : ''));
   document.getElementById('boutique-ville').textContent = meta.join(' · ');
-
-  if (boutique.note_moyenne > 0) {
-    document.getElementById('boutique-note').innerHTML = `<span class="note-badge">★ ${boutique.note_moyenne} (${boutique.nb_avis} avis)</span>`;
-  }
-
+  if (boutique.note_moyenne > 0) document.getElementById('boutique-note').innerHTML = `<span class="note-badge">★ ${boutique.note_moyenne} (${boutique.nb_avis} avis)</span>`;
   if (boutique.description) document.getElementById('boutique-desc').textContent = boutique.description;
+
   const catLabels = {'viande-charcuterie':'🥩 Charcuterie','fromage-laitier':'🧀 Fromage','vins-bieres':'🍷 Vins','epicerie-terroir':'🫙 Épicerie','fruits-legumes':'🥦 Fruits & Légumes','miel-confitures':'🍯 Miel','huiles-condiments':'🫒 Huiles','savons-cosmetiques':'🧴 Cosmétiques','bougies-deco':'🕯️ Déco','oeufs-volaille':'🥚 Œufs & Volaille'};
   const catBadge = document.getElementById('boutique-cat-badge');
   if (catBadge && boutique.categorie) catBadge.textContent = catLabels[boutique.categorie] || boutique.categorie;
-  // Logo = nom de la boutique en italic Georgia
+
   const logoEl = document.getElementById('boutique-logo');
   if (boutique.photo_logo) {
     logoEl.innerHTML = `<img src="${boutique.photo_logo}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`;
   } else {
-    const nomCourt = boutique.nom.length > 12 ? boutique.nom.substring(0, 12) : boutique.nom;
     logoEl.innerHTML = `<span style="font-family:Georgia,serif;font-style:italic;font-weight:800;font-size:${boutique.nom.length > 8 ? '11px' : '14px'};color:#fff;text-align:center;line-height:1.2;padding:4px;">${boutique.nom}</span>`;
-  }
-
-  // Bouton boost visible seulement pour le vendeur proprio
-  const user = await getUtilisateurConnecte();
-  if (user) {
-    const maB = await getBoutiqueParUserId(user.id);
-    if (maB && maB.id === boutique.id) {
-      // boost button removed from public view
-    }
   }
 
   const livEl = document.getElementById('boutique-livraisons');
@@ -397,46 +296,35 @@ async function afficherBoutique() {
   if (boutique.livraison_proximite) livEl.innerHTML += `<span class="liv-badge">🚗 Livraison ~${boutique.rayon_proximite_km}km</span>`;
 }
 
-// ============================================
-// PRODUITS
-// ============================================
 function construireFiltres() {
   const cats = [...new Set(produits.map(p => p.categorie))];
   const el = document.getElementById('filtres');
   el.innerHTML = '<button class="filtre-btn active" onclick="filtrer(\'tous\',this)">Tous</button>';
-  cats.forEach(cat => {
-    el.innerHTML += `<button class="filtre-btn" onclick="filtrer('${cat}',this)">${emojis[cat] || ''} ${cat.replace('-',' ')}</button>`;
-  });
+  cats.forEach(cat => { el.innerHTML += `<button class="filtre-btn" onclick="filtrer('${cat}',this)">${emojis[cat]||''} ${cat.replace('-',' ')}</button>`; });
 }
 
 function filtrer(cat, btn) {
   document.querySelectorAll('.filtre-btn').forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   filtreCourant = cat;
-  const filtered = cat === 'tous' ? produits : produits.filter(p => p.categorie === cat);
-  afficherProduits(filtered);
+  afficherProduits(cat === 'tous' ? produits : produits.filter(p => p.categorie === cat));
 }
 
 function afficherProduits(list) {
   const el = document.getElementById('produits-grid');
-  if (!list.length) {
-    el.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📦</div><p>Aucun produit dans cette catégorie.</p></div>';
-    return;
-  }
+  if (!list.length) { el.innerHTML = '<div class="empty" style="grid-column:1/-1"><div class="empty-icon">📦</div><p>Aucun produit dans cette catégorie.</p></div>'; return; }
   el.innerHTML = list.map(p => {
-    const photo = p.photos && p.photos.length
-      ? `<img src="${p.photos[0]}" alt="${p.nom}" loading="lazy">`
-      : `<div class="produit-photo-placeholder">${emojis[p.categorie] || '📦'}</div>`;
+    const photo = p.photos && p.photos.length ? `<img src="${p.photos[0]}" alt="${p.nom}" loading="lazy">` : `<div class="produit-photo-placeholder">${emojis[p.categorie]||'📦'}</div>`;
     const stockBas = !p.stock_illimite && p.stock > 0 && p.stock <= 5;
     return `<div class="produit-card" onclick="ouvrirModalProduit('${p.id}')">
       <div class="produit-photo">${photo}</div>
       <div class="produit-body">
         <div class="produit-nom">${p.nom}</div>
-        ${p.description ? `<div class="produit-desc-short">${p.description}</div>` : ''}
+        ${p.description?`<div class="produit-desc-short">${p.description}</div>`:''}
         <div class="produit-footer">
           <div>
             <div class="produit-prix">${parseFloat(p.prix).toFixed(2)}€</div>
-            <div class="produit-unite">/ ${p.unite}${stockBas ? ` · <span class="stock-badge">Plus que ${p.stock} !</span>` : ''}</div>
+            <div class="produit-unite">/ ${p.unite}${stockBas?` · <span class="stock-badge">Plus que ${p.stock} !</span>`:''}</div>
           </div>
           <button class="btn-ajouter" onclick="event.stopPropagation();ajouterDirectement('${p.id}')">+</button>
         </div>
@@ -445,29 +333,20 @@ function afficherProduits(list) {
   }).join('');
 }
 
-// ============================================
-// MODAL PRODUIT
-// ============================================
 function ouvrirModalProduit(id) {
   const p = produits.find(x => x.id === id);
   if (!p) return;
-  produitActif = p;
-  qtyActuelle = 1;
-
-  // Reset complet du modal
+  produitActif = p; qtyActuelle = 1;
   document.getElementById('modal-produit').classList.remove('open');
   document.getElementById('qty-val').textContent = 1;
   document.getElementById('modal-nom').textContent = p.nom;
   document.getElementById('modal-prix').textContent = parseFloat(p.prix).toFixed(2) + '€ / ' + p.unite;
   document.getElementById('modal-desc').textContent = p.description || '';
-
-  // Reset photo — force le rechargement
   const photosEl = document.getElementById('modal-photos');
   photosEl.innerHTML = '';
   if (p.photos && p.photos.length) {
     const img = document.createElement('img');
-    img.src = p.photos[0] + '?t=' + Date.now();
-    img.alt = p.nom;
+    img.src = p.photos[0]; img.alt = p.nom;
     img.style.cssText = 'width:100%;height:100%;object-fit:cover;display:block;';
     photosEl.appendChild(img);
   } else {
@@ -476,112 +355,43 @@ function ouvrirModalProduit(id) {
     div.textContent = emojis[p.categorie] || '📦';
     photosEl.appendChild(div);
   }
-
-  const stockEl = document.getElementById('modal-stock');
-  stockEl.textContent = (!p.stock_illimite && p.stock <= 5) ? 'Plus que ' + p.stock + ' !' : '';
-
+  document.getElementById('modal-stock').textContent = (!p.stock_illimite && p.stock <= 5) ? 'Plus que ' + p.stock + ' !' : '';
   const livEl = document.getElementById('modal-livraisons');
   livEl.innerHTML = '';
   if (boutique.livraison_colis) livEl.innerHTML += '<span class="liv-badge">📦 Colis</span>';
   if (boutique.livraison_enlevement) livEl.innerHTML += '<span class="liv-badge">🏠 Enlèvement</span>';
   if (boutique.livraison_proximite) livEl.innerHTML += `<span class="liv-badge">🚗 ~${boutique.rayon_proximite_km}km</span>`;
-
-  // Ouvrir après un court délai pour forcer le re-render
-  requestAnimationFrame(() => {
-    document.getElementById('modal-produit').classList.add('open');
-    document.body.style.overflow = 'hidden';
-  });
+  requestAnimationFrame(() => { document.getElementById('modal-produit').classList.add('open'); document.body.style.overflow = 'hidden'; });
 }
 
-function fermerModalProduit() {
-  document.getElementById('modal-produit').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function changeQty(delta) {
-  const max = produitActif && !produitActif.stock_illimite ? produitActif.stock : 99;
-  qtyActuelle = Math.max(1, Math.min(qtyActuelle + delta, max));
-  document.getElementById('qty-val').textContent = qtyActuelle;
-}
-
-function ajouterAuPanier() {
-  if (!produitActif) return;
-  ajouterItem(produitActif, qtyActuelle);
-  fermerModalProduit();
-  ouvrirPanier();
-}
-
-function ajouterDirectement(id) {
-  const p = produits.find(x => x.id === id);
-  if (p) { ajouterItem(p, 1); majPanierCount(); }
-}
+function fermerModalProduit() { document.getElementById('modal-produit').classList.remove('open'); document.body.style.overflow = ''; }
+function changeQty(delta) { const max = produitActif && !produitActif.stock_illimite ? produitActif.stock : 99; qtyActuelle = Math.max(1, Math.min(qtyActuelle + delta, max)); document.getElementById('qty-val').textContent = qtyActuelle; }
+function ajouterAuPanier() { if (!produitActif) return; ajouterItem(produitActif, qtyActuelle); fermerModalProduit(); ouvrirPanier(); }
+function ajouterDirectement(id) { const p = produits.find(x => x.id === id); if (p) { ajouterItem(p, 1); majPanierCount(); } }
 
 function ajouterItem(p, qty) {
   const existing = panier.find(i => i.id === p.id);
-  if (existing) {
-    existing.qty = Math.min(existing.qty + qty, p.stock_illimite ? 99 : p.stock);
-  } else {
-    panier.push({
-      id: p.id,
-      nom: p.nom,
-      prix: p.prix,
-      unite: p.unite,
-      qty,
-      photo: p.photos?.[0] || null,
-      emoji: emojis[p.categorie] || '📦',
-      stock: p.stock,
-      stock_illimite: p.stock_illimite,
-      boutique_id: boutique.id,
-      boutique_nom: boutique.nom,
-      boutique_slug: boutique.slug
-    });
-  }
+  if (existing) { existing.qty = Math.min(existing.qty + qty, p.stock_illimite ? 99 : p.stock); }
+  else { panier.push({ id: p.id, nom: p.nom, prix: p.prix, unite: p.unite, qty, photo: p.photos?.[0]||null, emoji: emojis[p.categorie]||'📦', stock: p.stock, stock_illimite: p.stock_illimite, boutique_id: boutique.id, boutique_nom: boutique.nom, boutique_slug: boutique.slug }); }
   majPanierCount();
 }
 
-// ============================================
-// PANIER
-// ============================================
 function majPanierCount() {
-  const total = panier.reduce((s,i) => s + i.qty, 0);
+  const total = panier.reduce((s,i) => s+i.qty, 0);
   const el = document.getElementById('panier-count');
-  el.textContent = total;
-  el.style.display = total > 0 ? 'flex' : 'none';
-  // Animation sur le bouton panier
+  el.textContent = total; el.style.display = total > 0 ? 'flex' : 'none';
   const btn = document.querySelector('.btn-panier');
-  if (btn && total > 0) {
-    btn.classList.remove('bump');
-    void btn.offsetWidth;
-    btn.classList.add('bump');
-  }
-  // Sauvegarder panier dans localStorage avec l'id de la boutique
-  if (boutique) {
-    const panierData = { boutique_id: boutique.id, boutique_slug: boutique.slug, items: panier };
-    localStorage.setItem('proxikau_panier', JSON.stringify(panierData));
-  }
+  if (btn && total > 0) { btn.classList.remove('bump'); void btn.offsetWidth; btn.classList.add('bump'); }
+  if (boutique) localStorage.setItem('proxikau_panier', JSON.stringify({ boutique_id: boutique.id, boutique_slug: boutique.slug, items: panier }));
 }
 
-function ouvrirPanier() {
-  afficherPanier();
-  document.getElementById('panier-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function fermerPanier() {
-  document.getElementById('panier-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
+function ouvrirPanier() { afficherPanier(); document.getElementById('panier-overlay').classList.add('open'); document.body.style.overflow = 'hidden'; }
+function fermerPanier() { document.getElementById('panier-overlay').classList.remove('open'); document.body.style.overflow = ''; }
 
 function afficherPanier() {
   const el = document.getElementById('panier-items');
   const footer = document.getElementById('panier-footer');
-  if (!panier.length) {
-    el.innerHTML = '<div class="panier-empty"><div style="font-size:40px;margin-bottom:12px;">🛒</div><p>Ton panier est vide.</p></div>';
-    footer.style.display = 'none';
-    return;
-  }
-
-  // Grouper par boutique
+  if (!panier.length) { el.innerHTML = '<div class="panier-empty"><div style="font-size:40px;margin-bottom:12px;">🛒</div><p>Ton panier est vide.</p></div>'; footer.style.display = 'none'; return; }
   const groupes = {};
   panier.forEach((item, i) => {
     const bid = item.boutique_id || boutique.id;
@@ -589,16 +399,15 @@ function afficherPanier() {
     if (!groupes[bid]) groupes[bid] = { nom: bnom, items: [] };
     groupes[bid].items.push({ ...item, index: i });
   });
-
   el.innerHTML = Object.entries(groupes).map(([bid, groupe]) => `
     <div style="margin-bottom:16px;">
       <div style="font-size:12px;font-weight:700;color:var(--vert);text-transform:uppercase;letter-spacing:.5px;padding:8px 0 6px;border-bottom:1px solid var(--border);margin-bottom:8px;">🏪 ${groupe.nom}</div>
       ${groupe.items.map(item => `
         <div class="panier-item">
-          <div class="panier-item-photo">${item.photo ? `<img src="${item.photo}" style="width:56px;height:56px;border-radius:8px;object-fit:cover;">` : item.emoji}</div>
+          <div class="panier-item-photo">${item.photo?`<img src="${item.photo}" style="width:56px;height:56px;border-radius:8px;object-fit:cover;">`:item.emoji}</div>
           <div class="panier-item-info">
             <div class="panier-item-nom">${item.nom}</div>
-            <div class="panier-item-prix">${(item.prix * item.qty).toFixed(2)}€</div>
+            <div class="panier-item-prix">${(item.prix*item.qty).toFixed(2)}€</div>
             <div class="panier-item-qty">
               <button class="btn-qty-sm" onclick="changeItemQty(${item.index},-1)">−</button>
               <div class="qty-sm-val">${item.qty}</div>
@@ -606,54 +415,21 @@ function afficherPanier() {
               <button class="btn-remove" onclick="supprimerItem(${item.index})">🗑️</button>
             </div>
           </div>
-        </div>
-      `).join('')}
-    </div>
-  `).join('');
-
-  const total = panier.reduce((s,i) => s + i.prix * i.qty, 0);
+        </div>`).join('')}
+    </div>`).join('');
+  const total = panier.reduce((s,i) => s+i.prix*i.qty, 0);
   document.getElementById('panier-total').textContent = total.toFixed(2) + '€';
-
-  // Livraisons de la boutique courante
-  const livEl = document.getElementById('livraison-options');
-  livEl.innerHTML = '<div style="font-size:12px;color:var(--ink3);margin-bottom:8px;">Les modes de livraison seront choisis au checkout pour chaque boutique.</div>';
-
+  document.getElementById('livraison-options').innerHTML = '<div style="font-size:12px;color:var(--ink3);margin-bottom:8px;">Les modes de livraison seront choisis au checkout pour chaque boutique.</div>';
   footer.style.display = 'block';
 }
 
-function livraisonOption(val, label, desc) {
-  const sel = livraisonSelectionnee === val ? 'selected' : '';
-  return `<div class="liv-option ${sel}" onclick="selectLivraison('${val}',this)">
-    <input type="radio" name="livraison" value="${val}" ${sel ? 'checked' : ''}>
-    <div><div style="font-weight:600;font-size:14px;">${label}</div><div style="font-size:12px;color:var(--ink3);">${desc}</div></div>
-  </div>`;
-}
+function changeItemQty(i, delta) { const item = panier[i]; const max = item.stock_illimite ? 99 : item.stock; item.qty = Math.max(1, Math.min(item.qty+delta, max)); afficherPanier(); majPanierCount(); }
+function supprimerItem(i) { panier.splice(i,1); afficherPanier(); majPanierCount(); }
 
-function selectLivraison(val, el) {
-  livraisonSelectionnee = val;
-  document.querySelectorAll('.liv-option').forEach(o => o.classList.remove('selected'));
-  el.classList.add('selected');
-}
-
-function changeItemQty(i, delta) {
-  const item = panier[i];
-  const max = item.stock_illimite ? 99 : item.stock;
-  item.qty = Math.max(1, Math.min(item.qty + delta, max));
-  afficherPanier();
-  majPanierCount();
-}
-
-function supprimerItem(i) {
-  panier.splice(i, 1);
-  afficherPanier();
-  majPanierCount();
-}
-
+// ✅ CORRECTION : plus de redirection vers connexion.html
+// Le checkout gère lui-même la connexion/inscription/guest
 async function passerCommande() {
-  const user = await getUtilisateurConnecte();
-  if (!user) { window.location.href = 'connexion.html?redirect=' + window.location.href; return; }
   if (!panier.length) { alert('Ton panier est vide.'); return; }
-  // Passer au checkout — le panier est dans localStorage
   window.location.href = 'checkout.html';
 }
 </script>
