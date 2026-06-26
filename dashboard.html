@@ -489,7 +489,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   if (!user) { window.location.href = 'connexion.html'; return; }
   try { const profil = await getProfil(user.id); if (profil) document.getElementById('prenom-user').textContent = profil.prenom || ''; } catch(e) {}
   boutique = await getBoutiqueParUserId(user.id);
-  if (!boutique) { window.location.href = 'inscription.html'; return; }
+  if (!boutique) { window.location.href = 'mes-commandes.html'; return; }
   document.getElementById('nav-slug').textContent = 'proxikau.com/' + boutique.slug;
   document.getElementById('btn-voir-boutique').href = 'boutique.html?slug=' + boutique.slug;
   document.getElementById('boutique-nom-sub').textContent = boutique.nom;
