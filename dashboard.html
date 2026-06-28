@@ -305,6 +305,12 @@ tr:last-child td{border-bottom:none;}
         </div>
         <div class="field"><label>Rayon livraison (km)</label><input type="number" id="edit-rayon" min="1" max="200" inputmode="numeric"></div>
 
+        <div style="margin:16px 0 10px;font-size:14px;font-weight:600;">💰 Frais de livraison</div>
+        <div class="form-grid">
+          <div class="field"><label>📦 Frais colis (€)</label><input type="number" id="edit-frais-colis" min="0" step="0.50" inputmode="decimal" placeholder="ex: 6.00"><div class="field-hint">0 = offerts</div></div>
+          <div class="field"><label>🚗 Frais proximité (€)</label><input type="number" id="edit-frais-proximite" min="0" step="0.50" inputmode="decimal" placeholder="ex: 3.00"><div class="field-hint">0 = offerts</div></div>
+        </div>
+
         <div style="margin:20px 0 10px;font-size:14px;font-weight:600;">Photo de bannière</div>
         <div id="banniere-preview" style="display:none;margin-bottom:12px;border-radius:10px;overflow:hidden;height:120px;position:relative;">
           <img id="banniere-img" src="" style="width:100%;height:100%;object-fit:cover;">
@@ -720,6 +726,8 @@ function remplirFormBoutique(){
   document.getElementById('edit-enlevement').checked=boutique.livraison_enlevement||false;
   document.getElementById('edit-proximite').checked=boutique.livraison_proximite||false;
   document.getElementById('edit-rayon').value=boutique.rayon_proximite_km||30;
+  document.getElementById('edit-frais-colis').value=boutique.frais_colis||0;
+  document.getElementById('edit-frais-proximite').value=boutique.frais_proximite||0;
   if(boutique.photo_banniere){document.getElementById('banniere-img').src=boutique.photo_banniere;document.getElementById('banniere-preview').style.display='block';document.getElementById('banniere-zone').style.display='none';}
   if(boutique.photo_logo){document.getElementById('logo-img').src=boutique.photo_logo;document.getElementById('logo-preview').style.display='flex';document.getElementById('logo-zone').style.display='none';}
 }
@@ -735,7 +743,7 @@ async function supprimerLogo(){if(!confirm('Supprimer le logo ?'))return;await m
 async function sauvegarderBoutique(){
   const alertEl=document.getElementById('alert-boutique');
   try{
-    await majBoutique(boutique.id,{nom:document.getElementById('edit-nom').value.trim(),categorie:document.getElementById('edit-categorie').value,description:document.getElementById('edit-description').value.trim(),ville:document.getElementById('edit-ville').value.trim(),region:document.getElementById('edit-region').value.trim(),telephone:document.getElementById('edit-telephone').value.trim(),email_contact:document.getElementById('edit-email-contact').value.trim(),livraison_colis:document.getElementById('edit-colis').checked,livraison_enlevement:document.getElementById('edit-enlevement').checked,livraison_proximite:document.getElementById('edit-proximite').checked,rayon_proximite_km:parseInt(document.getElementById('edit-rayon').value)||30});
+    await majBoutique(boutique.id,{nom:document.getElementById('edit-nom').value.trim(),categorie:document.getElementById('edit-categorie').value,description:document.getElementById('edit-description').value.trim(),ville:document.getElementById('edit-ville').value.trim(),region:document.getElementById('edit-region').value.trim(),telephone:document.getElementById('edit-telephone').value.trim(),email_contact:document.getElementById('edit-email-contact').value.trim(),livraison_colis:document.getElementById('edit-colis').checked,livraison_enlevement:document.getElementById('edit-enlevement').checked,livraison_proximite:document.getElementById('edit-proximite').checked,rayon_proximite_km:parseInt(document.getElementById('edit-rayon').value)||30,frais_colis:parseFloat(document.getElementById('edit-frais-colis').value)||0,frais_proximite:parseFloat(document.getElementById('edit-frais-proximite').value)||0});
     alertEl.textContent='✓ Boutique mise à jour !';alertEl.className='alert success show';
     boutique=await getBoutiqueParUserId((await getUtilisateurConnecte()).id);
     setTimeout(()=>alertEl.className='alert',3000);

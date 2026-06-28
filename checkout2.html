@@ -302,9 +302,11 @@ function afficherCheckout() {
         <div class="produit-ligne-prix">${(item.prix*item.qty).toFixed(2)}€</div>
       </div>`).join('');
     let livraisonsHTML = '<div class="livraison-choix">';
-    if (b.livraison_colis) livraisonsHTML += livOpt(bid,'colis','📦 Envoi par colis','Livraison à ton adresse');
-    if (b.livraison_enlevement) livraisonsHTML += livOpt(bid,'enlevement','🏠 Enlèvement sur place',`Chez ${groupe.nom}${b.ville?' à '+b.ville:''}`);
-    if (b.livraison_proximite) livraisonsHTML += livOpt(bid,'proximite','🚗 Livraison à proximité',`Dans un rayon de ${b.rayon_proximite_km||30}km`);
+    const fraisColis = parseFloat(b.frais_colis)||0;
+    const fraisProx = parseFloat(b.frais_proximite)||0;
+    if (b.livraison_colis) livraisonsHTML += livOpt(bid,'colis','📦 Envoi par colis',fraisColis>0?'+'+fraisColis.toFixed(2)+'€ de frais de port':'Frais de port offerts');
+    if (b.livraison_enlevement) livraisonsHTML += livOpt(bid,'enlevement','🏠 Enlèvement sur place','Gratuit');
+    if (b.livraison_proximite) livraisonsHTML += livOpt(bid,'proximite','🚗 Livraison à proximité',fraisProx>0?'+'+fraisProx.toFixed(2)+'€':'Gratuit');
     livraisonsHTML += '</div>';
     col.innerHTML += `<div class="card">
       <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border-radius:10px;margin-bottom:12px;">
@@ -338,13 +340,16 @@ function afficherRecap() {
   let html = '', grandTotal = 0;
   Object.entries(groupes).forEach(([bid, groupe]) => {
     const sous_total = groupe.items.reduce((s,i)=>s+i.prix*i.qty,0);
-    grandTotal += sous_total;
+    const b_data = boutiquesData[bid]||{};
+    const frais_liv = livraisonsChoisies[bid]==='colis'?(parseFloat(b_data.frais_colis)||0):livraisonsChoisies[bid]==='proximite'?(parseFloat(b_data.frais_proximite)||0):0;
+    grandTotal += sous_total + frais_liv;
     const commission = Math.round(sous_total*0.05*100)/100;
     const livraison = livraisonsChoisies[bid];
     const livLabel = livraison?{colis:'📦 Colis',enlevement:'🏠 Enlèvement',proximite:'🚗 Proximité'}[livraison]:'<span style="color:var(--error);font-size:11px;">À choisir</span>';
     html += `<div style="font-size:12px;font-weight:700;color:var(--vert);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 4px;">${groupe.nom}</div>`;
     groupe.items.forEach(i => { html += `<div class="recap-ligne"><span>${i.nom} x${i.qty}</span><span>${(i.prix*i.qty).toFixed(2)}€</span></div>`; });
-    html += `<div class="recap-ligne"><span>Livraison</span><span>${livLabel}</span></div>`;
+    if(frais_liv>0){html += `<div class="recap-ligne"><span>Livraison</span><span>+${frais_liv.toFixed(2)}€</span></div>`;}
+    else{html += `<div class="recap-ligne"><span>Livraison</span><span>${livraison?'Gratuit':livLabel}</span></div>`;}
     html += `<div class="recap-ligne commission"><span>Commission (5%)</span><span>${commission.toFixed(2)}€</span></div>`;
   });
   html += `<div class="recap-ligne total"><span>Total</span><span>${grandTotal.toFixed(2)}€</span></div>`;
@@ -381,13 +386,16 @@ async function confirmerCommande() {
     for (const bid of boutique_ids) {
       const groupe = groupes[bid];
       const montant_produits = groupe.items.reduce((s,i)=>s+i.prix*i.qty,0);
+      const b_frais = boutiquesData[bid]||{};
+      const frais_livraison = livraisonsChoisies[bid]==='colis'?(parseFloat(b_frais.frais_colis)||0):livraisonsChoisies[bid]==='proximite'?(parseFloat(b_frais.frais_proximite)||0):0;
+      const montant_avec_frais = montant_produits + frais_livraison;
       const commission = Math.round(montant_produits*0.05*100)/100;
       let adresse_livraison = { prenom, nom, email, telephone: tel };
       if (['colis','proximite'].includes(livraisonsChoisies[bid])) adresse_livraison = { ...adresse_livraison, ...adresseCommande };
       const { data: commande, error } = await db.from('commandes').insert([{
         acheteur_id: currentUser ? currentUser.id : null,
         boutique_id: bid,
-        montant_total: montant_produits,
+        montant_total: montant_avec_frais,
         montant_produits,
         commission_proxikau: commission,
         montant_vendeur: Math.round((montant_produits-commission)*100)/100,
