@@ -67,7 +67,48 @@ export default async function handler(req, res) {
     }
   }
 
-  if (!vendeur_email || !commande_id) return res.status(400).json({ error: 'Données manquantes' });
+  // Email bienvenue vendeur
+  if (type === 'bienvenue_vendeur') {
+    const { vendeur_nom, boutique_nom, boutique_slug } = req.body;
+    const htmlBienvenue = `
+      <div style="font-family:Inter,sans-serif;max-width:560px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #E0E0E0;">
+        <div style="background:linear-gradient(135deg,#1B4332,#2D6A4F);padding:28px 32px;">
+          <div style="color:#fff;font-size:22px;font-weight:800;">Proxikau</div>
+          <div style="color:rgba(255,255,255,.8);font-size:14px;margin-top:4px;">Bienvenue sur Proxikau ! 🎉</div>
+        </div>
+        <div style="padding:28px 32px;">
+          <h2 style="font-size:18px;font-weight:700;margin:0 0 12px;">Bonjour ${vendeur_nom} !</h2>
+          <p style="color:#555;font-size:14px;margin:0 0 16px;line-height:1.6;">Ta boutique <strong>${boutique_nom}</strong> est maintenant créée sur Proxikau. 🚀</p>
+          <p style="color:#555;font-size:14px;margin:0 0 24px;line-height:1.6;">Tu peux dès maintenant ajouter tes produits et commencer à vendre à des milliers d'acheteurs.</p>
+          <div style="background:#F9F7F4;border-radius:10px;padding:16px;margin-bottom:24px;">
+            <p style="margin:0;font-size:14px;">🔗 Ta vitrine : <a href="https://proxikau.com/${boutique_slug}" style="color:#2D6A4F;font-weight:700;">proxikau.com/${boutique_slug}</a></p>
+          </div>
+          <a href="https://proxikau.com/dashboard.html" style="display:inline-block;background:#2D6A4F;color:#fff;padding:13px 28px;border-radius:10px;text-decoration:none;font-weight:700;font-size:15px;">Accéder à mon dashboard →</a>
+          <p style="color:#999;font-size:12px;margin-top:20px;line-height:1.5;">Commission de 5% par vente seulement. Paiement sur ton compte à J+30.</p>
+        </div>
+        <div style="padding:16px 32px;background:#F9F7F4;border-top:1px solid #E0E0E0;font-size:12px;color:#999;text-align:center;">
+          Proxikau — Marketplace des artisans et producteurs locaux
+        </div>
+      </div>`;
+    try {
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.RESEND_API_KEY}` },
+        body: JSON.stringify({
+          from: 'Proxikau <noreply@proxikau.com>',
+          to: [vendeur_email],
+          subject: `🎉 Ta boutique ${boutique_nom} est créée sur Proxikau !`,
+          html: htmlBienvenue
+        })
+      });
+      return res.status(200).json({ success: true });
+    } catch(e) {
+      return res.status(500).json({ error: e.message });
+    }
+  }
+
+  if (!vendeur_email) return res.status(400).json({ error: 'Données manquantes' });
+  if (!commande_id && type !== 'bienvenue_vendeur') return res.status(400).json({ error: 'Commande manquante' });
 
   const livLabel = { colis: '📦 Envoi par colis', enlevement: '🏠 Enlèvement sur place', proximite: '🚗 Livraison à proximité' }[mode_livraison] || mode_livraison;
 
