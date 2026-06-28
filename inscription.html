@@ -10,35 +10,18 @@
 <script src="supabase-config.js"></script>
 <style>
 :root {
-  --vert:#2D6A4F;
-  --vert2:#1B4332;
-  --vert-light:#D8F3DC;
-  --terre:#BC6C25;
-  --terre-light:#FDEBD0;
-  --ink:#1A1A1A;
-  --ink2:#555;
-  --ink3:#999;
-  --border:#E0E0E0;
-  --bg:#F9F7F4;
-  --white:#fff;
-  --sans:'Inter',system-ui,sans-serif;
-  --error:#D32F2F;
-  --success:#2D6A4F;
+  --vert:#2D6A4F;--vert2:#1B4332;--vert-light:#D8F3DC;--terre:#BC6C25;--terre-light:#FDEBD0;
+  --ink:#1A1A1A;--ink2:#555;--ink3:#999;--border:#E0E0E0;--bg:#F9F7F4;--white:#fff;
+  --sans:'Inter',system-ui,sans-serif;--error:#D32F2F;--success:#2D6A4F;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;}
-
-/* NAV */
 nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;display:flex;align-items:center;padding:0 24px;gap:16px;}
 .logo{font-size:22px;font-weight:700;color:var(--vert);text-decoration:none;letter-spacing:-0.5px;}
 .logo span{color:var(--terre);}
 .nav-right{margin-left:auto;font-size:14px;color:var(--ink2);}
 .nav-right a{color:var(--vert);font-weight:500;text-decoration:none;}
-
-/* LAYOUT */
 .page{max-width:960px;margin:0 auto;padding:40px 24px 80px;}
-
-/* STEPS */
 .steps{display:flex;align-items:center;gap:0;margin-bottom:40px;}
 .step{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink3);font-weight:500;}
 .step.active{color:var(--vert);}
@@ -48,33 +31,20 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .step.done .step-num{border-color:var(--vert);background:var(--vert-light);color:var(--vert);}
 .step-line{flex:1;height:2px;background:var(--border);margin:0 8px;}
 .step-line.done{background:var(--vert);}
-
-/* GRID */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
 @media(max-width:680px){.grid{grid-template-columns:1fr;}}
-
-/* CARD */
 .card{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:32px;}
 .card-title{font-size:20px;font-weight:700;color:var(--ink);margin-bottom:6px;}
 .card-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;line-height:1.6;}
-
-/* FORM */
 .field{margin-bottom:20px;}
 .field label{display:block;font-size:13px;font-weight:600;color:var(--ink);margin-bottom:6px;}
 .field label span{color:var(--error);}
-.field input,.field textarea,.field select{
-  width:100%;border:1.5px solid var(--border);border-radius:8px;
-  padding:11px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);
-  background:var(--white);outline:none;transition:border-color .15s;
-}
+.field input,.field textarea,.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:11px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--white);outline:none;transition:border-color .15s;}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--vert);}
 .field input.error,.field select.error{border-color:var(--error);}
 .field input.ok{border-color:var(--success);}
 .field textarea{resize:vertical;min-height:90px;}
 .field-hint{font-size:12px;color:var(--ink3);margin-top:5px;}
-.field-error{font-size:12px;color:var(--error);margin-top:5px;display:none;}
-
-/* SLUG */
 .slug-wrap{position:relative;}
 .slug-prefix{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--ink3);pointer-events:none;}
 .slug-input{padding-left:130px !important;}
@@ -82,8 +52,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .slug-ok{color:var(--success);}
 .slug-ko{color:var(--error);}
 .slug-check{color:var(--ink3);}
-
-/* LIVRAISONS */
 .livraisons{display:flex;flex-direction:column;gap:10px;}
 .livraison-option{display:flex;align-items:flex-start;gap:12px;padding:14px;border:1.5px solid var(--border);border-radius:10px;cursor:pointer;transition:border-color .15s,background .15s;}
 .livraison-option:hover{border-color:var(--vert);background:var(--vert-light);}
@@ -91,16 +59,12 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .livraison-option input[type=checkbox]{width:18px;height:18px;accent-color:var(--vert);flex-shrink:0;margin-top:1px;cursor:pointer;}
 .livraison-label{font-size:14px;font-weight:600;color:var(--ink);}
 .livraison-desc{font-size:12px;color:var(--ink2);margin-top:2px;}
-
-/* CATEGORIES */
 .cats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
 .cat-option{display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--border);border-radius:8px;cursor:pointer;transition:all .15s;font-size:13px;font-weight:500;color:var(--ink2);}
 .cat-option:hover{border-color:var(--vert);color:var(--vert);}
 .cat-option.selected{border-color:var(--vert);background:var(--vert-light);color:var(--vert2);}
 .cat-option input{display:none;}
 .cat-emoji{font-size:18px;}
-
-/* APERCU */
 .apercu{background:var(--bg);border:1px solid var(--border);border-radius:16px;padding:24px;position:sticky;top:20px;}
 .apercu-title{font-size:13px;font-weight:600;color:var(--ink3);text-transform:uppercase;letter-spacing:.5px;margin-bottom:16px;}
 .apercu-card{background:var(--white);border-radius:12px;border:1px solid var(--border);overflow:hidden;}
@@ -112,33 +76,19 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .apercu-desc{font-size:12px;color:var(--ink2);line-height:1.5;margin-bottom:12px;}
 .apercu-tags{display:flex;flex-wrap:wrap;gap:6px;}
 .apercu-tag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--vert-light);color:var(--vert2);font-weight:500;}
-
-/* AVANTAGES */
 .avantages{margin-top:20px;}
 .avantage{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--ink2);padding:8px 0;border-bottom:1px solid var(--border);}
 .avantage:last-child{border-bottom:none;}
 .avantage svg{width:16px;height:16px;fill:none;stroke:var(--vert);stroke-width:2;flex-shrink:0;}
-
-/* BTN */
 .btn-submit{width:100%;padding:14px;border-radius:10px;background:var(--vert);color:#fff;border:none;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:8px;}
 .btn-submit:hover{background:var(--vert2);}
 .btn-submit:disabled{background:var(--ink3);cursor:not-allowed;}
-.btn-submit.loading::after{content:' ...';animation:dots 1s infinite;}
-
-/* SECTION TITRE */
 .section-head{margin-bottom:32px;}
 .section-head h1{font-size:28px;font-weight:700;color:var(--ink);margin-bottom:8px;}
 .section-head p{font-size:15px;color:var(--ink2);line-height:1.6;}
-
-/* ALERT */
 .alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:20px;display:none;}
 .alert.error{background:#FFEBEE;color:var(--error);border:1px solid #FFCDD2;}
-.alert.success{background:var(--vert-light);color:var(--vert2);border:1px solid #B7E4C7;}
-
-/* DIVIDER */
 .divider{height:1px;background:var(--border);margin:24px 0;}
-
-/* SUCCESS PAGE */
 .success-page{text-align:center;padding:60px 24px;display:none;}
 .success-icon{width:72px;height:72px;border-radius:50%;background:var(--vert-light);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;}
 .success-icon svg{width:36px;height:36px;fill:none;stroke:var(--vert);stroke-width:2;}
@@ -156,29 +106,17 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 </nav>
 
 <div class="page">
-
-  <!-- ETAPES -->
   <div class="steps">
-    <div class="step active" id="step1-indicator">
-      <div class="step-num">1</div>
-      <span>Mon compte</span>
-    </div>
+    <div class="step active" id="step1-indicator"><div class="step-num">1</div><span>Mon compte</span></div>
     <div class="step-line" id="line1"></div>
-    <div class="step" id="step2-indicator">
-      <div class="step-num">2</div>
-      <span>Ma boutique</span>
-    </div>
+    <div class="step" id="step2-indicator"><div class="step-num">2</div><span>Ma boutique</span></div>
     <div class="step-line" id="line2"></div>
-    <div class="step" id="step3-indicator">
-      <div class="step-num">3</div>
-      <span>Livraisons</span>
-    </div>
+    <div class="step" id="step3-indicator"><div class="step-num">3</div><span>Livraisons</span></div>
   </div>
 
-  <!-- FORMULAIRE -->
   <div id="form-container">
 
-    <!-- ETAPE 1 : COMPTE -->
+    <!-- ETAPE 1 -->
     <div id="step1">
       <div class="section-head">
         <h1>Ouvre ta boutique gratuitement</h1>
@@ -191,23 +129,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
             <div class="card-sub">Ces informations restent privees.</div>
             <div class="alert error" id="alert-step1"></div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div class="field">
-                <label>Prenom <span>*</span></label>
-                <input type="text" id="prenom" placeholder="Jean">
-              </div>
-              <div class="field">
-                <label>Nom <span>*</span></label>
-                <input type="text" id="nom" placeholder="Dupont">
-              </div>
+              <div class="field"><label>Prenom <span>*</span></label><input type="text" id="prenom" placeholder="Jean"></div>
+              <div class="field"><label>Nom <span>*</span></label><input type="text" id="nom" placeholder="Dupont"></div>
             </div>
-            <div class="field">
-              <label>Email <span>*</span></label>
-              <input type="email" id="email" placeholder="jean@exemple.fr">
-            </div>
-            <div class="field">
-              <label>Telephone <span>*</span></label>
-              <input type="tel" id="telephone" placeholder="+33 6 00 00 00 00">
-            </div>
+            <div class="field"><label>Email <span>*</span></label><input type="email" id="email" placeholder="jean@exemple.fr"></div>
+            <div class="field"><label>Telephone <span>*</span></label><input type="tel" id="telephone" placeholder="+33 6 00 00 00 00"></div>
             <div class="field">
               <label>Mot de passe <span>*</span></label>
               <input type="password" id="motdepasse" placeholder="8 caracteres minimum">
@@ -220,37 +146,19 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
           <div class="apercu">
             <div class="apercu-title">Pourquoi Proxikau ?</div>
             <div class="avantages">
-              <div class="avantage">
-                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                Inscription 100% gratuite
-              </div>
-              <div class="avantage">
-                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                Seulement 5% par vente
-              </div>
-              <div class="avantage">
-                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                Ta propre vitrine personnalisee
-              </div>
-              <div class="avantage">
-                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                Paiement securise Stripe
-              </div>
-              <div class="avantage">
-                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                Virement vendeur a J+30
-              </div>
-              <div class="avantage">
-                <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-                Boost ta visibilite (10€/sem)
-              </div>
+              <div class="avantage"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Inscription 100% gratuite</div>
+              <div class="avantage"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Seulement 5% par vente</div>
+              <div class="avantage"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Ta propre vitrine personnalisee</div>
+              <div class="avantage"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Paiement securise Stripe</div>
+              <div class="avantage"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Virement vendeur a J+30</div>
+              <div class="avantage"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>Boost ta visibilite (10€/sem)</div>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- ETAPE 2 : BOUTIQUE -->
+    <!-- ETAPE 2 -->
     <div id="step2" style="display:none;">
       <div class="section-head">
         <h1>Ta boutique</h1>
@@ -262,12 +170,10 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
             <div class="card-title">Identite de ta boutique</div>
             <div class="card-sub">Ces informations sont visibles par les acheteurs.</div>
             <div class="alert error" id="alert-step2"></div>
-
             <div class="field">
               <label>Nom de ta boutique <span>*</span></label>
               <input type="text" id="nom-boutique" placeholder="Charcuterie Torre" oninput="genererSlug(this.value)">
             </div>
-
             <div class="field">
               <label>Ton URL personnalisee <span>*</span></label>
               <div class="slug-wrap">
@@ -275,14 +181,12 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
                 <input type="text" id="slug" class="slug-input" placeholder="torre" oninput="verifierSlug(this.value)">
               </div>
               <div class="slug-status" id="slug-status"></div>
-              <div class="field-hint">Uniquement lettres, chiffres et tirets. Ex : torre, miel-biancucci</div>
+              <div class="field-hint">Uniquement lettres, chiffres et tirets.</div>
             </div>
-
             <div class="field">
               <label>Description <span>*</span></label>
               <textarea id="description" placeholder="Decris tes produits, ton savoir-faire, ta region..."></textarea>
             </div>
-
             <div class="field">
               <label>Categorie principale <span>*</span></label>
               <div class="cats-grid" id="cats-grid">
@@ -295,33 +199,20 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
                 <div class="cat-option" onclick="selectCat('huiles-condiments',this)"><span class="cat-emoji">🫒</span>Huiles & Condiments</div>
                 <div class="cat-option" onclick="selectCat('savons-cosmetiques',this)"><span class="cat-emoji">🧴</span>Savons & Cosmetiques</div>
                 <div class="cat-option" onclick="selectCat('bougies-deco',this)"><span class="cat-emoji">🕯️</span>Bougies & Deco</div>
+                <div class="cat-option" onclick="selectCat('oeufs-volaille',this)"><span class="cat-emoji">🥚</span>Oeufs & Volaille</div>
               </div>
               <input type="hidden" id="categorie">
             </div>
-
             <div class="divider"></div>
-
-            <div class="field">
-              <label>Ville <span>*</span></label>
-              <input type="text" id="ville" placeholder="Ajaccio">
-            </div>
+            <div class="field"><label>Ville <span>*</span></label><input type="text" id="ville" placeholder="Ajaccio"></div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
-              <div class="field">
-                <label>Region</label>
-                <input type="text" id="region" placeholder="Corse">
-              </div>
-              <div class="field">
-                <label>Pays <span>*</span></label>
-                <input type="text" id="pays" value="France">
-              </div>
+              <div class="field"><label>Region</label><input type="text" id="region" placeholder="Corse"></div>
+              <div class="field"><label>Pays <span>*</span></label><input type="text" id="pays" value="France"></div>
             </div>
-
             <button class="btn-submit" onclick="etape2Suivant()">Continuer →</button>
             <button onclick="retourEtape(1)" style="width:100%;margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:transparent;font-family:var(--sans);font-size:14px;color:var(--ink2);cursor:pointer;">← Retour</button>
           </div>
         </div>
-
-        <!-- APERCU BOUTIQUE -->
         <div>
           <div class="apercu">
             <div class="apercu-title">Apercu de ta vitrine</div>
@@ -342,11 +233,11 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
       </div>
     </div>
 
-    <!-- ETAPE 3 : LIVRAISONS -->
+    <!-- ETAPE 3 -->
     <div id="step3" style="display:none;">
       <div class="section-head">
         <h1>Modes de livraison</h1>
-        <p>Choisis comment tes clients vont recevoir leurs commandes. Tu peux en activer plusieurs.</p>
+        <p>Choisis comment tes clients vont recevoir leurs commandes.</p>
       </div>
       <div class="grid">
         <div>
@@ -354,54 +245,35 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
             <div class="card-title">Comment tu livres ?</div>
             <div class="card-sub">Tu pourras modifier ca depuis ton dashboard.</div>
             <div class="alert error" id="alert-step3"></div>
-
             <div class="livraisons">
               <label class="livraison-option" id="opt-colis">
                 <input type="checkbox" id="livraison-colis" onchange="toggleLivraison('opt-colis',this)">
-                <div>
-                  <div class="livraison-label">📦 Envoi par colis</div>
-                  <div class="livraison-desc">Tu envoies tes produits par La Poste, Colissimo, Chronopost... Les frais de port sont a la charge de l'acheteur.</div>
-                </div>
+                <div><div class="livraison-label">📦 Envoi par colis</div><div class="livraison-desc">Tu envoies tes produits par La Poste, Colissimo...</div></div>
               </label>
-
               <label class="livraison-option" id="opt-enlevement">
                 <input type="checkbox" id="livraison-enlevement" onchange="toggleLivraison('opt-enlevement',this)">
-                <div>
-                  <div class="livraison-label">🏠 Enlevement sur place</div>
-                  <div class="livraison-desc">L'acheteur vient chercher sa commande directement chez toi. Gratuit pour tout le monde.</div>
-                </div>
+                <div><div class="livraison-label">🏠 Enlevement sur place</div><div class="livraison-desc">L'acheteur vient chercher sa commande chez toi.</div></div>
               </label>
-
               <label class="livraison-option" id="opt-proximite">
                 <input type="checkbox" id="livraison-proximite" onchange="toggleLivraison('opt-proximite',this)">
-                <div>
-                  <div class="livraison-label">🚗 Livraison a proximite</div>
-                  <div class="livraison-desc">Tu livres toi-meme dans un rayon autour de chez toi.</div>
-                </div>
+                <div><div class="livraison-label">🚗 Livraison a proximite</div><div class="livraison-desc">Tu livres toi-meme dans un rayon autour de chez toi.</div></div>
               </label>
             </div>
-
             <div id="rayon-field" class="field" style="margin-top:20px;display:none;">
               <label>Rayon de livraison (km)</label>
               <input type="number" id="rayon" placeholder="30" min="1" max="200" value="30">
-              <div class="field-hint">Distance maximale autour de ta ville ou tu peux livrer</div>
             </div>
-
             <div class="divider"></div>
-
             <button class="btn-submit" id="btn-creer" onclick="creerCompte()">Creer ma boutique 🎉</button>
             <button onclick="retourEtape(2)" style="width:100%;margin-top:10px;padding:12px;border:1px solid var(--border);border-radius:10px;background:transparent;font-family:var(--sans);font-size:14px;color:var(--ink2);cursor:pointer;">← Retour</button>
           </div>
         </div>
-
         <div>
           <div class="apercu">
             <div class="apercu-title">Recapitulatif</div>
             <div id="recap" style="font-size:14px;color:var(--ink2);line-height:2;"></div>
             <div class="divider"></div>
-            <div style="font-size:13px;color:var(--ink3);">
-              En creant ta boutique tu acceptes les <a href="#" style="color:var(--vert);">conditions d'utilisation</a> de Proxikau. Commission de 5% par vente, paiement vendeur a J+30.
-            </div>
+            <div style="font-size:13px;color:var(--ink3);">Commission de 5% par vente, paiement vendeur a J+30.</div>
           </div>
         </div>
       </div>
@@ -409,11 +281,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 
   </div>
 
-  <!-- PAGE SUCCES -->
   <div class="success-page" id="success-page">
-    <div class="success-icon">
-      <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
-    </div>
+    <div class="success-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
     <h2>Ta boutique est creee ! 🎉</h2>
     <p>Bienvenue sur Proxikau. Tu peux maintenant ajouter tes premiers produits et commencer a vendre.</p>
     <a href="dashboard.html" class="btn-dashboard">Acceder a mon dashboard →</a>
@@ -422,9 +291,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 </div>
 
 <script>
-// ============================================
-// STATE
-// ============================================
 let currentStep = 1;
 let slugValide = false;
 let categorieSelectionnee = '';
@@ -432,12 +298,9 @@ let slugTimeout = null;
 const emojis = {
   'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷',
   'epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯',
-  'huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️'
+  'huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'
 };
 
-// ============================================
-// NAVIGATION ETAPES
-// ============================================
 function allerEtape(n) {
   document.getElementById('step1').style.display = n===1 ? 'block' : 'none';
   document.getElementById('step2').style.display = n===2 ? 'block' : 'none';
@@ -457,9 +320,6 @@ function allerEtape(n) {
 
 function retourEtape(n) { allerEtape(n); }
 
-// ============================================
-// ETAPE 1 — VALIDATION COMPTE
-// ============================================
 function etape1Suivant() {
   const prenom = document.getElementById('prenom').value.trim();
   const nom = document.getElementById('nom').value.trim();
@@ -467,35 +327,17 @@ function etape1Suivant() {
   const tel = document.getElementById('telephone').value.trim();
   const mdp = document.getElementById('motdepasse').value;
   const alert = document.getElementById('alert-step1');
-
-  if (!prenom || !nom || !email || !tel || !mdp) {
-    showAlert(alert, 'Tous les champs sont obligatoires.');
-    return;
-  }
-  if (!email.includes('@')) {
-    showAlert(alert, 'Email invalide.');
-    return;
-  }
-  if (mdp.length < 8) {
-    showAlert(alert, 'Le mot de passe doit contenir au moins 8 caracteres.');
-    return;
-  }
+  if (!prenom || !nom || !email || !tel || !mdp) { showAlert(alert, 'Tous les champs sont obligatoires.'); return; }
+  if (!email.includes('@')) { showAlert(alert, 'Email invalide.'); return; }
+  if (mdp.length < 8) { showAlert(alert, 'Le mot de passe doit contenir au moins 8 caracteres.'); return; }
   alert.style.display = 'none';
   allerEtape(2);
 }
 
-// ============================================
-// ETAPE 2 — SLUG + BOUTIQUE
-// ============================================
 function genererSlug(nom) {
-  const slug = nom.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,'')
-    .replace(/[^a-z0-9\s-]/g,'')
-    .trim().replace(/\s+/g,'-')
-    .substring(0,30);
+  const slug = nom.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9\s-]/g,'').trim().replace(/\s+/g,'-').substring(0,30);
   document.getElementById('slug').value = slug;
   verifierSlug(slug);
-  // Apercu
   document.getElementById('apercu-nom').textContent = nom || 'Nom de ta boutique';
 }
 
@@ -505,11 +347,7 @@ function verifierSlug(slug) {
   document.getElementById('apercu-slug').textContent = 'proxikau.com/' + (slug || 'ton-slug');
   const propre = slug.replace(/[^a-z0-9-]/g,'');
   if (propre !== slug) { input.value = propre; slug = propre; }
-  if (!slug || slug.length < 2) {
-    status.innerHTML = '';
-    slugValide = false;
-    return;
-  }
+  if (!slug || slug.length < 2) { status.innerHTML = ''; slugValide = false; return; }
   status.innerHTML = '<span class="slug-check">Verification...</span>';
   clearTimeout(slugTimeout);
   slugTimeout = setTimeout(async () => {
@@ -524,10 +362,7 @@ function verifierSlug(slug) {
         input.className = 'slug-input error';
         slugValide = false;
       }
-    } catch(e) {
-      status.innerHTML = '<span class="slug-check">Impossible de verifier</span>';
-      slugValide = false;
-    }
+    } catch(e) { status.innerHTML = '<span class="slug-check">Impossible de verifier</span>'; slugValide = false; }
   }, 600);
 }
 
@@ -540,7 +375,6 @@ function selectCat(val, el) {
   document.getElementById('apercu-emoji').textContent = emojis[val] || '🏪';
 }
 
-// Live apercu description
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('description').addEventListener('input', e => {
     document.getElementById('apercu-desc').textContent = e.target.value || 'Ta description apparaitra ici...';
@@ -557,20 +391,10 @@ function etape2Suivant() {
   const ville = document.getElementById('ville').value.trim();
   const pays = document.getElementById('pays').value.trim();
   const alert = document.getElementById('alert-step2');
-
-  if (!nom || !slug || !desc || !categorieSelectionnee || !ville || !pays) {
-    showAlert(alert, 'Remplis tous les champs obligatoires.');
-    return;
-  }
-  if (!slugValide) {
-    showAlert(alert, 'Choisis un nom de boutique disponible.');
-    return;
-  }
+  if (!nom || !slug || !desc || !categorieSelectionnee || !ville || !pays) { showAlert(alert, 'Remplis tous les champs obligatoires.'); return; }
+  if (!slugValide) { showAlert(alert, 'Choisis un nom de boutique disponible.'); return; }
   alert.style.display = 'none';
-
-  // Recapitulatif
-  const recap = document.getElementById('recap');
-  recap.innerHTML = `
+  document.getElementById('recap').innerHTML = `
     <div><strong>Compte :</strong> ${document.getElementById('email').value}</div>
     <div><strong>Boutique :</strong> ${nom}</div>
     <div><strong>URL :</strong> proxikau.com/${slug}</div>
@@ -580,31 +404,21 @@ function etape2Suivant() {
   allerEtape(3);
 }
 
-// ============================================
-// ETAPE 3 — LIVRAISONS
-// ============================================
 function toggleLivraison(id, cb) {
   const el = document.getElementById(id);
   el.classList.toggle('selected', cb.checked);
-  const rayonField = document.getElementById('rayon-field');
-  const proxCb = document.getElementById('livraison-proximite');
-  rayonField.style.display = proxCb.checked ? 'block' : 'none';
+  document.getElementById('rayon-field').style.display = document.getElementById('livraison-proximite').checked ? 'block' : 'none';
 }
 
-// ============================================
-// CREATION COMPTE + BOUTIQUE
-// ============================================
 async function creerCompte() {
   const colis = document.getElementById('livraison-colis').checked;
   const enlevement = document.getElementById('livraison-enlevement').checked;
   const proximite = document.getElementById('livraison-proximite').checked;
   const alert = document.getElementById('alert-step3');
   const btn = document.getElementById('btn-creer');
+  const email = document.getElementById('email').value.trim();
 
-  if (!colis && !enlevement && !proximite) {
-    showAlert(alert, 'Selectionne au moins un mode de livraison.');
-    return;
-  }
+  if (!colis && !enlevement && !proximite) { showAlert(alert, 'Selectionne au moins un mode de livraison.'); return; }
 
   btn.disabled = true;
   btn.textContent = 'Creation en cours...';
@@ -613,16 +427,14 @@ async function creerCompte() {
   try {
     // 1. Creer le compte auth
     const authData = await inscrireUtilisateur(
-      document.getElementById('email').value.trim(),
+      email,
       document.getElementById('motdepasse').value,
       document.getElementById('prenom').value.trim(),
       document.getElementById('nom').value.trim(),
       document.getElementById('telephone').value.trim()
     );
 
-    const userId = authData.user.id;
-
-    // 2. Creer la boutique
+    // 2. Creer la boutique avec email_contact automatique
     await creerBoutique({
       slug: document.getElementById('slug').value.trim(),
       nom: document.getElementById('nom-boutique').value.trim(),
@@ -634,10 +446,10 @@ async function creerCompte() {
       livraison_colis: colis,
       livraison_enlevement: enlevement,
       livraison_proximite: proximite,
-      rayon_proximite_km: proximite ? parseInt(document.getElementById('rayon').value) || 30 : 30
+      rayon_proximite_km: proximite ? parseInt(document.getElementById('rayon').value) || 30 : 30,
+      email_contact: email  // ✅ Email contact automatique
     });
 
-    // Succes
     document.getElementById('form-container').style.display = 'none';
     document.querySelector('.steps').style.display = 'none';
     document.getElementById('success-page').style.display = 'block';
@@ -652,9 +464,6 @@ async function creerCompte() {
   }
 }
 
-// ============================================
-// UTILS
-// ============================================
 function showAlert(el, msg) {
   el.textContent = msg;
   el.style.display = 'block';
