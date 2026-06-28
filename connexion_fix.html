@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Connexion — Proxikau</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
+<style>
+:root{--vert:#2D6A4F;--vert2:#1B4332;--vert-light:#D8F3DC;--terre:#BC6C25;--ink:#1A1A1A;--ink2:#555;--ink3:#999;--border:#E0E0E0;--bg:#F9F7F4;--white:#fff;--error:#D32F2F;--sans:'Inter',system-ui,sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;}
+nav{background:var(--vert2);height:56px;display:flex;align-items:center;padding:0 20px;}
+.logo{font-size:20px;font-weight:700;color:#fff;text-decoration:none;}
+.logo span{color:#95D5B2;}
+.page{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 20px;}
+.card{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:32px 28px;width:100%;max-width:400px;}
+.card-title{font-size:22px;font-weight:700;margin-bottom:6px;}
+.card-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
+.field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-family:var(--sans);font-size:15px;color:var(--ink);outline:none;transition:border-color .15s;-webkit-appearance:none;}
+.field input:focus{border-color:var(--vert);}
+.btn{width:100%;padding:13px;border-radius:10px;background:var(--vert);color:#fff;border:none;font-family:var(--sans);font-size:15px;font-weight:600;cursor:pointer;transition:background .15s;margin-top:4px;}
+.btn:hover{background:var(--vert2);}
+.btn:disabled{background:var(--ink3);cursor:not-allowed;}
+.alert{padding:12px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;display:none;}
+.alert.error{background:#FFEBEE;color:var(--error);display:block;}
+.divider{text-align:center;font-size:13px;color:var(--ink3);margin:20px 0;}
+.mot-de-passe-wrap{position:relative;}
+.mot-de-passe-wrap input{padding-right:44px;}
+.toggle-mdp{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:var(--ink3);}
+</style>
+</head>
+<body>
+<nav><a href="index.html" class="logo">Proxi<span>kau</span></a></nav>
+<div class="page">
+  <div class="card">
+    <div class="card-title">Se connecter</div>
+    <div class="card-sub">Vendeur ou acheteur, entre ton email et mot de passe.</div>
+    <div class="alert" id="alert"></div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="ton@email.fr" inputmode="email" autocomplete="email">
+    </div>
+    <div class="field">
+      <label>Mot de passe</label>
+      <div class="mot-de-passe-wrap">
+        <input type="password" id="mdp" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')seConnecter()">
+        <button class="toggle-mdp" onclick="toggleMdp()" type="button">👁</button>
+      </div>
+    </div>
+    <button class="btn" id="btn-login" onclick="seConnecter()">Se connecter</button>
+    <div class="divider">Pas encore de compte ?</div>
+    <a href="inscription.html" style="display:block;text-align:center;padding:12px;border-radius:10px;border:1.5px solid var(--vert);color:var(--vert);font-size:14px;font-weight:600;text-decoration:none;margin-bottom:10px;">Ouvrir ma boutique gratuitement →</a>
+    <a href="mes-commandes.html" style="display:block;text-align:center;font-size:13px;color:var(--ink3);text-decoration:none;">← Retour à l'accueil</a>
+  </div>
+</div>
+<script>
+function toggleMdp() {
+  const input = document.getElementById('mdp');
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+async function seConnecter() {
+  const email = document.getElementById('email').value.trim();
+  const mdp = document.getElementById('mdp').value;
+  const alertEl = document.getElementById('alert');
+  const btn = document.getElementById('btn-login');
+
+  if (!email || !mdp) {
+    alertEl.textContent = 'Remplis tous les champs.';
+    alertEl.className = 'alert error';
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Connexion...';
+  alertEl.className = 'alert';
+
+  try {
+    const { data, error } = await db.auth.signInWithPassword({ email, password: mdp });
+    if (error) throw error;
+
+    // Détecter si vendeur ou acheteur
+    const boutique = await getBoutiqueParUserId(data.user.id);
+    if (boutique) {
+      window.location.href = 'dashboard.html';
+    } else {
+      window.location.href = 'mes-commandes.html';
+    }
+  } catch(e) {
+    alertEl.textContent = 'Email ou mot de passe incorrect.';
+    alertEl.className = 'alert error';
+    btn.disabled = false;
+    btn.textContent = 'Se connecter';
+  }
+}
+
+// Si déjà connecté
+document.addEventListener('DOMContentLoaded', async () => {
+  const user = await getUtilisateurConnecte();
+  if (user) {
+    const boutique = await getBoutiqueParUserId(user.id);
+    window.location.href = boutique ? 'dashboard.html' : 'mes-commandes.html';
+  }
+});
+</script>
+</body>
+</html>
