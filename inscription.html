@@ -434,6 +434,9 @@ async function creerCompte() {
       document.getElementById('telephone').value.trim()
     );
 
+    // 1b. Connecter l utilisateur pour que creerBoutique fonctionne
+    await connecterUtilisateur(email, document.getElementById('motdepasse').value);
+
     // 2. Creer la boutique avec email_contact automatique
     await creerBoutique({
       slug: document.getElementById('slug').value.trim(),
