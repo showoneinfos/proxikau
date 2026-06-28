@@ -124,6 +124,7 @@ footer strong{color:#fff;}
       🛒 Panier <span class="panier-nav-count" id="panier-nav-count">0</span>
     </a>
     <a href="mes-commandes.html" class="btn-connexion" id="nav-commandes">Mes commandes</a>
+    <a href="connexion.html" class="btn-connexion" id="nav-connexion">Se connecter</a>
     <a href="dashboard.html" class="btn-connexion" id="nav-compte" style="display:none;">Mon espace</a>
     <a href="inscription.html" class="btn-vendre">Vendre →</a>
   </div>
@@ -287,6 +288,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   // Vérifier connexion — si vendeur, afficher "Mon espace"
   const user = await getUtilisateurConnecte();
   if (user) {
+    document.getElementById('nav-connexion').style.display = 'none';
     try {
       const maB = await getBoutiqueParUserId(user.id);
       if (maB) {
