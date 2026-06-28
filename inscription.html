@@ -200,6 +200,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
                 <div class="cat-option" onclick="selectCat('savons-cosmetiques',this)"><span class="cat-emoji">🧴</span>Savons & Cosmetiques</div>
                 <div class="cat-option" onclick="selectCat('bougies-deco',this)"><span class="cat-emoji">🕯️</span>Bougies & Deco</div>
                 <div class="cat-option" onclick="selectCat('oeufs-volaille',this)"><span class="cat-emoji">🥚</span>Oeufs & Volaille</div>
+                <div class="cat-option" onclick="selectCat('plats-patisserie',this)"><span class="cat-emoji">🍽️</span>Plats & Patisserie</div>
+                <div class="cat-option" onclick="selectCat('creation-artisanale',this)"><span class="cat-emoji">🎨</span>Creation Artisanale</div>
               </div>
               <input type="hidden" id="categorie">
             </div>
@@ -298,7 +300,7 @@ let slugTimeout = null;
 const emojis = {
   'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷',
   'epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯',
-  'huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'
+  'huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚','plats-patisserie':'🍽️','creation-artisanale':'🎨'
 };
 
 function allerEtape(n) {
