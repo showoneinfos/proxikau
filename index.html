@@ -32,7 +32,12 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:60px;di
 .btn-panier-nav{position:relative;background:var(--vert);color:#fff;border:none;border-radius:10px;padding:9px 16px;font-family:var(--sans);font-size:14px;font-weight:700;cursor:pointer;display:none;align-items:center;gap:6px;box-shadow:0 2px 8px rgba(45,106,79,.3);text-decoration:none;}
 .btn-panier-nav.visible{display:inline-flex;}
 .panier-nav-count{background:var(--terre);color:#fff;min-width:18px;height:18px;border-radius:9px;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid #fff;}
-@media(max-width:600px){.nav-search{display:none;}}
+@media(max-width:600px){.txt-long{display:none !important;}.txt-court{display:inline !important;}
+  .nav-search{display:none;}
+  .btn-connexion{font-size:11px;padding:5px 7px;}
+  .btn-vendre{font-size:11px;padding:6px 8px;}
+  nav{gap:6px;}
+}
 .hero{background:linear-gradient(135deg,var(--vert2) 0%,var(--vert) 100%);padding:28px 20px 36px;text-align:center;position:relative;overflow:hidden;}
 .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");pointer-events:none;}
 .hero-tag{display:inline-block;background:rgba(255,255,255,.15);color:#fff;font-size:12px;font-weight:600;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:.5px;}
@@ -114,7 +119,6 @@ footer strong{color:#fff;}
 <body>
 
 <nav>
-  <a href="inscription.html" class="btn-vendre" style="order:-1;margin-right:4px;">Vendre →</a>
   <a href="/" class="logo">Proxi<span>kau</span></a>
   <div class="nav-search">
     <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -124,9 +128,10 @@ footer strong{color:#fff;}
     <a href="#" class="btn-panier-nav" id="btn-panier-nav" onclick="allerAuPanier(event)">
       🛒 Panier <span class="panier-nav-count" id="panier-nav-count">0</span>
     </a>
-    <a href="mes-commandes.html" class="btn-connexion" id="nav-commandes">Mes commandes</a>
-    <a href="connexion.html" class="btn-connexion" id="nav-connexion">Se connecter</a>
+    <a href="mes-commandes.html" class="btn-connexion" id="nav-commandes"><span class="txt-long">Mes commandes</span><span class="txt-court" style="display:none;">Commandes</span></a>
+    <a href="connexion.html" class="btn-connexion" id="nav-connexion"><span class="txt-long">Se connecter</span><span class="txt-court" style="display:none;">Connexion</span></a>
     <a href="dashboard.html" class="btn-connexion" id="nav-compte" style="display:none;">Mon espace</a>
+    <a href="inscription.html" class="btn-vendre"><span class="txt-long">Vendre →</span><span class="txt-court" style="display:none;">Vendre</span></a>
 
   </div>
 </nav>
@@ -272,7 +277,7 @@ footer strong{color:#fff;}
     <a href="mentions-legales.html">Mentions légales</a>
     <a href="comment-ca-marche.html">Comment ça marche</a>
     <a href="inscription.html">Vendre sur Proxikau</a>
-    <a href="mes-commandes.html">Mes commandes</a>
+    <a href="mes-commandes.html"><span class="txt-long">Mes commandes</span><span class="txt-court" style="display:none;">Commandes</span></a>
   </div>
 </footer>
 
