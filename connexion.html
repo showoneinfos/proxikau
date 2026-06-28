@@ -15,9 +15,9 @@ nav{background:var(--vert2);height:56px;display:flex;align-items:center;padding:
 .logo{font-size:20px;font-weight:700;color:#fff;text-decoration:none;}
 .logo span{color:#95D5B2;}
 .page{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 20px;}
-.card{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:32px 28px;width:100%;max-width:420px;}
+.card{background:var(--white);border-radius:16px;border:1px solid var(--border);padding:32px 28px;width:100%;max-width:400px;}
 .card-title{font-size:22px;font-weight:700;margin-bottom:6px;}
-.card-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;line-height:1.5;}
+.card-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;}
 .field{margin-bottom:16px;}
 .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px;}
 .field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:12px 14px;font-family:var(--sans);font-size:15px;color:var(--ink);outline:none;transition:border-color .15s;-webkit-appearance:none;}
@@ -27,148 +27,47 @@ nav{background:var(--vert2);height:56px;display:flex;align-items:center;padding:
 .btn:disabled{background:var(--ink3);cursor:not-allowed;}
 .alert{padding:12px 14px;border-radius:8px;font-size:13px;margin-bottom:16px;display:none;}
 .alert.error{background:#FFEBEE;color:var(--error);display:block;}
-.divider{display:flex;align-items:center;gap:10px;margin:20px 0;color:var(--ink3);font-size:12px;font-weight:600;}
-.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
+.divider{text-align:center;font-size:13px;color:var(--ink3);margin:20px 0;}
 .mot-de-passe-wrap{position:relative;}
 .mot-de-passe-wrap input{padding-right:44px;}
 .toggle-mdp{position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:18px;color:var(--ink3);}
-
-/* TABS */
-.tabs{display:flex;border-bottom:2px solid var(--border);margin-bottom:24px;}
-.tab{flex:1;padding:12px;text-align:center;font-size:14px;font-weight:600;color:var(--ink3);cursor:pointer;border:none;background:none;font-family:var(--sans);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;}
-.tab.active{color:var(--vert);border-bottom-color:var(--vert);}
-
-/* INSCRIPTION */
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-@media(max-width:400px){.form-grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
 <nav><a href="index.html" class="logo">Proxi<span>kau</span></a></nav>
-
 <div class="page">
   <div class="card">
-    <div class="card-title">Bienvenue sur Proxikau</div>
-    <div class="card-sub">Connecte-toi pour accéder à ton espace.</div>
-
-    <!-- TABS -->
-    <div class="tabs">
-      <button class="tab active" id="tab-co" onclick="switchTab('connexion')">Se connecter</button>
-      <button class="tab" id="tab-in" onclick="switchTab('inscription')">Créer un compte</button>
+    <div class="card-title">Se connecter</div>
+    <div class="card-sub">Vendeur ou acheteur, entre ton email et mot de passe.</div>
+    <div class="alert" id="alert"></div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="ton@email.fr" inputmode="email" autocomplete="email">
     </div>
-
-    <!-- CONNEXION -->
-    <div id="form-connexion">
-      <div class="alert" id="alert-co"></div>
-      <div class="field">
-        <label>Email</label>
-        <input type="email" id="co-email" placeholder="ton@email.fr" inputmode="email" autocomplete="email">
+    <div class="field">
+      <label>Mot de passe</label>
+      <div class="mot-de-passe-wrap">
+        <input type="password" id="mdp" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')seConnecter()">
+        <button class="toggle-mdp" onclick="toggleMdp()" type="button">👁</button>
       </div>
-      <div class="field">
-        <label>Mot de passe</label>
-        <div class="mot-de-passe-wrap">
-          <input type="password" id="co-mdp" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')seConnecter()">
-          <button class="toggle-mdp" onclick="toggleMdp('co-mdp')" type="button">👁</button>
-        </div>
-      </div>
-      <button class="btn" id="btn-co" onclick="seConnecter()">Se connecter</button>
     </div>
-
-    <!-- INSCRIPTION -->
-    <div id="form-inscription" style="display:none;">
-      <div class="alert" id="alert-in"></div>
-      <div class="form-grid">
-        <div class="field"><label>Prénom *</label><input type="text" id="in-prenom" placeholder="Jean"></div>
-        <div class="field"><label>Nom *</label><input type="text" id="in-nom" placeholder="Dupont"></div>
-      </div>
-      <div class="field"><label>Email *</label><input type="email" id="in-email" placeholder="ton@email.fr" inputmode="email"></div>
-      <div class="field">
-        <label>Mot de passe *</label>
-        <div class="mot-de-passe-wrap">
-          <input type="password" id="in-mdp" placeholder="8 caractères minimum">
-          <button class="toggle-mdp" onclick="toggleMdp('in-mdp')" type="button">👁</button>
-        </div>
-      </div>
-
-      <!-- CHOIX RÔLE -->
-      <div style="margin-bottom:16px;">
-        <label style="display:block;font-size:13px;font-weight:600;margin-bottom:10px;">Je suis *</label>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-          <label id="role-acheteur-card" onclick="selectRole('acheteur')" style="border:1.5px solid var(--vert);background:var(--vert-light);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;">
-            <input type="radio" name="role" value="acheteur" checked style="display:none;">
-            <div style="font-size:24px;margin-bottom:6px;">🛒</div>
-            <div style="font-size:13px;font-weight:700;color:var(--vert2);">Acheteur</div>
-            <div style="font-size:11px;color:var(--ink3);margin-top:2px;">Je veux acheter</div>
-          </label>
-          <label id="role-vendeur-card" onclick="selectRole('vendeur')" style="border:1.5px solid var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;">
-            <input type="radio" name="role" value="vendeur" style="display:none;">
-            <div style="font-size:24px;margin-bottom:6px;">🏪</div>
-            <div style="font-size:13px;font-weight:700;color:var(--ink);">Vendeur</div>
-            <div style="font-size:11px;color:var(--ink3);margin-top:2px;">Je veux vendre</div>
-          </label>
-        </div>
-      </div>
-
-      <button class="btn" id="btn-in" onclick="sInscrire()">Créer mon compte</button>
-    </div>
-
-    <div class="divider">ou</div>
-    <a href="index.html" style="display:block;text-align:center;font-size:14px;color:var(--ink3);text-decoration:none;">← Retour à l'accueil</a>
+    <button class="btn" id="btn-login" onclick="seConnecter()">Se connecter</button>
+    <div class="divider">Pas encore de compte ?</div>
+    <a href="inscription.html" style="display:block;text-align:center;padding:12px;border-radius:10px;border:1.5px solid var(--vert);color:var(--vert);font-size:14px;font-weight:600;text-decoration:none;margin-bottom:10px;">Ouvrir ma boutique gratuitement →</a>
+    <a href="index.html" style="display:block;text-align:center;font-size:13px;color:var(--ink3);text-decoration:none;">← Retour à l'accueil</a>
   </div>
 </div>
-
 <script>
-let roleSelectionne = 'acheteur';
-
-// Si déjà connecté → redirect selon rôle
-getUtilisateurConnecte().then(async user => {
-  if (user) await redirectSelon(user.id);
-});
-
-async function redirectSelon(userId) {
-  try {
-    const boutique = await getBoutiqueParUserId(userId);
-    if (boutique) {
-      window.location.href = 'dashboard.html';
-    } else {
-      window.location.href = 'mes-commandes.html';
-    }
-  } catch(e) {
-    window.location.href = 'mes-commandes.html';
-  }
-}
-
-function switchTab(tab) {
-  document.getElementById('tab-co').classList.toggle('active', tab === 'connexion');
-  document.getElementById('tab-in').classList.toggle('active', tab === 'inscription');
-  document.getElementById('form-connexion').style.display = tab === 'connexion' ? 'block' : 'none';
-  document.getElementById('form-inscription').style.display = tab === 'inscription' ? 'block' : 'none';
-}
-
-function selectRole(role) {
-  roleSelectionne = role;
-  const acheteurCard = document.getElementById('role-acheteur-card');
-  const vendeurCard = document.getElementById('role-vendeur-card');
-  if (role === 'acheteur') {
-    acheteurCard.style.cssText = 'border:1.5px solid var(--vert);background:var(--vert-light);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;';
-    vendeurCard.style.cssText = 'border:1.5px solid var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;';
-  } else {
-    vendeurCard.style.cssText = 'border:1.5px solid var(--vert);background:var(--vert-light);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;';
-    acheteurCard.style.cssText = 'border:1.5px solid var(--border);border-radius:10px;padding:14px;text-align:center;cursor:pointer;transition:all .15s;';
-  }
-}
-
-function toggleMdp(id) {
-  const input = document.getElementById(id);
+function toggleMdp() {
+  const input = document.getElementById('mdp');
   input.type = input.type === 'password' ? 'text' : 'password';
 }
 
 async function seConnecter() {
-  const email = document.getElementById('co-email').value.trim();
-  const mdp = document.getElementById('co-mdp').value;
-  const alertEl = document.getElementById('alert-co');
-  const btn = document.getElementById('btn-co');
-  alertEl.className = 'alert';
+  const email = document.getElementById('email').value.trim();
+  const mdp = document.getElementById('mdp').value;
+  const alertEl = document.getElementById('alert');
+  const btn = document.getElementById('btn-login');
 
   if (!email || !mdp) {
     alertEl.textContent = 'Remplis tous les champs.';
@@ -178,11 +77,17 @@ async function seConnecter() {
 
   btn.disabled = true;
   btn.textContent = 'Connexion...';
+  alertEl.className = 'alert';
 
   try {
-    const { data } = await connecterUtilisateur(email, mdp);
-    // Détecter le rôle et rediriger
-    await redirectSelon(data.user.id);
+    const { data, error } = await db.auth.signInWithPassword({ email, password: mdp });
+    if (error) throw error;
+    const boutique = await getBoutiqueParUserId(data.user.id);
+    if (boutique) {
+      window.location.href = 'dashboard.html';
+    } else {
+      window.location.href = 'mes-commandes.html';
+    }
   } catch(e) {
     alertEl.textContent = 'Email ou mot de passe incorrect.';
     alertEl.className = 'alert error';
@@ -191,53 +96,13 @@ async function seConnecter() {
   }
 }
 
-async function sInscrire() {
-  const prenom = document.getElementById('in-prenom').value.trim();
-  const nom = document.getElementById('in-nom').value.trim();
-  const email = document.getElementById('in-email').value.trim();
-  const mdp = document.getElementById('in-mdp').value;
-  const alertEl = document.getElementById('alert-in');
-  const btn = document.getElementById('btn-in');
-  alertEl.className = 'alert';
-
-  if (!prenom || !nom || !email || !mdp) {
-    alertEl.textContent = 'Remplis tous les champs.';
-    alertEl.className = 'alert error';
-    return;
+document.addEventListener('DOMContentLoaded', async () => {
+  const user = await getUtilisateurConnecte();
+  if (user) {
+    const boutique = await getBoutiqueParUserId(user.id);
+    window.location.href = boutique ? 'dashboard.html' : 'mes-commandes.html';
   }
-  if (mdp.length < 8) {
-    alertEl.textContent = 'Mot de passe trop court (8 caractères minimum).';
-    alertEl.className = 'alert error';
-    return;
-  }
-
-  btn.disabled = true;
-  btn.textContent = 'Création...';
-
-  try {
-    const { data, error } = await db.auth.signUp({ email, password: mdp });
-    if (error) throw error;
-
-    // Créer le profil
-    await db.from('utilisateurs').insert([{
-      id: data.user.id,
-      email, prenom, nom,
-      role: roleSelectionne
-    }]);
-
-    // Rediriger selon le rôle choisi
-    if (roleSelectionne === 'vendeur') {
-      window.location.href = 'inscription.html';
-    } else {
-      window.location.href = 'mes-commandes.html';
-    }
-  } catch(e) {
-    alertEl.textContent = e.message.includes('already') ? 'Cet email est déjà utilisé.' : 'Erreur : ' + e.message;
-    alertEl.className = 'alert error';
-    btn.disabled = false;
-    btn.textContent = 'Créer mon compte';
-  }
-}
+});
 </script>
 </body>
 </html>
