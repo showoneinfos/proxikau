@@ -452,7 +452,7 @@ async function creerCompte() {
 
     // Email de bienvenue vendeur
     try {
-      await fetch('/api/send-email', {
+      await fetch('https://proxikau.com/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
