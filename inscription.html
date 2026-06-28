@@ -450,6 +450,21 @@ async function creerCompte() {
       email_contact: email  // ✅ Email contact automatique
     });
 
+    // Email de bienvenue vendeur
+    try {
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'bienvenue_vendeur',
+          vendeur_email: email,
+          vendeur_nom: document.getElementById('prenom').value.trim() + ' ' + document.getElementById('nom').value.trim(),
+          boutique_nom: document.getElementById('nom-boutique').value.trim(),
+          boutique_slug: document.getElementById('slug').value.trim()
+        })
+      });
+    } catch(e) { console.log('Email bienvenue non envoyé', e); }
+
     document.getElementById('form-container').style.display = 'none';
     document.querySelector('.steps').style.display = 'none';
     document.getElementById('success-page').style.display = 'block';
