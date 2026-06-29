@@ -3,7 +3,7 @@ import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
-const BASE_URL = process.env.BASE_URL || 'https://proxikau.vercel.app';
+const BASE_URL = process.env.BASE_URL || 'https://proxikau.com';
 
 export default async function handler(req, res) {
 
@@ -20,20 +20,73 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Webhook signature invalide' });
     }
 
+    // ✅ Paiement confirmé — mettre à jour commandes ET envoyer emails
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const commande_ids = session.metadata?.commande_id?.split(',') || [];
+
       try {
         const { createClient } = await import('@supabase/supabase-js');
         const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+
         for (const commande_id of commande_ids) {
+          const id = commande_id.trim();
+
+          // 1. Mettre à jour le statut
           await db.from('commandes').update({
             statut: 'payee',
             stripe_session_id: session.id,
             stripe_payment_intent: session.payment_intent
-          }).eq('id', commande_id.trim());
+          }).eq('id', id);
+
+          // 2. Récupérer les infos complètes pour l'email
+          const { data: commande } = await db
+            .from('commandes')
+            .select(`
+              *,
+              boutiques (nom, email_contact),
+              commande_lignes (nom_produit, quantite, prix_unitaire)
+            `)
+            .eq('id', id)
+            .single();
+
+          if (!commande) continue;
+
+          const vendeurEmail = commande.boutiques?.email_contact;
+          const boutique_nom = commande.boutiques?.nom || '';
+          const adresse = commande.adresse_livraison || {};
+
+          // 3. Envoyer email au vendeur
+          if (vendeurEmail) {
+            try {
+              await fetch(`${BASE_URL}/api/send-email`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  vendeur_email: vendeurEmail,
+                  boutique_nom,
+                  commande_id: commande.id,
+                  produits: commande.commande_lignes.map(l => ({
+                    nom: l.nom_produit,
+                    qty: l.quantite,
+                    prix: l.prix_unitaire
+                  })),
+                  mode_livraison: commande.mode_livraison,
+                  adresse: ['colis','proximite'].includes(commande.mode_livraison) ? adresse : null,
+                  acheteur_nom: (adresse.prenom || '') + ' ' + (adresse.nom || ''),
+                  acheteur_email: adresse.email || '',
+                  acheteur_tel: adresse.telephone || '',
+                  montant_total: commande.montant_total
+                })
+              });
+            } catch (emailErr) {
+              console.error('Erreur email vendeur:', emailErr.message);
+            }
+          }
         }
-      } catch (e) { console.error('Erreur update commande:', e.message); }
+      } catch (e) {
+        console.error('Erreur webhook checkout.session.completed:', e.message);
+      }
     }
 
     if (event.type === 'account.updated') {
