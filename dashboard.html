@@ -107,6 +107,7 @@ tr:last-child td{border-bottom:none;}
 .badge-preparee{background:#EDE7F6;color:#4527A0;}
 .badge-livree{background:var(--vert-light);color:var(--vert2);}
 .badge-annulee{background:#FFEBEE;color:var(--error);}
+.badge-remboursee{background:#FFEBEE;color:var(--error);}
 .produit-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);}
 .produit-row:last-child{border-bottom:none;}
 .produit-thumb{width:52px;height:52px;border-radius:8px;background:var(--bg);border:1px solid var(--border);object-fit:cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px;}
@@ -146,7 +147,6 @@ tr:last-child td{border-bottom:none;}
 .boost-desc{font-size:12px;color:var(--ink2);margin-bottom:10px;}
 .boost-prix{font-size:20px;font-weight:700;color:var(--vert);}
 .boost-periode{font-size:11px;color:var(--ink3);}
-/* STRIPE */
 .stripe-block{margin-top:24px;padding:20px;background:#F0EEFF;border:1.5px solid #635BFF44;border-radius:12px;}
 .stripe-block-title{font-size:14px;font-weight:700;margin-bottom:4px;color:#3D3580;}
 .stripe-block-desc{font-size:13px;color:var(--ink2);margin-bottom:14px;line-height:1.5;}
@@ -285,6 +285,8 @@ tr:last-child td{border-bottom:none;}
               <option value="savons-cosmetiques">🧴 Savons & Cosmétiques</option>
               <option value="bougies-deco">🕯️ Bougies & Déco</option>
               <option value="oeufs-volaille">🥚 Œufs & Volaille</option>
+              <option value="plats-patisserie">🥐 Plats & Pâtisserie</option>
+              <option value="creation-artisanale">⭐ Création Artisanale</option>
             </select>
           </div>
         </div>
@@ -339,7 +341,6 @@ tr:last-child td{border-bottom:none;}
 
         <button class="btn btn-primary" style="margin-top:20px;" onclick="sauvegarderBoutique()">Sauvegarder</button>
 
-        <!-- STRIPE CONNECT -->
         <div class="stripe-block">
           <div class="stripe-block-title">💳 Paiements en ligne</div>
           <div class="stripe-block-desc">Connecte ton compte bancaire pour recevoir les paiements de tes clients directement sur ton IBAN. Proxikau prend 5% de commission, tu reçois le reste automatiquement à J+30.</div>
@@ -348,7 +349,6 @@ tr:last-child td{border-bottom:none;}
             🔗 Connecter mon compte Stripe
           </button>
         </div>
-
       </div>
     </div>
 
@@ -439,6 +439,8 @@ tr:last-child td{border-bottom:none;}
           <option value="savons-cosmetiques">🧴 Savons & Cosmétiques</option>
           <option value="bougies-deco">🕯️ Bougies & Déco</option>
           <option value="oeufs-volaille">🥚 Œufs & Volaille</option>
+          <option value="plats-patisserie">🥐 Plats & Pâtisserie</option>
+          <option value="creation-artisanale">⭐ Création Artisanale</option>
         </select>
       </div>
       <div class="field">
@@ -508,7 +510,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   verifierStripeRetour();
 });
 
-// STRIPE
 function verifierStripeRetour() {
   const p = new URLSearchParams(window.location.search);
   if (p.get('stripe') === 'success') {
@@ -620,7 +621,7 @@ async function chargerProduits() {
 }
 
 function getEmoji(cat) {
-  return {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚'}[cat]||'📦';
+  return {'viande-charcuterie':'🥩','fromage-laitier':'🧀','vins-bieres':'🍷','epicerie-terroir':'🫙','fruits-legumes':'🥦','miel-confitures':'🍯','huiles-condiments':'🫒','savons-cosmetiques':'🧴','bougies-deco':'🕯️','oeufs-volaille':'🥚','plats-patisserie':'🥐','creation-artisanale':'⭐'}[cat]||'📦';
 }
 
 function afficherProduits() {
