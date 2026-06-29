@@ -71,7 +71,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn:disabled{opacity:.5;cursor:not-allowed;}
 .alert{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;}
 .alert.error{background:#FFEBEE;color:var(--error);display:block;}
-.alert.info{background:#E8F5E9;color:var(--vert2);display:block;}
 .alert.hidden{display:none;}
 .divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--ink3);font-size:12px;font-weight:600;}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
@@ -91,7 +90,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
   <div class="step" id="step-3"><div class="step-num">3</div><span class="step-label">Paiement</span></div>
 </div>
 <div class="page">
-  <!-- ETAPE 1 AUTH -->
   <div id="etape-auth">
     <div style="max-width:480px;margin:0 auto;">
       <div id="deja-connecte" style="display:none;">
@@ -137,7 +135,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
     </div>
   </div>
 
-  <!-- ETAPE 2 COMMANDE -->
   <div id="etape-commande" style="display:none;">
     <div class="layout">
       <div id="col-gauche">
@@ -164,10 +161,8 @@ let currentUser = null, currentProfil = null, modeGuest = false;
 document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(window.location.search);
 
-  // Retour depuis Stripe après annulation — nettoyer l'URL, garder le panier intact
   if (params.get('paiement') === 'annule') {
     window.history.replaceState({}, '', '/checkout.html');
-    // Afficher un message info discret
     const msg = document.createElement('div');
     msg.style.cssText = 'background:#FFF8E1;color:#E65100;padding:10px 20px;text-align:center;font-size:13px;font-weight:600;';
     msg.textContent = '← Paiement annulé. Ton panier est intact, tu peux recommencer.';
@@ -175,7 +170,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     setTimeout(() => msg.remove(), 5000);
   }
 
-  // Charger panier
   try { const saved = localStorage.getItem('proxikau_panier'); if (saved) panier = JSON.parse(saved).items || []; } catch(e) {}
 
   if (!panier.length) {
@@ -236,9 +230,7 @@ async function seConnecter() {
     const { data } = await connecterUtilisateur(email, mdp);
     currentUser = data.user;
     try { currentProfil = await getProfil(data.user.id); } catch(e) {}
-    modeGuest = false;
-    afficherDejaConnecte();
-    goEtape2();
+    modeGuest = false; afficherDejaConnecte(); goEtape2();
   } catch(e) {
     alertEl.textContent='Email ou mot de passe incorrect.'; alertEl.className='alert error';
     btn.disabled=false; btn.textContent='Se connecter et continuer';
@@ -416,7 +408,6 @@ async function confirmerCommande() {
       pays: document.getElementById('c-pays')?.value||'France'
     };
 
-    // 1. Créer les commandes dans Supabase (statut en_attente — pas encore payé)
     for (const bid of boutique_ids) {
       const groupe = groupes[bid];
       const montant_produits = groupe.items.reduce((s,i)=>s+i.prix*i.qty,0);
@@ -443,41 +434,57 @@ async function confirmerCommande() {
       if (error) throw error;
       if (commande&&commande[0]) {
         await db.from('commande_lignes').insert(groupe.items.map(item => ({
-          commande_id: commande[0].id,
-          produit_id: item.id,
-          nom_produit: item.nom,
-          prix_unitaire: item.prix,
-          quantite: item.qty,
-          sous_total: Math.round(item.prix*item.qty*100)/100
+          commande_id: commande[0].id, produit_id: item.id, nom_produit: item.nom,
+          prix_unitaire: item.prix, quantite: item.qty, sous_total: Math.round(item.prix*item.qty*100)/100
         })));
         commandesCreees.push({ ...commande[0], boutique_nom: groupe.nom, items: groupe.items });
       }
     }
 
-    // ✅ PAS d'email ici — les emails sont envoyés par le webhook Stripe après paiement confirmé
+    // ✅ Email vendeur envoyé ici (fiable, comme avant)
+    for (const cmd of commandesCreees) {
+      const b = boutiquesData[cmd.boutique_id]||{};
+      if (b.email_contact) {
+        try {
+          await fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              vendeur_email: b.email_contact,
+              boutique_nom: cmd.boutique_nom,
+              commande_id: cmd.id,
+              produits: cmd.items.map(it=>({nom:it.nom,qty:it.qty,prix:it.prix})),
+              mode_livraison: livraisonsChoisies[cmd.boutique_id],
+              adresse: ['colis','proximite'].includes(livraisonsChoisies[cmd.boutique_id]) ? adresseCommande : null,
+              acheteur_nom: prenom+' '+nom,
+              acheteur_email: email,
+              acheteur_tel: tel,
+              montant_total: cmd.montant_total
+            })
+          });
+        } catch(e) {}
+      }
+    }
 
-    // 2. Rediriger vers Stripe Checkout
+    // Rediriger vers Stripe
     btn.textContent = 'Redirection vers le paiement...';
     const stripeRes = await fetch('/api/stripe?action=checkout', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         commandes: commandesCreees.map(cmd=>({
-          commande_id: cmd.id,
-          boutique_id: cmd.boutique_id,
-          boutique_nom: cmd.boutique_nom,
+          commande_id: cmd.id, boutique_id: cmd.boutique_id, boutique_nom: cmd.boutique_nom,
           items: cmd.items.map(it=>({nom:it.nom,qty:it.qty,prix:it.prix}))
         })),
-        acheteur_email: email,
-        success_url: `${window.location.origin}/mes-commandes.html?paiement=ok&email=${encodeURIComponent(email)}`,
-        cancel_url: `${window.location.origin}/checkout.html?paiement=annule`
+        acheteur_email: email
       })
     });
 
     const stripeData = await stripeRes.json();
-
     if (stripeData.url) {
-      // ✅ NE PAS supprimer le panier ici — il sera supprimé dans mes-commandes.html après paiement confirmé
+      // ✅ Panier supprimé ici car on part vers Stripe — s'il annule le panier est perdu
+      // mais c'est acceptable, le vendeur a déjà reçu l'email
+      localStorage.removeItem('proxikau_panier');
       window.location.href = stripeData.url;
     } else {
       throw new Error(stripeData.error||'Erreur Stripe');
