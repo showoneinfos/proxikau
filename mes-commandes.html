@@ -18,12 +18,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn-retour{font-size:13px;color:var(--ink2);text-decoration:none;padding:7px 12px;border:1px solid var(--border);border-radius:8px;}
 .btn-deco{font-size:13px;color:var(--error);background:none;border:none;cursor:pointer;font-family:var(--sans);}
 .nav-user{font-size:13px;color:var(--ink2);display:none;}
-
 .page{max-width:720px;margin:0 auto;padding:28px 16px 60px;}
 .page-title{font-size:22px;font-weight:800;margin-bottom:4px;}
 .page-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;}
-
-/* AUTH CARD */
 .auth-card{background:var(--white);border:1px solid var(--border);border-radius:16px;overflow:hidden;max-width:440px;margin:0 auto;}
 .auth-tabs{display:flex;border-bottom:1px solid var(--border);}
 .auth-tab{flex:1;padding:14px;text-align:center;font-size:14px;font-weight:600;color:var(--ink3);cursor:pointer;border:none;background:none;font-family:var(--sans);transition:all .15s;}
@@ -31,12 +28,8 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .auth-body{padding:28px 24px;}
 .auth-title{font-size:18px;font-weight:700;margin-bottom:6px;}
 .auth-sub{font-size:13px;color:var(--ink2);margin-bottom:20px;line-height:1.5;}
-
-/* GUEST SECTION */
 .guest-section{margin-top:20px;padding-top:20px;border-top:1px dashed var(--border);}
 .guest-title{font-size:13px;font-weight:600;color:var(--ink3);text-align:center;margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;}
-
-/* FORM */
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;}
 .field label span{color:var(--error);}
@@ -44,8 +37,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .field input:focus{border-color:var(--vert);}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:400px){.form-grid{grid-template-columns:1fr;}}
-
-/* BTN */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 20px;border-radius:10px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;border:none;width:100%;margin-top:4px;}
 .btn-vert{background:var(--vert);color:#fff;}
 .btn-vert:hover{background:var(--vert2);}
@@ -53,13 +44,9 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .btn-outline:hover{background:var(--vert-light);}
 .btn-ghost{background:var(--bg);color:var(--ink2);border:1px solid var(--border);}
 .btn:disabled{opacity:.5;cursor:not-allowed;}
-
-/* ALERT */
 .alert{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;display:none;}
 .alert.error{background:#FFEBEE;color:var(--error);display:block;}
 .alert.success{background:var(--vert-light);color:var(--vert2);display:block;}
-
-/* COMMANDE CARD */
 .commande-card{background:var(--white);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:16px;}
 .commande-head{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .commande-boutique{font-size:15px;font-weight:700;color:var(--ink);text-decoration:none;}
@@ -76,8 +63,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .commande-footer{padding:14px 20px;background:var(--bg);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .commande-total{font-size:15px;font-weight:700;}
 .commande-livraison{font-size:13px;color:var(--ink2);}
-
-/* BADGE STATUT */
 .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:600;}
 .badge-en_attente{background:#FFF3E0;color:#F57C00;}
 .badge-payee,.badge-livree,.badge-terminee{background:var(--vert-light);color:var(--vert2);}
@@ -85,8 +70,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .badge-expediee{background:#E3F2FD;color:#1565C0;}
 .badge-disponible{background:#E8F5E9;color:#2E7D32;}
 .badge-annulee,.badge-remboursee{background:#FFEBEE;color:var(--error);}
-
-/* TIMELINE */
 .timeline{display:flex;align-items:center;margin-top:12px;overflow-x:auto;padding:4px 0;}
 .tl-step{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
 .tl-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border);background:var(--white);display:flex;align-items:center;justify-content:center;font-size:13px;}
@@ -96,26 +79,19 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .tl-label.done,.tl-label.active{color:var(--vert2);font-weight:600;}
 .tl-line{flex:1;height:2px;background:var(--border);min-width:20px;}
 .tl-line.done{background:var(--vert);}
-
-/* USER INFO */
 .user-info-bar{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
 .user-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--vert),var(--vert2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0;}
 .user-name{font-size:14px;font-weight:700;}
 .user-email{font-size:12px;color:var(--ink3);}
-
-/* SUCCESS */
 .success-banner{background:var(--vert-light);border:1.5px solid var(--vert);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:12px;}
 .success-banner-icon{font-size:28px;flex-shrink:0;}
 .success-banner-title{font-size:15px;font-weight:700;color:var(--vert2);}
 .success-banner-sub{font-size:13px;color:var(--vert2);margin-top:2px;}
-
-/* EMPTY */
 .empty{text-align:center;padding:60px 20px;}
 .empty-icon{font-size:48px;margin-bottom:16px;}
 .empty h3{font-size:18px;font-weight:700;margin-bottom:8px;}
 .empty p{font-size:14px;color:var(--ink2);margin-bottom:24px;}
 .btn-shop{display:inline-block;padding:12px 24px;border-radius:10px;background:var(--vert);color:#fff;text-decoration:none;font-weight:600;}
-
 .loading{text-align:center;padding:40px;color:var(--ink3);}
 .divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:var(--ink3);font-size:12px;}
 .divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
@@ -142,20 +118,16 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
       <div style="font-size:22px;font-weight:800;margin-bottom:6px;">Mes commandes</div>
       <div style="font-size:14px;color:var(--ink2);">Connecte-toi ou crée un compte pour suivre tes commandes.</div>
     </div>
-
     <div class="auth-card">
       <div class="auth-tabs">
         <button class="auth-tab active" id="tab-connexion" onclick="switchTab('connexion')">Se connecter</button>
         <button class="auth-tab" id="tab-inscription" onclick="switchTab('inscription')">Créer un compte</button>
       </div>
-
-      <!-- CONNEXION -->
       <div class="auth-body" id="body-connexion">
         <div class="alert" id="alert-connexion"></div>
         <div class="field"><label>Email <span>*</span></label><input type="email" id="co-email" placeholder="ton@email.fr" inputmode="email"></div>
         <div class="field"><label>Mot de passe <span>*</span></label><input type="password" id="co-mdp" onkeydown="if(event.key==='Enter')seConnecter()"></div>
         <button class="btn btn-vert" onclick="seConnecter()" id="btn-connexion">Se connecter</button>
-
         <div class="guest-section">
           <div class="guest-title">Pas de compte ?</div>
           <div style="font-size:13px;color:var(--ink2);text-align:center;margin-bottom:12px;">Retrouve tes commandes passées en guest avec ton email.</div>
@@ -163,8 +135,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
           <button class="btn btn-outline" onclick="rechercherGuest()" id="btn-guest">🔍 Voir mes commandes</button>
         </div>
       </div>
-
-      <!-- INSCRIPTION -->
       <div class="auth-body" id="body-inscription" style="display:none;">
         <div class="alert" id="alert-inscription"></div>
         <div class="form-grid">
@@ -191,7 +161,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
         </div>
       </div>
     </div>
-
     <div id="user-info-bar" style="display:none;" class="user-info-bar">
       <div class="user-avatar" id="user-avatar">?</div>
       <div>
@@ -202,8 +171,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
         <button onclick="seDeconnecter()" style="font-size:12px;color:var(--ink3);background:none;border:none;cursor:pointer;">Déconnexion</button>
       </div>
     </div>
-
-    <div id="guest-info-bar" style="display:none;" class="user-info-bar" style="background:var(--terre-light);border-color:var(--terre);">
+    <div id="guest-info-bar" style="display:none;" class="user-info-bar">
       <div style="font-size:24px;">👤</div>
       <div>
         <div style="font-size:14px;font-weight:700;">Commandes guest</div>
@@ -213,7 +181,6 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
         <button onclick="switchTab('inscription');document.getElementById('auth-section').style.display='block';document.getElementById('commandes-section').style.display='none';" style="font-size:12px;color:var(--vert);background:none;border:1px solid var(--vert);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--sans);font-weight:600;">Créer un compte</button>
       </div>
     </div>
-
     <div class="page-title">Mes commandes</div>
     <div class="page-sub" id="nb-commandes"></div>
     <div id="liste-commandes"></div>
@@ -249,9 +216,6 @@ function getTimeline(statut, mode) {
   });
 }
 
-// ============================================
-// INIT
-// ============================================
 document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(window.location.search);
 
@@ -259,9 +223,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   document.getElementById('loading').style.display = 'none';
 
   if (user) {
-    // Utilisateur connecté
     document.getElementById('btn-deco').style.display = 'block';
-    // Afficher infos user dans nav
     try {
       const profil = await getProfil(user.id);
       if (profil) {
@@ -275,18 +237,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     } catch(e) {}
 
     if (params.get('paiement') === 'ok') {
+      // ✅ Supprimer le panier maintenant que le paiement est confirmé
+      localStorage.removeItem('proxikau_panier');
       document.getElementById('success-banner').style.display = 'block';
     }
+
     await chargerCommandes({ type: 'user', id: user.id });
+
   } else {
-    // Non connecté
     document.getElementById('auth-section').style.display = 'block';
 
-    // Si retour paiement sans compte → chercher par email dans URL ou localStorage
     if (params.get('paiement') === 'ok') {
       const emailFromUrl = params.get('email');
       const lastEmail = emailFromUrl || localStorage.getItem('proxikau_last_email');
       if (lastEmail) {
+        // ✅ Supprimer le panier maintenant que le paiement est confirmé
+        localStorage.removeItem('proxikau_panier');
         localStorage.setItem('proxikau_last_email', lastEmail);
         document.getElementById('auth-section').style.display = 'none';
         document.getElementById('success-banner').style.display = 'block';
@@ -299,9 +265,6 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// ============================================
-// TABS
-// ============================================
 function switchTab(tab) {
   document.getElementById('tab-connexion').classList.toggle('active', tab === 'connexion');
   document.getElementById('tab-inscription').classList.toggle('active', tab === 'inscription');
@@ -309,9 +272,6 @@ function switchTab(tab) {
   document.getElementById('body-inscription').style.display = tab === 'inscription' ? 'block' : 'none';
 }
 
-// ============================================
-// CONNEXION
-// ============================================
 async function seConnecter() {
   const email = document.getElementById('co-email').value.trim();
   const mdp = document.getElementById('co-mdp').value;
@@ -322,7 +282,6 @@ async function seConnecter() {
   btn.disabled = true; btn.textContent = 'Connexion...';
   try {
     const { data } = await connecterUtilisateur(email, mdp);
-    // Récupérer profil
     let prenom = '', nom = '';
     try { const profil = await getProfil(data.user.id); prenom = profil?.prenom || ''; nom = profil?.nom || ''; } catch(e) {}
     document.getElementById('auth-section').style.display = 'none';
@@ -339,9 +298,6 @@ async function seConnecter() {
   }
 }
 
-// ============================================
-// INSCRIPTION
-// ============================================
 async function sInscrire() {
   const prenom = document.getElementById('in-prenom').value.trim();
   const nom = document.getElementById('in-nom').value.trim();
@@ -350,33 +306,16 @@ async function sInscrire() {
   const mdp2 = document.getElementById('in-mdp2').value;
   const alertEl = document.getElementById('alert-inscription');
   alertEl.className = 'alert';
-
   if (!prenom || !nom || !email || !mdp) { alertEl.textContent = 'Remplis tous les champs.'; alertEl.className = 'alert error'; return; }
   if (mdp.length < 8) { alertEl.textContent = 'Le mot de passe doit faire 8 caractères minimum.'; alertEl.className = 'alert error'; return; }
   if (mdp !== mdp2) { alertEl.textContent = 'Les mots de passe ne correspondent pas.'; alertEl.className = 'alert error'; return; }
-
   const btn = document.getElementById('btn-inscription');
   btn.disabled = true; btn.textContent = 'Création...';
-
   try {
-    // Créer le compte Supabase
     const { data, error } = await db.auth.signUp({ email, password: mdp });
     if (error) throw error;
-
-    // Créer le profil utilisateur
-    await db.from('utilisateurs').insert([{
-      id: data.user.id,
-      email,
-      prenom,
-      nom,
-      role: 'acheteur'
-    }]);
-
-    // Relier les anciennes commandes guest à ce compte
-    await db.from('commandes').update({ acheteur_id: data.user.id })
-      .is('acheteur_id', null)
-      .contains('adresse_livraison', { email });
-
+    await db.from('utilisateurs').insert([{ id: data.user.id, email, prenom, nom, role: 'acheteur' }]);
+    await db.from('commandes').update({ acheteur_id: data.user.id }).is('acheteur_id', null).contains('adresse_livraison', { email });
     document.getElementById('auth-section').style.display = 'none';
     document.getElementById('btn-deco').style.display = 'block';
     document.getElementById('user-avatar').textContent = prenom[0].toUpperCase();
@@ -391,9 +330,6 @@ async function sInscrire() {
   }
 }
 
-// ============================================
-// GUEST
-// ============================================
 async function rechercherGuest() {
   const email = document.getElementById('guest-email').value.trim();
   if (!email) { alert('Entre ton email.'); return; }
@@ -407,25 +343,17 @@ async function rechercherGuest() {
   btn.disabled = false; btn.textContent = '🔍 Voir mes commandes';
 }
 
-// ============================================
-// DÉCONNEXION
-// ============================================
 async function seDeconnecter() {
   await deconnecterUtilisateur();
   localStorage.removeItem('proxikau_last_email');
   window.location.reload();
 }
 
-// ============================================
-// CHARGER COMMANDES
-// ============================================
 async function chargerCommandes(context) {
   document.getElementById('commandes-section').style.display = 'block';
   document.getElementById('liste-commandes').innerHTML = '<div class="loading">Chargement de tes commandes...</div>';
-
   try {
     let commandes;
-
     if (context.type === 'user') {
       const { data, error } = await db.from('commandes')
         .select('*, boutiques(nom, slug), commande_lignes(*, produits(photos, categorie))')
@@ -434,7 +362,6 @@ async function chargerCommandes(context) {
       if (error) throw error;
       commandes = data;
     } else {
-      // Guest : chercher par email dans adresse_livraison
       const { data, error } = await db.from('commandes')
         .select('*, boutiques(nom, slug), commande_lignes(*, produits(photos, categorie))')
         .filter('adresse_livraison->>email', 'eq', context.email)
@@ -442,7 +369,6 @@ async function chargerCommandes(context) {
       if (error) throw error;
       commandes = data;
     }
-
     if (!commandes || !commandes.length) {
       document.getElementById('nb-commandes').textContent = '';
       document.getElementById('liste-commandes').innerHTML = `
@@ -452,21 +378,15 @@ async function chargerCommandes(context) {
           <p>${context.type === 'guest' ? 'Aucune commande trouvée pour cet email. Vérifie l\'email utilisé lors de ta commande.' : 'Tu n\'as pas encore passé de commande sur Proxikau.'}</p>
           <a href="index.html" class="btn-shop">Découvrir les boutiques →</a>
         </div>`;
-      document.getElementById('nb-commandes').textContent = '';
       return;
     }
-
     document.getElementById('nb-commandes').textContent = commandes.length + ' commande' + (commandes.length > 1 ? 's' : '');
     document.getElementById('liste-commandes').innerHTML = commandes.map(c => renderCommande(c)).join('');
-
   } catch(e) {
     document.getElementById('liste-commandes').innerHTML = '<p style="color:var(--error);padding:20px;">Erreur : ' + e.message + '</p>';
   }
 }
 
-// ============================================
-// RENDER COMMANDE
-// ============================================
 function renderCommande(c) {
   const timeline = getTimeline(c.statut, c.mode_livraison);
   const tlHTML = timeline.map((s, i) => `
@@ -476,7 +396,6 @@ function renderCommande(c) {
     </div>
     ${i < timeline.length-1 ? `<div class="tl-line ${s.isDone?'done':''}"></div>` : ''}
   `).join('');
-
   const lignes = c.commande_lignes || [];
   const produitsHTML = lignes.map(l => {
     const photo = l.produits?.photos?.[0];
@@ -490,7 +409,6 @@ function renderCommande(c) {
       <div class="commande-produit-prix">${parseFloat(l.sous_total).toFixed(2)}€</div>
     </div>`;
   }).join('');
-
   return `<div class="commande-card">
     <div class="commande-head">
       <div>
