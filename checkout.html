@@ -8,32 +8,36 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
 <style>
-:root{
-  --vert:#2D6A4F;--vert2:#1B4332;--vert-light:#D8F3DC;
-  --terre:#BC6C25;--ink:#1A1A1A;--ink2:#555;--ink3:#999;
-  --border:#E0E0E0;--bg:#F9F7F4;--white:#fff;
-  --error:#D32F2F;--sans:'Inter',system-ui,sans-serif;
-}
+:root{--vert:#2D6A4F;--vert2:#1B4332;--vert-light:#D8F3DC;--terre:#BC6C25;--ink:#1A1A1A;--ink2:#555;--ink3:#999;--border:#E0E0E0;--bg:#F9F7F4;--white:#fff;--error:#D32F2F;--sans:'Inter',system-ui,sans-serif;}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:var(--sans);background:var(--bg);color:var(--ink);}
 nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;display:flex;align-items:center;padding:0 20px;gap:12px;}
 .logo{font-size:20px;font-weight:800;color:var(--vert);text-decoration:none;}
 .logo span{color:var(--terre);}
 .nav-etape{margin-left:auto;font-size:13px;color:var(--ink3);}
+.steps-bar{display:flex;align-items:center;justify-content:center;gap:0;padding:16px 20px;background:var(--white);border-bottom:1px solid var(--border);}
+.step{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink3);}
+.step.active{color:var(--vert);}
+.step-num{width:24px;height:24px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;}
+.step.active .step-num{background:var(--vert);color:#fff;border-color:var(--vert);}
+.step.done .step-num{background:var(--ink3);color:#fff;border-color:var(--ink3);}
+.step-line{width:32px;height:2px;background:var(--border);margin:0 4px;}
+.step-line.done{background:var(--vert);}
+@media(max-width:500px){.step-label{display:none;}.step-line{width:20px;}}
 .page{max-width:900px;margin:0 auto;padding:24px 16px 60px;}
-.page-title{font-size:22px;font-weight:800;margin-bottom:6px;}
-.page-sub{font-size:14px;color:var(--ink2);margin-bottom:28px;}
 .layout{display:grid;grid-template-columns:1fr 340px;gap:24px;align-items:start;}
 @media(max-width:700px){.layout{grid-template-columns:1fr;}}
 .card{background:var(--white);border:1px solid var(--border);border-radius:14px;padding:20px;margin-bottom:16px;}
 .card-title{font-size:15px;font-weight:700;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
-.boutique-header-checkout{display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border-radius:10px;margin-bottom:12px;}
+.auth-tabs{display:flex;border-bottom:1px solid var(--border);margin:-20px -20px 20px;}
+.auth-tab{flex:1;padding:13px;text-align:center;font-size:14px;font-weight:600;color:var(--ink3);cursor:pointer;border:none;background:none;font-family:var(--sans);transition:all .15s;}
+.auth-tab.active{color:var(--vert);border-bottom:2px solid var(--vert);}
+.user-connecte{display:flex;align-items:center;gap:12px;padding:14px 16px;background:var(--vert-light);border:1.5px solid var(--vert);border-radius:12px;margin-bottom:16px;}
+.user-avatar{width:36px;height:36px;border-radius:50%;background:var(--vert);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;flex-shrink:0;}
 .boutique-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--vert),var(--vert2));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:13px;flex-shrink:0;}
-.boutique-checkout-nom{font-size:14px;font-weight:700;}
-.boutique-checkout-sub{font-size:12px;color:var(--ink3);}
 .produit-ligne{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
 .produit-ligne:last-child{border-bottom:none;}
-.produit-ligne-photo{width:48px;height:48px;border-radius:8px;background:var(--bg);object-fit:cover;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
+.produit-ligne-photo{width:48px;height:48px;border-radius:8px;background:var(--bg);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
 .produit-ligne-info{flex:1;min-width:0;}
 .produit-ligne-nom{font-size:14px;font-weight:600;margin-bottom:2px;}
 .produit-ligne-qty{font-size:12px;color:var(--ink3);}
@@ -48,7 +52,7 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .field{margin-bottom:14px;}
 .field label{display:block;font-size:13px;font-weight:600;margin-bottom:5px;}
 .field label span{color:var(--error);}
-.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;transition:border-color .15s;-webkit-appearance:none;}
+.field input{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 14px;font-family:var(--sans);font-size:14px;color:var(--ink);outline:none;transition:border-color .15s;-webkit-appearance:none;}
 .field input:focus{border-color:var(--vert);}
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:500px){.form-grid{grid-template-columns:1fr;}}
@@ -57,96 +61,230 @@ nav{background:var(--white);border-bottom:1px solid var(--border);height:56px;di
 .recap-ligne:last-child{border-bottom:none;}
 .recap-ligne.total{font-size:16px;font-weight:800;padding-top:12px;margin-top:4px;}
 .recap-ligne.commission{font-size:12px;color:var(--ink3);}
-.recap-boutique-label{font-size:12px;font-weight:700;color:var(--vert);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 4px;}
-.btn-commander{width:100%;padding:15px;border-radius:12px;background:#635BFF;color:#fff;border:none;font-family:var(--sans);font-size:16px;font-weight:700;cursor:pointer;transition:background .15s;margin-top:16px;display:flex;align-items:center;justify-content:center;gap:8px;}
-.btn-commander:hover{background:#4B44CC;}
-.btn-commander:disabled{background:var(--ink3);cursor:not-allowed;}
-.alert{padding:12px 16px;border-radius:8px;font-size:13px;margin-bottom:14px;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:12px 20px;border-radius:10px;font-family:var(--sans);font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;border:none;white-space:nowrap;}
+.btn-vert{background:var(--vert);color:#fff;}
+.btn-vert:hover{background:var(--vert2);}
+.btn-stripe{background:#635BFF;color:#fff;}
+.btn-stripe:hover{background:#4B44CC;}
+.btn-ghost{background:var(--bg);color:var(--ink2);border:1px solid var(--border);}
+.btn-full{width:100%;margin-top:4px;}
+.btn:disabled{opacity:.5;cursor:not-allowed;}
+.alert{padding:10px 14px;border-radius:8px;font-size:13px;margin-bottom:14px;}
 .alert.error{background:#FFEBEE;color:var(--error);display:block;}
+.alert.info{background:#E8F5E9;color:var(--vert2);display:block;}
 .alert.hidden{display:none;}
+.divider{display:flex;align-items:center;gap:10px;margin:14px 0;color:var(--ink3);font-size:12px;font-weight:600;}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border);}
 .badge-stripe{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--ink3);justify-content:center;margin-top:12px;}
-.success-page{text-align:center;padding:60px 20px;display:none;}
-.success-icon{width:72px;height:72px;border-radius:50%;background:var(--vert-light);display:flex;align-items:center;justify-content:center;margin:0 auto 20px;font-size:36px;}
-.success-page h2{font-size:24px;font-weight:800;margin-bottom:10px;}
-.success-page p{font-size:15px;color:var(--ink2);margin-bottom:24px;line-height:1.6;}
-.btn-retour{display:inline-block;padding:12px 28px;border-radius:10px;background:var(--vert);color:#fff;text-decoration:none;font-weight:600;}
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="logo">Proxi<span>kau</span></a>
-  <div class="nav-etape">Étape finale — Paiement sécurisé</div>
+  <div class="nav-etape" id="nav-etape">Étape 1 sur 3</div>
 </nav>
-
-<div class="page" id="checkout-page">
-  <div class="page-title">Finaliser ma commande</div>
-  <div class="page-sub">Vérifie tes articles, choisis la livraison et paie en sécurité.</div>
-  <div class="layout">
-    <div id="col-gauche">
-      <div class="card" style="text-align:center;color:var(--ink3);padding:40px;">Chargement...</div>
-    </div>
-    <div class="recap-sticky">
-      <div class="card">
-        <div class="card-title">📋 Récapitulatif</div>
-        <div id="recap-contenu"></div>
-        <div class="alert hidden" id="alert-checkout"></div>
-        <button class="btn-commander" id="btn-commander" onclick="confirmerCommande()">
-          🔒 Payer par carte
-        </button>
-        <div class="badge-stripe">🔒 Paiement sécurisé par Stripe</div>
+<div class="steps-bar">
+  <div class="step active" id="step-1"><div class="step-num">1</div><span class="step-label">Mon compte</span></div>
+  <div class="step-line" id="line-1"></div>
+  <div class="step" id="step-2"><div class="step-num">2</div><span class="step-label">Ma commande</span></div>
+  <div class="step-line" id="line-2"></div>
+  <div class="step" id="step-3"><div class="step-num">3</div><span class="step-label">Paiement</span></div>
+</div>
+<div class="page">
+  <!-- ETAPE 1 AUTH -->
+  <div id="etape-auth">
+    <div style="max-width:480px;margin:0 auto;">
+      <div id="deja-connecte" style="display:none;">
+        <div class="user-connecte">
+          <div class="user-avatar" id="auth-avatar">?</div>
+          <div style="flex:1;">
+            <div style="font-size:14px;font-weight:700;color:var(--vert2);" id="auth-nom"></div>
+            <div style="font-size:12px;color:var(--vert);" id="auth-email"></div>
+          </div>
+          <button onclick="seDeconnecter()" style="font-size:12px;color:var(--ink3);background:none;border:none;cursor:pointer;">Changer</button>
+        </div>
+        <button class="btn btn-vert btn-full" onclick="goEtape2()">Continuer →</button>
       </div>
-      <a href="javascript:history.back()" style="display:block;text-align:center;font-size:13px;color:var(--ink3);margin-top:12px;text-decoration:none;">← Retour au panier</a>
+      <div id="non-connecte">
+        <div class="card" style="padding:0;overflow:hidden;">
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="tab-co" onclick="switchAuthTab('connexion')">Se connecter</button>
+            <button class="auth-tab" id="tab-in" onclick="switchAuthTab('inscription')">Créer un compte</button>
+          </div>
+          <div id="auth-connexion" style="padding:20px;">
+            <div class="alert hidden" id="alert-co"></div>
+            <div class="field"><label>Email</label><input type="email" id="co-email" placeholder="ton@email.fr" inputmode="email"></div>
+            <div class="field"><label>Mot de passe</label><input type="password" id="co-mdp" onkeydown="if(event.key==='Enter')seConnecter()"></div>
+            <button class="btn btn-vert btn-full" onclick="seConnecter()" id="btn-co">Se connecter et continuer</button>
+            <div class="divider">ou</div>
+            <button class="btn btn-ghost btn-full" onclick="continuerSansCompte()">Continuer sans compte</button>
+          </div>
+          <div id="auth-inscription" style="padding:20px;display:none;">
+            <div class="alert hidden" id="alert-in"></div>
+            <div class="form-grid">
+              <div class="field"><label>Prénom <span>*</span></label><input type="text" id="in-prenom" placeholder="Jean"></div>
+              <div class="field"><label>Nom <span>*</span></label><input type="text" id="in-nom" placeholder="Dupont"></div>
+            </div>
+            <div class="field"><label>Email <span>*</span></label><input type="email" id="in-email" placeholder="ton@email.fr" inputmode="email"></div>
+            <div class="field"><label>Mot de passe <span>*</span></label><input type="password" id="in-mdp" placeholder="8 caractères minimum"></div>
+            <div class="field"><label>Confirmer <span>*</span></label><input type="password" id="in-mdp2"></div>
+            <button class="btn btn-vert btn-full" onclick="sInscrire()" id="btn-in">Créer mon compte et continuer</button>
+            <div class="divider">ou</div>
+            <button class="btn btn-ghost btn-full" onclick="continuerSansCompte()">Continuer sans compte</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ETAPE 2 COMMANDE -->
+  <div id="etape-commande" style="display:none;">
+    <div class="layout">
+      <div id="col-gauche">
+        <div class="card" style="text-align:center;color:var(--ink3);padding:40px;">Chargement...</div>
+      </div>
+      <div class="recap-sticky">
+        <div class="card">
+          <div class="card-title">📋 Récapitulatif</div>
+          <div id="recap-contenu"></div>
+          <div class="alert hidden" id="alert-checkout"></div>
+          <button class="btn btn-stripe btn-full" id="btn-commander" onclick="confirmerCommande()" style="margin-top:16px;">🔒 Payer par carte</button>
+          <div class="badge-stripe">🔒 Paiement sécurisé par Stripe</div>
+        </div>
+        <a href="index.html" style="display:block;text-align:center;font-size:13px;color:var(--ink3);margin-top:12px;text-decoration:none;">← Retour à l'accueil</a>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="success-page" id="success-page">
-  <div class="success-icon">✅</div>
-  <h2>Commande confirmée !</h2>
-  <p id="success-msg">Tes commandes ont été transmises aux vendeurs.</p>
-  <a href="index.html" class="btn-retour">Retour à l'accueil</a>
-</div>
-
 <script>
-let panier = [];
-let boutiquesData = {};
-let livraisonsChoisies = {};
+let panier = [], boutiquesData = {}, livraisonsChoisies = {};
+let currentUser = null, currentProfil = null, modeGuest = false;
 
 document.addEventListener('DOMContentLoaded', async () => {
-  // Vérifier retour Stripe
   const params = new URLSearchParams(window.location.search);
-  if (params.get('paiement') === 'ok') {
-    document.getElementById('checkout-page').style.display = 'none';
-    document.getElementById('success-page').style.display = 'block';
-    localStorage.removeItem('proxikau_panier');
-    return;
+
+  // Retour depuis Stripe après annulation — nettoyer l'URL, garder le panier intact
+  if (params.get('paiement') === 'annule') {
+    window.history.replaceState({}, '', '/checkout.html');
+    // Afficher un message info discret
+    const msg = document.createElement('div');
+    msg.style.cssText = 'background:#FFF8E1;color:#E65100;padding:10px 20px;text-align:center;font-size:13px;font-weight:600;';
+    msg.textContent = '← Paiement annulé. Ton panier est intact, tu peux recommencer.';
+    document.querySelector('nav').insertAdjacentElement('afterend', msg);
+    setTimeout(() => msg.remove(), 5000);
   }
 
   // Charger panier
-  try {
-    const saved = localStorage.getItem('proxikau_panier');
-    if (saved) panier = JSON.parse(saved).items || [];
-  } catch(e) {}
+  try { const saved = localStorage.getItem('proxikau_panier'); if (saved) panier = JSON.parse(saved).items || []; } catch(e) {}
 
   if (!panier.length) {
-    document.getElementById('col-gauche').innerHTML = '<div class="card" style="text-align:center;padding:40px;"><div style="font-size:40px;margin-bottom:12px;">🛒</div><p style="color:var(--ink3);">Ton panier est vide.</p><a href="index.html" style="color:var(--vert);">Retour à l\'accueil</a></div>';
-    document.getElementById('recap-contenu').innerHTML = '<p style="color:var(--ink3);font-size:13px;">Aucun article</p>';
-    document.getElementById('btn-commander').disabled = true;
+    document.getElementById('etape-auth').innerHTML = '<div style="text-align:center;padding:60px 20px;"><div style="font-size:40px;margin-bottom:12px;">🛒</div><p style="color:var(--ink3);">Ton panier est vide.</p><a href="index.html" style="color:var(--vert);">Retour à l\'accueil</a></div>';
     return;
+  }
+
+  const user = await getUtilisateurConnecte();
+  if (user) {
+    currentUser = user;
+    try { currentProfil = await getProfil(user.id); } catch(e) {}
+    afficherDejaConnecte();
   }
 
   const boutique_ids = [...new Set(panier.map(i => i.boutique_id))];
   for (const bid of boutique_ids) {
-    try {
-      const { data } = await db.from('boutiques').select('*').eq('id', bid).single();
-      if (data) boutiquesData[bid] = data;
-    } catch(e) {}
+    try { const { data } = await db.from('boutiques').select('*').eq('id', bid).single(); if (data) boutiquesData[bid] = data; } catch(e) {}
   }
-
-  afficherCheckout();
-  afficherRecap();
 });
+
+function setStep(n) {
+  for (let i = 1; i <= 3; i++) {
+    const s = document.getElementById('step-'+i);
+    s.classList.remove('active','done');
+    if (i < n) s.classList.add('done');
+    else if (i === n) s.classList.add('active');
+    if (i < 3) document.getElementById('line-'+i).classList.toggle('done', i < n);
+  }
+  document.getElementById('nav-etape').textContent = {1:'Étape 1 sur 3 — Mon compte',2:'Étape 2 sur 3 — Ma commande',3:'Étape 3 sur 3 — Paiement'}[n];
+}
+
+function switchAuthTab(tab) {
+  document.getElementById('tab-co').classList.toggle('active', tab==='connexion');
+  document.getElementById('tab-in').classList.toggle('active', tab==='inscription');
+  document.getElementById('auth-connexion').style.display = tab==='connexion'?'block':'none';
+  document.getElementById('auth-inscription').style.display = tab==='inscription'?'block':'none';
+}
+
+function afficherDejaConnecte() {
+  const prenom = currentProfil?.prenom || '';
+  const nom = currentProfil?.nom || '';
+  document.getElementById('auth-avatar').textContent = (prenom?.[0]||'?').toUpperCase();
+  document.getElementById('auth-nom').textContent = prenom+' '+nom;
+  document.getElementById('auth-email').textContent = currentUser.email;
+  document.getElementById('deja-connecte').style.display = 'block';
+  document.getElementById('non-connecte').style.display = 'none';
+}
+
+async function seConnecter() {
+  const email = document.getElementById('co-email').value.trim();
+  const mdp = document.getElementById('co-mdp').value;
+  const alertEl = document.getElementById('alert-co');
+  alertEl.className = 'alert hidden';
+  if (!email||!mdp) { alertEl.textContent='Remplis tous les champs.'; alertEl.className='alert error'; return; }
+  const btn = document.getElementById('btn-co');
+  btn.disabled=true; btn.textContent='Connexion...';
+  try {
+    const { data } = await connecterUtilisateur(email, mdp);
+    currentUser = data.user;
+    try { currentProfil = await getProfil(data.user.id); } catch(e) {}
+    modeGuest = false;
+    afficherDejaConnecte();
+    goEtape2();
+  } catch(e) {
+    alertEl.textContent='Email ou mot de passe incorrect.'; alertEl.className='alert error';
+    btn.disabled=false; btn.textContent='Se connecter et continuer';
+  }
+}
+
+async function sInscrire() {
+  const prenom = document.getElementById('in-prenom').value.trim();
+  const nom = document.getElementById('in-nom').value.trim();
+  const email = document.getElementById('in-email').value.trim();
+  const mdp = document.getElementById('in-mdp').value;
+  const mdp2 = document.getElementById('in-mdp2').value;
+  const alertEl = document.getElementById('alert-in');
+  alertEl.className='alert hidden';
+  if (!prenom||!nom||!email||!mdp) { alertEl.textContent='Remplis tous les champs.'; alertEl.className='alert error'; return; }
+  if (mdp.length<8) { alertEl.textContent='Mot de passe trop court (8 caractères min).'; alertEl.className='alert error'; return; }
+  if (mdp!==mdp2) { alertEl.textContent='Les mots de passe ne correspondent pas.'; alertEl.className='alert error'; return; }
+  const btn = document.getElementById('btn-in');
+  btn.disabled=true; btn.textContent='Création...';
+  try {
+    const { data, error } = await db.auth.signUp({ email, password: mdp });
+    if (error) throw error;
+    await db.from('utilisateurs').insert([{ id: data.user.id, email, prenom, nom, role: 'acheteur' }]);
+    currentUser = data.user; currentProfil = { prenom, nom }; modeGuest = false;
+    afficherDejaConnecte(); goEtape2();
+  } catch(e) {
+    alertEl.textContent = e.message.includes('already')?'Cet email est déjà utilisé.':'Erreur : '+e.message;
+    alertEl.className='alert error'; btn.disabled=false; btn.textContent='Créer mon compte et continuer';
+  }
+}
+
+function continuerSansCompte() { modeGuest=true; currentUser=null; goEtape2(); }
+
+async function seDeconnecter() {
+  await deconnecterUtilisateur();
+  currentUser=null; currentProfil=null;
+  document.getElementById('deja-connecte').style.display='none';
+  document.getElementById('non-connecte').style.display='block';
+}
+
+function goEtape2() {
+  setStep(2);
+  document.getElementById('etape-auth').style.display='none';
+  document.getElementById('etape-commande').style.display='block';
+  afficherCheckout(); afficherRecap();
+}
 
 function grouperParBoutique() {
   const groupes = {};
@@ -161,58 +299,51 @@ function afficherCheckout() {
   const groupes = grouperParBoutique();
   const col = document.getElementById('col-gauche');
   col.innerHTML = '';
+  const prenomVal = currentProfil?.prenom||'', nomVal = currentProfil?.nom||'', emailVal = currentUser?.email||'';
+  col.innerHTML += `<div class="card"><div class="card-title">👤 Tes coordonnées</div>
+    ${currentUser&&currentProfil?`<div style="padding:12px;background:var(--vert-light);border-radius:10px;margin-bottom:14px;font-size:14px;color:var(--vert2);">✅ Connecté en tant que <strong>${prenomVal} ${nomVal}</strong></div>`:''}
+    <div class="form-grid">
+      <div class="field"><label>Prénom <span>*</span></label><input type="text" id="c-prenom" placeholder="Jean" value="${prenomVal}"></div>
+      <div class="field"><label>Nom <span>*</span></label><input type="text" id="c-nom" placeholder="Dupont" value="${nomVal}"></div>
+    </div>
+    <div class="field"><label>Email <span>*</span></label><input type="email" id="c-email" placeholder="jean@exemple.fr" inputmode="email" value="${emailVal}"></div>
+    <div class="field"><label>Téléphone <span>*</span></label><input type="tel" id="c-tel" placeholder="+33 6 00 00 00 00" inputmode="tel"></div>
+  </div>`;
 
-  col.innerHTML += `
-    <div class="card">
-      <div class="card-title">👤 Tes coordonnées</div>
-      <div class="form-grid">
-        <div class="field"><label>Prénom <span>*</span></label><input type="text" id="c-prenom" placeholder="Jean"></div>
-        <div class="field"><label>Nom <span>*</span></label><input type="text" id="c-nom" placeholder="Dupont"></div>
-      </div>
-      <div class="field"><label>Email <span>*</span></label><input type="email" id="c-email" placeholder="jean@exemple.fr" inputmode="email"></div>
-      <div class="field"><label>Téléphone <span>*</span></label><input type="tel" id="c-tel" placeholder="+33 6 00 00 00 00" inputmode="tel"></div>
-    </div>`;
-
-  col.innerHTML += `
-    <div class="card" id="card-adresse" style="display:none;">
-      <div class="card-title">📦 Adresse de livraison</div>
-      <div class="field"><label>Adresse <span>*</span></label><input type="text" id="c-adresse" placeholder="12 rue des Artisans"></div>
-      <div class="form-grid">
-        <div class="field"><label>Code postal <span>*</span></label><input type="text" id="c-cp" placeholder="75001" inputmode="numeric"></div>
-        <div class="field"><label>Ville <span>*</span></label><input type="text" id="c-ville" placeholder="Paris"></div>
-      </div>
-      <div class="field"><label>Pays</label><input type="text" id="c-pays" value="France"></div>
-    </div>`;
+  col.innerHTML += `<div class="card" id="card-adresse" style="display:none;"><div class="card-title">📦 Adresse de livraison</div>
+    <div class="field"><label>Adresse <span>*</span></label><input type="text" id="c-adresse" placeholder="12 rue des Artisans"></div>
+    <div class="form-grid">
+      <div class="field"><label>Code postal <span>*</span></label><input type="text" id="c-cp" placeholder="20000" inputmode="numeric"></div>
+      <div class="field"><label>Ville <span>*</span></label><input type="text" id="c-ville" placeholder="Ajaccio"></div>
+    </div>
+    <div class="field"><label>Pays</label><input type="text" id="c-pays" value="France"></div>
+  </div>`;
 
   Object.entries(groupes).forEach(([bid, groupe]) => {
-    const b = boutiquesData[bid] || {};
+    const b = boutiquesData[bid]||{};
     const initiales = groupe.nom.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();
     const produitsHTML = groupe.items.map(item => `
       <div class="produit-ligne">
-        <div class="produit-ligne-photo">${item.photo ? `<img src="${item.photo}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;">` : (item.emoji || '📦')}</div>
-        <div class="produit-ligne-info">
-          <div class="produit-ligne-nom">${item.nom}</div>
-          <div class="produit-ligne-qty">x${item.qty} · ${item.unite}</div>
-        </div>
-        <div class="produit-ligne-prix">${(item.prix * item.qty).toFixed(2)}€</div>
+        <div class="produit-ligne-photo">${item.photo?`<img src="${item.photo}" style="width:48px;height:48px;border-radius:8px;object-fit:cover;">`:(item.emoji||'📦')}</div>
+        <div class="produit-ligne-info"><div class="produit-ligne-nom">${item.nom}</div><div class="produit-ligne-qty">x${item.qty} · ${item.unite}</div></div>
+        <div class="produit-ligne-prix">${(item.prix*item.qty).toFixed(2)}€</div>
       </div>`).join('');
-
     let livraisonsHTML = '<div class="livraison-choix">';
-    if (b.livraison_colis) livraisonsHTML += livOpt(bid,'colis','📦 Envoi par colis','Livraison à ton adresse');
-    if (b.livraison_enlevement) livraisonsHTML += livOpt(bid,'enlevement','🏠 Enlèvement sur place',`Chez ${groupe.nom}${b.ville?' à '+b.ville:''}`);
-    if (b.livraison_proximite) livraisonsHTML += livOpt(bid,'proximite','🚗 Livraison à proximité',`Dans un rayon de ${b.rayon_proximite_km||30}km`);
+    const fraisColis = parseFloat(b.frais_colis)||0;
+    const fraisProx = parseFloat(b.frais_proximite)||0;
+    if (b.livraison_colis) livraisonsHTML += livOpt(bid,'colis','📦 Envoi par colis',fraisColis>0?'+'+fraisColis.toFixed(2)+'€ de frais de port':'Frais de port offerts');
+    if (b.livraison_enlevement) livraisonsHTML += livOpt(bid,'enlevement','🏠 Enlèvement sur place','Gratuit');
+    if (b.livraison_proximite) livraisonsHTML += livOpt(bid,'proximite','🚗 Livraison à proximité',fraisProx>0?'+'+fraisProx.toFixed(2)+'€':'Gratuit');
     livraisonsHTML += '</div>';
-
-    col.innerHTML += `
-      <div class="card">
-        <div class="boutique-header-checkout">
-          <div class="boutique-avatar">${initiales}</div>
-          <div><div class="boutique-checkout-nom">${groupe.nom}</div><div class="boutique-checkout-sub">${groupe.items.length} article${groupe.items.length>1?'s':''}</div></div>
-        </div>
-        ${produitsHTML}
-        <div style="margin-top:14px;font-size:13px;font-weight:600;color:var(--ink);">Mode de livraison</div>
-        ${livraisonsHTML}
-      </div>`;
+    col.innerHTML += `<div class="card">
+      <div style="display:flex;align-items:center;gap:10px;padding:12px 16px;background:var(--bg);border-radius:10px;margin-bottom:12px;">
+        <div class="boutique-avatar">${initiales}</div>
+        <div><div style="font-size:14px;font-weight:700;">${groupe.nom}</div><div style="font-size:12px;color:var(--ink3);">${groupe.items.length} article${groupe.items.length>1?'s':''}</div></div>
+      </div>
+      ${produitsHTML}
+      <div style="margin-top:14px;font-size:13px;font-weight:600;">Mode de livraison</div>
+      ${livraisonsHTML}
+    </div>`;
   });
 }
 
@@ -226,27 +357,27 @@ function livOpt(bid, val, label, desc) {
 function selectLivraison(bid, val, el) {
   livraisonsChoisies[bid] = val;
   document.querySelectorAll(`input[name="liv_${bid}"]`).forEach(r => r.closest('.liv-opt').classList.remove('selected'));
-  el.classList.add('selected');
-  el.querySelector('input').checked = true;
-  const needsAdresse = Object.values(livraisonsChoisies).some(v => v === 'colis' || v === 'proximite');
-  document.getElementById('card-adresse').style.display = needsAdresse ? 'block' : 'none';
+  el.classList.add('selected'); el.querySelector('input').checked = true;
+  document.getElementById('card-adresse').style.display = Object.values(livraisonsChoisies).some(v=>v==='colis'||v==='proximite') ? 'block' : 'none';
   afficherRecap();
 }
 
 function afficherRecap() {
   const groupes = grouperParBoutique();
-  let html = '';
-  let grandTotal = 0;
+  let html = '', grandTotal = 0;
   Object.entries(groupes).forEach(([bid, groupe]) => {
-    const sous_total = groupe.items.reduce((s,i) => s + i.prix * i.qty, 0);
-    const commission = Math.round(sous_total * 0.05 * 100) / 100;
-    grandTotal += sous_total;
+    const sous_total = groupe.items.reduce((s,i)=>s+i.prix*i.qty,0);
+    const b_data = boutiquesData[bid]||{};
+    const frais_liv = livraisonsChoisies[bid]==='colis'?(parseFloat(b_data.frais_colis)||0):livraisonsChoisies[bid]==='proximite'?(parseFloat(b_data.frais_proximite)||0):0;
+    grandTotal += sous_total + frais_liv;
+    const commission = Math.round(sous_total*0.05*100)/100;
     const livraison = livraisonsChoisies[bid];
-    const livLabel = livraison ? {colis:'📦 Colis',enlevement:'🏠 Enlèvement',proximite:'🚗 Proximité'}[livraison] : '<span style="color:var(--error);font-size:11px;">À choisir</span>';
-    html += `<div class="recap-boutique-label">${groupe.nom}</div>`;
+    const livLabel = livraison?{colis:'📦 Colis',enlevement:'🏠 Enlèvement',proximite:'🚗 Proximité'}[livraison]:'<span style="color:var(--error);font-size:11px;">À choisir</span>';
+    html += `<div style="font-size:12px;font-weight:700;color:var(--vert);text-transform:uppercase;letter-spacing:.5px;margin:10px 0 4px;">${groupe.nom}</div>`;
     groupe.items.forEach(i => { html += `<div class="recap-ligne"><span>${i.nom} x${i.qty}</span><span>${(i.prix*i.qty).toFixed(2)}€</span></div>`; });
-    html += `<div class="recap-ligne"><span>Livraison</span><span>${livLabel}</span></div>`;
-    html += `<div class="recap-ligne commission"><span>Commission Proxikau (5%)</span><span>${commission.toFixed(2)}€</span></div>`;
+    if(frais_liv>0){html += `<div class="recap-ligne"><span>Livraison</span><span>+${frais_liv.toFixed(2)}€</span></div>`;}
+    else{html += `<div class="recap-ligne"><span>Livraison</span><span>${livraison?'Gratuit':livLabel}</span></div>`;}
+    html += `<div class="recap-ligne commission"><span>Commission (5%)</span><span>${commission.toFixed(2)}€</span></div>`;
   });
   html += `<div class="recap-ligne total"><span>Total</span><span>${grandTotal.toFixed(2)}€</span></div>`;
   document.getElementById('recap-contenu').innerHTML = html;
@@ -255,155 +386,106 @@ function afficherRecap() {
 async function confirmerCommande() {
   const alertEl = document.getElementById('alert-checkout');
   alertEl.className = 'alert hidden';
-
   const prenom = document.getElementById('c-prenom')?.value.trim();
   const nom = document.getElementById('c-nom')?.value.trim();
   const email = document.getElementById('c-email')?.value.trim();
   const tel = document.getElementById('c-tel')?.value.trim();
-
-  if (!prenom || !nom || !email || !tel) {
-    alertEl.textContent = 'Remplis tes coordonnées.';
-    alertEl.className = 'alert error';
-    document.getElementById('c-prenom').scrollIntoView({ behavior: 'smooth' });
-    return;
-  }
-
+  if (!prenom||!nom||!email||!tel) { alertEl.textContent='Remplis tes coordonnées.'; alertEl.className='alert error'; return; }
   const groupes = grouperParBoutique();
   const boutique_ids = Object.keys(groupes);
   for (const bid of boutique_ids) {
-    if (!livraisonsChoisies[bid]) {
-      alertEl.textContent = `Choisis un mode de livraison pour "${groupes[bid].nom}".`;
-      alertEl.className = 'alert error';
-      return;
-    }
+    if (!livraisonsChoisies[bid]) { alertEl.textContent=`Choisis un mode de livraison pour "${groupes[bid].nom}".`; alertEl.className='alert error'; return; }
   }
-
-  const hasColis = Object.values(livraisonsChoisies).some(v => v === 'colis' || v === 'proximite');
+  const hasColis = Object.values(livraisonsChoisies).some(v=>v==='colis'||v==='proximite');
   if (hasColis) {
     const adresse = document.getElementById('c-adresse')?.value.trim();
     const cp = document.getElementById('c-cp')?.value.trim();
     const ville = document.getElementById('c-ville')?.value.trim();
-    if (!adresse || !cp || !ville) {
-      alertEl.textContent = 'Remplis ton adresse de livraison.';
-      alertEl.className = 'alert error';
-      return;
-    }
+    if (!adresse||!cp||!ville) { alertEl.textContent='Remplis ton adresse de livraison.'; alertEl.className='alert error'; return; }
   }
-
   const btn = document.getElementById('btn-commander');
-  btn.disabled = true;
-  btn.textContent = 'Création de la commande...';
+  btn.disabled=true; btn.textContent='Création de la commande...';
+  setStep(3);
 
   try {
-    const user = await getUtilisateurConnecte();
     const commandesCreees = [];
     const adresseCommande = {
-      rue: document.getElementById('c-adresse')?.value || '',
-      cp: document.getElementById('c-cp')?.value || '',
-      ville: document.getElementById('c-ville')?.value || '',
-      pays: document.getElementById('c-pays')?.value || 'France'
+      rue: document.getElementById('c-adresse')?.value||'',
+      cp: document.getElementById('c-cp')?.value||'',
+      ville: document.getElementById('c-ville')?.value||'',
+      pays: document.getElementById('c-pays')?.value||'France'
     };
 
-    // 1. Créer les commandes dans Supabase
+    // 1. Créer les commandes dans Supabase (statut en_attente — pas encore payé)
     for (const bid of boutique_ids) {
       const groupe = groupes[bid];
-      const montant_produits = groupe.items.reduce((s,i) => s + i.prix * i.qty, 0);
-      const commission = Math.round(montant_produits * 0.05 * 100) / 100;
+      const montant_produits = groupe.items.reduce((s,i)=>s+i.prix*i.qty,0);
+      const b_frais = boutiquesData[bid]||{};
+      const frais_livraison = livraisonsChoisies[bid]==='colis'?(parseFloat(b_frais.frais_colis)||0):livraisonsChoisies[bid]==='proximite'?(parseFloat(b_frais.frais_proximite)||0):0;
+      const montant_avec_frais = montant_produits + frais_livraison;
+      const commission = Math.round(montant_produits*0.05*100)/100;
       let adresse_livraison = { prenom, nom, email, telephone: tel };
-      if (['colis','proximite'].includes(livraisonsChoisies[bid])) {
-        adresse_livraison = { ...adresse_livraison, ...adresseCommande };
-      }
+      if (['colis','proximite'].includes(livraisonsChoisies[bid])) adresse_livraison = { ...adresse_livraison, ...adresseCommande };
 
       const { data: commande, error } = await db.from('commandes').insert([{
-        acheteur_id: user ? user.id : null,
+        acheteur_id: currentUser ? currentUser.id : null,
         boutique_id: bid,
-        montant_total: montant_produits,
+        montant_total: montant_avec_frais,
         montant_produits,
         commission_proxikau: commission,
-        montant_vendeur: Math.round((montant_produits - commission) * 100) / 100,
+        montant_vendeur: Math.round((montant_produits-commission)*100)/100,
         mode_livraison: livraisonsChoisies[bid],
         adresse_livraison,
         statut: 'en_attente',
-        paiement_vendeur_at: new Date(Date.now() + 30*24*60*60*1000).toISOString()
+        paiement_vendeur_at: new Date(Date.now()+30*24*60*60*1000).toISOString()
       }]).select();
 
       if (error) throw error;
-
-      if (commande && commande[0]) {
-        const lignes = groupe.items.map(item => ({
+      if (commande&&commande[0]) {
+        await db.from('commande_lignes').insert(groupe.items.map(item => ({
           commande_id: commande[0].id,
           produit_id: item.id,
           nom_produit: item.nom,
           prix_unitaire: item.prix,
           quantite: item.qty,
-          sous_total: Math.round(item.prix * item.qty * 100) / 100
-        }));
-        await db.from('commande_lignes').insert(lignes);
+          sous_total: Math.round(item.prix*item.qty*100)/100
+        })));
         commandesCreees.push({ ...commande[0], boutique_nom: groupe.nom, items: groupe.items });
       }
     }
 
-    // 2. Envoyer emails vendeurs
-    for (const cmd of commandesCreees) {
-      const b = boutiquesData[cmd.boutique_id] || {};
-      const vendeurEmail = b.email_contact || '';
-      if (vendeurEmail) {
-        try {
-          await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              vendeur_email: vendeurEmail,
-              boutique_nom: cmd.boutique_nom,
-              commande_id: cmd.id,
-              produits: cmd.items.map(it => ({ nom: it.nom, qty: it.qty, prix: it.prix })),
-              mode_livraison: livraisonsChoisies[cmd.boutique_id],
-              adresse: ['colis','proximite'].includes(livraisonsChoisies[cmd.boutique_id]) ? adresseCommande : null,
-              acheteur_nom: prenom + ' ' + nom,
-              acheteur_email: email,
-              acheteur_tel: tel,
-              montant_total: cmd.montant_total
-            })
-          });
-        } catch(e) {}
-      }
-    }
+    // ✅ PAS d'email ici — les emails sont envoyés par le webhook Stripe après paiement confirmé
 
-    // 3. Rediriger vers Stripe Checkout
+    // 2. Rediriger vers Stripe Checkout
     btn.textContent = 'Redirection vers le paiement...';
-
-    const stripePayload = {
-      commandes: commandesCreees.map(cmd => ({
-        commande_id: cmd.id,
-        boutique_id: cmd.boutique_id,
-        boutique_nom: cmd.boutique_nom,
-        items: cmd.items.map(it => ({ nom: it.nom, qty: it.qty, prix: it.prix }))
-      })),
-      acheteur_email: email,
-      success_url: `${window.location.origin}/mes-commandes.html?paiement=ok`,
-      cancel_url: `${window.location.origin}/checkout.html?paiement=annule`
-    };
-
     const stripeRes = await fetch('/api/stripe?action=checkout', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(stripePayload)
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        commandes: commandesCreees.map(cmd=>({
+          commande_id: cmd.id,
+          boutique_id: cmd.boutique_id,
+          boutique_nom: cmd.boutique_nom,
+          items: cmd.items.map(it=>({nom:it.nom,qty:it.qty,prix:it.prix}))
+        })),
+        acheteur_email: email,
+        success_url: `${window.location.origin}/mes-commandes.html?paiement=ok&email=${encodeURIComponent(email)}`,
+        cancel_url: `${window.location.origin}/checkout.html?paiement=annule`
+      })
     });
 
     const stripeData = await stripeRes.json();
 
     if (stripeData.url) {
-      localStorage.removeItem('proxikau_panier');
+      // ✅ NE PAS supprimer le panier ici — il sera supprimé dans mes-commandes.html après paiement confirmé
       window.location.href = stripeData.url;
     } else {
-      throw new Error(stripeData.error || 'Erreur Stripe');
+      throw new Error(stripeData.error||'Erreur Stripe');
     }
 
   } catch(e) {
-    alertEl.textContent = 'Erreur : ' + e.message;
-    alertEl.className = 'alert error';
-    btn.disabled = false;
-    btn.textContent = '🔒 Payer par carte';
+    alertEl.textContent='Erreur : '+e.message; alertEl.className='alert error';
+    btn.disabled=false; btn.textContent='🔒 Payer par carte'; setStep(2);
   }
 }
 </script>
