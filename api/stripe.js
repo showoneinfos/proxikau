@@ -20,7 +20,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Webhook signature invalide' });
     }
 
-    // ✅ Paiement confirmé — mettre à jour commandes ET envoyer emails
+    // ✅ Paiement confirmé
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const commande_ids = session.metadata?.commande_id?.split(',') || [];
@@ -28,6 +28,8 @@ export default async function handler(req, res) {
       try {
         const { createClient } = await import('@supabase/supabase-js');
         const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
+
+        const commandesRecuperees = [];
 
         for (const commande_id of commande_ids) {
           const id = commande_id.trim();
@@ -39,51 +41,86 @@ export default async function handler(req, res) {
             stripe_payment_intent: session.payment_intent
           }).eq('id', id);
 
-          // 2. Récupérer les infos complètes pour l'email
+          // 2. Récupérer les infos complètes
           const { data: commande } = await db
             .from('commandes')
-            .select(`
-              *,
-              boutiques (nom, email_contact),
-              commande_lignes (nom_produit, quantite, prix_unitaire)
-            `)
+            .select('*, boutiques(nom, email_contact), commande_lignes(nom_produit, quantite, prix_unitaire)')
             .eq('id', id)
             .single();
 
-          if (!commande) continue;
+          if (commande) commandesRecuperees.push(commande);
+        }
 
+        if (!commandesRecuperees.length) {
+          return res.status(200).json({ received: true });
+        }
+
+        // Infos acheteur depuis la première commande
+        const premiere = commandesRecuperees[0];
+        const adresse = premiere.adresse_livraison || {};
+        const acheteur_nom = `${adresse.prenom || ''} ${adresse.nom || ''}`.trim();
+        const acheteur_email = adresse.email || '';
+        const acheteur_tel = adresse.telephone || '';
+
+        // 3. Email vendeur — un par boutique
+        for (const commande of commandesRecuperees) {
           const vendeurEmail = commande.boutiques?.email_contact;
-          const boutique_nom = commande.boutiques?.nom || '';
-          const adresse = commande.adresse_livraison || {};
+          if (!vendeurEmail) continue;
+          const addr = commande.adresse_livraison || {};
+          try {
+            await fetch(`${BASE_URL}/api/send-email`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                vendeur_email: vendeurEmail,
+                boutique_nom: commande.boutiques?.nom || '',
+                commande_id: commande.id,
+                produits: commande.commande_lignes.map(l => ({
+                  nom: l.nom_produit,
+                  qty: l.quantite,
+                  prix: l.prix_unitaire
+                })),
+                mode_livraison: commande.mode_livraison,
+                adresse: ['colis','proximite'].includes(commande.mode_livraison) ? addr : null,
+                acheteur_nom,
+                acheteur_email,
+                acheteur_tel,
+                montant_total: commande.montant_total
+              })
+            });
+          } catch (e) {
+            console.error('Erreur email vendeur:', e.message);
+          }
+        }
 
-          // 3. Envoyer email au vendeur
-          if (vendeurEmail) {
-            try {
-              await fetch(`${BASE_URL}/api/send-email`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  vendeur_email: vendeurEmail,
-                  boutique_nom,
-                  commande_id: commande.id,
-                  produits: commande.commande_lignes.map(l => ({
+        // 4. Email acheteur — un seul récap avec toutes les boutiques
+        if (acheteur_email) {
+          try {
+            await fetch(`${BASE_URL}/api/send-email`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                type: 'acheteur_recap',
+                acheteur_nom,
+                acheteur_email,
+                toutes_commandes: commandesRecuperees.map(c => ({
+                  boutique_nom: c.boutiques?.nom || '',
+                  mode_livraison: c.mode_livraison,
+                  adresse: ['colis','proximite'].includes(c.mode_livraison) ? (c.adresse_livraison || {}) : null,
+                  montant: c.montant_total,
+                  produits: c.commande_lignes.map(l => ({
                     nom: l.nom_produit,
                     qty: l.quantite,
                     prix: l.prix_unitaire
-                  })),
-                  mode_livraison: commande.mode_livraison,
-                  adresse: ['colis','proximite'].includes(commande.mode_livraison) ? adresse : null,
-                  acheteur_nom: (adresse.prenom || '') + ' ' + (adresse.nom || ''),
-                  acheteur_email: adresse.email || '',
-                  acheteur_tel: adresse.telephone || '',
-                  montant_total: commande.montant_total
-                })
-              });
-            } catch (emailErr) {
-              console.error('Erreur email vendeur:', emailErr.message);
-            }
+                  }))
+                }))
+              })
+            });
+          } catch (e) {
+            console.error('Erreur email acheteur:', e.message);
           }
         }
+
       } catch (e) {
         console.error('Erreur webhook checkout.session.completed:', e.message);
       }
@@ -107,7 +144,6 @@ export default async function handler(req, res) {
   if (req.method === 'POST' && action === 'onboarding') {
     const { boutique_id, boutique_nom, email } = req.body;
     if (!boutique_id || !email) return res.status(400).json({ error: 'boutique_id et email requis' });
-
     try {
       const account = await stripe.accounts.create({
         type: 'express',
@@ -118,18 +154,15 @@ export default async function handler(req, res) {
         business_profile: { name: boutique_nom, mcc: '5999', url: `${BASE_URL}/boutique.html?slug=${boutique_id}` },
         metadata: { boutique_id }
       });
-
       const { createClient } = await import('@supabase/supabase-js');
       const db = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_KEY);
       await db.from('boutiques').update({ stripe_account_id: account.id, stripe_verified: false }).eq('id', boutique_id);
-
       const accountLink = await stripe.accountLinks.create({
         account: account.id,
         refresh_url: `${BASE_URL}/dashboard.html?stripe=refresh`,
         return_url: `${BASE_URL}/dashboard.html?stripe=success`,
         type: 'account_onboarding',
       });
-
       return res.status(200).json({ url: accountLink.url });
     } catch (err) {
       return res.status(500).json({ error: err.message });
@@ -157,7 +190,6 @@ export default async function handler(req, res) {
   if (req.method === 'POST' && action === 'checkout') {
     const { commandes, acheteur_email } = req.body;
     if (!commandes || !commandes.length) return res.status(400).json({ error: 'commandes requises' });
-
     try {
       const line_items = [];
       for (const cmd of commandes) {
@@ -172,7 +204,6 @@ export default async function handler(req, res) {
           });
         }
       }
-
       const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
         line_items,
@@ -186,7 +217,6 @@ export default async function handler(req, res) {
         },
         payment_intent_data: { transfer_group: `group_${Date.now()}` }
       });
-
       return res.status(200).json({ url: session.url, session_id: session.id });
     } catch (err) {
       return res.status(500).json({ error: err.message });
