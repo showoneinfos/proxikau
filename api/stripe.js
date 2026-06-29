@@ -20,7 +20,6 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: 'Webhook signature invalide' });
     }
 
-    // ✅ Paiement confirmé
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const commande_ids = session.metadata?.commande_id?.split(',') || [];
@@ -34,68 +33,30 @@ export default async function handler(req, res) {
         for (const commande_id of commande_ids) {
           const id = commande_id.trim();
 
-          // 1. Mettre à jour le statut
+          // Mettre à jour le statut
           await db.from('commandes').update({
             statut: 'payee',
             stripe_session_id: session.id,
             stripe_payment_intent: session.payment_intent
           }).eq('id', id);
 
-          // 2. Récupérer les infos complètes
+          // Récupérer les infos pour l'email acheteur
           const { data: commande } = await db
             .from('commandes')
-            .select('*, boutiques(nom, email_contact), commande_lignes(nom_produit, quantite, prix_unitaire)')
+            .select('*, boutiques(nom), commande_lignes(nom_produit, quantite, prix_unitaire)')
             .eq('id', id)
             .single();
 
           if (commande) commandesRecuperees.push(commande);
         }
 
-        if (!commandesRecuperees.length) {
-          return res.status(200).json({ received: true });
-        }
+        // Envoyer UN email récap à l'acheteur
+        if (commandesRecuperees.length) {
+          const adresse = commandesRecuperees[0].adresse_livraison || {};
+          const acheteur_email = adresse.email || '';
+          const acheteur_nom = `${adresse.prenom || ''} ${adresse.nom || ''}`.trim();
 
-        // Infos acheteur depuis la première commande
-        const premiere = commandesRecuperees[0];
-        const adresse = premiere.adresse_livraison || {};
-        const acheteur_nom = `${adresse.prenom || ''} ${adresse.nom || ''}`.trim();
-        const acheteur_email = adresse.email || '';
-        const acheteur_tel = adresse.telephone || '';
-
-        // 3. Email vendeur — un par boutique
-        for (const commande of commandesRecuperees) {
-          const vendeurEmail = commande.boutiques?.email_contact;
-          if (!vendeurEmail) continue;
-          const addr = commande.adresse_livraison || {};
-          try {
-            await fetch(`${BASE_URL}/api/send-email`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                vendeur_email: vendeurEmail,
-                boutique_nom: commande.boutiques?.nom || '',
-                commande_id: commande.id,
-                produits: commande.commande_lignes.map(l => ({
-                  nom: l.nom_produit,
-                  qty: l.quantite,
-                  prix: l.prix_unitaire
-                })),
-                mode_livraison: commande.mode_livraison,
-                adresse: ['colis','proximite'].includes(commande.mode_livraison) ? addr : null,
-                acheteur_nom,
-                acheteur_email,
-                acheteur_tel,
-                montant_total: commande.montant_total
-              })
-            });
-          } catch (e) {
-            console.error('Erreur email vendeur:', e.message);
-          }
-        }
-
-        // 4. Email acheteur — un seul récap avec toutes les boutiques
-        if (acheteur_email) {
-          try {
+          if (acheteur_email) {
             await fetch(`${BASE_URL}/api/send-email`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -116,13 +77,11 @@ export default async function handler(req, res) {
                 }))
               })
             });
-          } catch (e) {
-            console.error('Erreur email acheteur:', e.message);
           }
         }
 
       } catch (e) {
-        console.error('Erreur webhook checkout.session.completed:', e.message);
+        console.error('Erreur webhook:', e.message);
       }
     }
 
@@ -146,9 +105,7 @@ export default async function handler(req, res) {
     if (!boutique_id || !email) return res.status(400).json({ error: 'boutique_id et email requis' });
     try {
       const account = await stripe.accounts.create({
-        type: 'express',
-        country: 'FR',
-        email,
+        type: 'express', country: 'FR', email,
         capabilities: { card_payments: { requested: true }, transfers: { requested: true } },
         business_type: 'individual',
         business_profile: { name: boutique_nom, mcc: '5999', url: `${BASE_URL}/boutique.html?slug=${boutique_id}` },
@@ -169,7 +126,7 @@ export default async function handler(req, res) {
     }
   }
 
-  // ONBOARDING LINK (compte existant)
+  // ONBOARDING LINK
   if (req.method === 'POST' && action === 'onboarding-link') {
     const { stripe_account_id } = req.body;
     if (!stripe_account_id) return res.status(400).json({ error: 'stripe_account_id requis' });
@@ -209,7 +166,7 @@ export default async function handler(req, res) {
         line_items,
         mode: 'payment',
         customer_email: acheteur_email,
-        success_url: `${BASE_URL}/mes-commandes.html?paiement=ok`,
+        success_url: `${BASE_URL}/mes-commandes.html?paiement=ok&email=${encodeURIComponent(acheteur_email)}`,
         cancel_url: `${BASE_URL}/checkout.html?paiement=annule`,
         metadata: {
           commande_id: commandes.map(c => c.commande_id).join(','),
