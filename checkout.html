@@ -441,32 +441,8 @@ async function confirmerCommande() {
       }
     }
 
-    // ✅ Email vendeur envoyé ici (fiable, comme avant)
-    for (const cmd of commandesCreees) {
-      const b = boutiquesData[cmd.boutique_id]||{};
-      if (b.email_contact) {
-        try {
-          await fetch('/api/send-email', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              vendeur_email: b.email_contact,
-              boutique_nom: cmd.boutique_nom,
-              commande_id: cmd.id,
-              produits: cmd.items.map(it=>({nom:it.nom,qty:it.qty,prix:it.prix})),
-              mode_livraison: livraisonsChoisies[cmd.boutique_id],
-              adresse: ['colis','proximite'].includes(livraisonsChoisies[cmd.boutique_id]) ? adresseCommande : null,
-              acheteur_nom: prenom+' '+nom,
-              acheteur_email: email,
-              acheteur_tel: tel,
-              montant_total: cmd.montant_total
-            })
-          });
-        } catch(e) {}
-      }
-    }
+    // ✅ AUCUN email ici — tout est géré par le webhook Stripe après paiement confirmé
 
-    // Rediriger vers Stripe
     btn.textContent = 'Redirection vers le paiement...';
     const stripeRes = await fetch('/api/stripe?action=checkout', {
       method: 'POST',
@@ -482,8 +458,6 @@ async function confirmerCommande() {
 
     const stripeData = await stripeRes.json();
     if (stripeData.url) {
-      // ✅ Panier supprimé ici car on part vers Stripe — s'il annule le panier est perdu
-      // mais c'est acceptable, le vendeur a déjà reçu l'email
       localStorage.removeItem('proxikau_panier');
       window.location.href = stripeData.url;
     } else {
