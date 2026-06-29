@@ -7,7 +7,7 @@ const BASE_URL = process.env.BASE_URL || 'https://proxikau.com';
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 
 async function envoyerEmail(to, subject, html) {
-  await fetch('https://api.resend.com/emails', {
+  const r = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -20,6 +20,8 @@ async function envoyerEmail(to, subject, html) {
       html
     })
   });
+  const data = await r.json();
+  console.log('Email envoyé à', to, '— statut:', r.status, JSON.stringify(data));
 }
 
 export default async function handler(req, res) {
@@ -34,12 +36,17 @@ export default async function handler(req, res) {
       const rawBody = await getRawBody(req);
       event = stripe.webhooks.constructEvent(rawBody, sig, WEBHOOK_SECRET);
     } catch (err) {
-      return res.status(400).json({ error: 'Webhook signature invalide' });
+      console.error('Webhook signature invalide:', err.message);
+      return res.status(400).json({ error: 'Webhook signature invalide: ' + err.message });
     }
+
+    console.log('Webhook reçu:', event.type);
 
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
+      console.log('Session metadata:', JSON.stringify(session.metadata));
       const commande_ids = session.metadata?.commande_id?.split(',') || [];
+      console.log('Commande IDs:', commande_ids);
 
       try {
         const { createClient } = await import('@supabase/supabase-js');
@@ -56,29 +63,36 @@ export default async function handler(req, res) {
             stripe_payment_intent: session.payment_intent
           }).eq('id', id);
 
-          const { data: commande } = await db
+          const { data: commande, error } = await db
             .from('commandes')
             .select('*, boutiques(nom, email_contact), commande_lignes(nom_produit, quantite, prix_unitaire)')
             .eq('id', id)
             .single();
 
+          console.log('Commande récupérée:', id, error ? 'ERREUR: ' + error.message : 'OK');
           if (commande) commandesRecuperees.push(commande);
         }
 
-        if (!commandesRecuperees.length) return res.status(200).json({ received: true });
+        if (!commandesRecuperees.length) {
+          console.log('Aucune commande récupérée — arrêt');
+          return res.status(200).json({ received: true });
+        }
 
         const premiere = commandesRecuperees[0];
         const adresse = premiere.adresse_livraison || {};
         const acheteur_nom = `${adresse.prenom || ''} ${adresse.nom || ''}`.trim();
-        const acheteur_email = adresse.email || '';
+        const acheteur_email = adresse.email || session.customer_email || '';
         const acheteur_tel = adresse.telephone || '';
+
+        console.log('Acheteur email:', acheteur_email);
 
         const livLabel = (mode) => ({ colis: '📦 Envoi par colis', enlevement: '🏠 Enlèvement sur place', proximite: '🚗 Livraison à proximité' }[mode] || mode);
 
         // ✅ Email vendeur — un par boutique
         for (const commande of commandesRecuperees) {
           const vendeurEmail = commande.boutiques?.email_contact;
-          if (!vendeurEmail) continue;
+          console.log('Email vendeur pour boutique', commande.boutiques?.nom, ':', vendeurEmail);
+          if (!vendeurEmail) { console.log('Pas d email vendeur — skip'); continue; }
 
           const produitsHTML = commande.commande_lignes.map(l =>
             `<tr>
@@ -133,6 +147,7 @@ export default async function handler(req, res) {
         }
 
         // ✅ Email acheteur — un seul récap
+        console.log('Envoi email acheteur à:', acheteur_email);
         if (acheteur_email) {
           const commandesHTML = commandesRecuperees.map(c => {
             const produitsHTML = c.commande_lignes.map(l =>
@@ -185,10 +200,12 @@ export default async function handler(req, res) {
           try {
             await envoyerEmail(acheteur_email, `✅ Ta commande Proxikau est confirmée`, htmlAcheteur);
           } catch(e) { console.error('Erreur email acheteur:', e.message); }
+        } else {
+          console.log('Pas d email acheteur trouvé — skip');
         }
 
       } catch (e) {
-        console.error('Erreur webhook:', e.message);
+        console.error('Erreur webhook générale:', e.message, e.stack);
       }
     }
 
@@ -310,11 +327,12 @@ export default async function handler(req, res) {
 
 export const config = { api: { bodyParser: false } };
 
+// ✅ FIX : Buffer au lieu de string pour que Stripe puisse vérifier la signature
 function getRawBody(req) {
   return new Promise((resolve, reject) => {
-    let data = '';
-    req.on('data', chunk => { data += chunk; });
-    req.on('end', () => resolve(data));
+    const chunks = [];
+    req.on('data', chunk => { chunks.push(chunk); });
+    req.on('end', () => resolve(Buffer.concat(chunks)));
     req.on('error', reject);
   });
 }
