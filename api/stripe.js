@@ -4,6 +4,23 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 const WEBHOOK_SECRET = process.env.STRIPE_WEBHOOK_SECRET;
 const BASE_URL = process.env.BASE_URL || 'https://proxikau.com';
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+
+async function envoyerEmail(to, subject, html) {
+  await fetch('https://api.resend.com/emails', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${RESEND_API_KEY}`
+    },
+    body: JSON.stringify({
+      from: 'Proxikau <noreply@proxikau.com>',
+      to: [to],
+      subject,
+      html
+    })
+  });
+}
 
 export default async function handler(req, res) {
 
@@ -33,51 +50,141 @@ export default async function handler(req, res) {
         for (const commande_id of commande_ids) {
           const id = commande_id.trim();
 
-          // Mettre à jour le statut
           await db.from('commandes').update({
             statut: 'payee',
             stripe_session_id: session.id,
             stripe_payment_intent: session.payment_intent
           }).eq('id', id);
 
-          // Récupérer les infos pour l'email acheteur
           const { data: commande } = await db
             .from('commandes')
-            .select('*, boutiques(nom), commande_lignes(nom_produit, quantite, prix_unitaire)')
+            .select('*, boutiques(nom, email_contact), commande_lignes(nom_produit, quantite, prix_unitaire)')
             .eq('id', id)
             .single();
 
           if (commande) commandesRecuperees.push(commande);
         }
 
-        // Envoyer UN email récap à l'acheteur
-        if (commandesRecuperees.length) {
-          const adresse = commandesRecuperees[0].adresse_livraison || {};
-          const acheteur_email = adresse.email || '';
-          const acheteur_nom = `${adresse.prenom || ''} ${adresse.nom || ''}`.trim();
+        if (!commandesRecuperees.length) return res.status(200).json({ received: true });
 
-          if (acheteur_email) {
-            await fetch(`${BASE_URL}/api/send-email`, {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                type: 'acheteur_recap',
-                acheteur_nom,
-                acheteur_email,
-                toutes_commandes: commandesRecuperees.map(c => ({
-                  boutique_nom: c.boutiques?.nom || '',
-                  mode_livraison: c.mode_livraison,
-                  adresse: ['colis','proximite'].includes(c.mode_livraison) ? (c.adresse_livraison || {}) : null,
-                  montant: c.montant_total,
-                  produits: c.commande_lignes.map(l => ({
-                    nom: l.nom_produit,
-                    qty: l.quantite,
-                    prix: l.prix_unitaire
-                  }))
-                }))
-              })
-            });
-          }
+        const premiere = commandesRecuperees[0];
+        const adresse = premiere.adresse_livraison || {};
+        const acheteur_nom = `${adresse.prenom || ''} ${adresse.nom || ''}`.trim();
+        const acheteur_email = adresse.email || '';
+        const acheteur_tel = adresse.telephone || '';
+
+        const livLabel = (mode) => ({ colis: '📦 Envoi par colis', enlevement: '🏠 Enlèvement sur place', proximite: '🚗 Livraison à proximité' }[mode] || mode);
+
+        // ✅ Email vendeur — un par boutique
+        for (const commande of commandesRecuperees) {
+          const vendeurEmail = commande.boutiques?.email_contact;
+          if (!vendeurEmail) continue;
+
+          const produitsHTML = commande.commande_lignes.map(l =>
+            `<tr>
+              <td style="padding:8px 0;border-bottom:1px solid #eee;">${l.nom_produit}</td>
+              <td style="padding:8px 0;border-bottom:1px solid #eee;text-align:center;">x${l.quantite}</td>
+              <td style="padding:8px 0;border-bottom:1px solid #eee;text-align:right;font-weight:600;color:#2D6A4F;">${(l.prix_unitaire * l.quantite).toFixed(2)}€</td>
+            </tr>`
+          ).join('');
+
+          const addr = commande.adresse_livraison || {};
+          const adresseHTML = ['colis','proximite'].includes(commande.mode_livraison) && addr.rue
+            ? `<p style="margin:0;"><strong>Adresse :</strong> ${addr.rue}, ${addr.cp} ${addr.ville}</p>` : '';
+
+          const htmlVendeur = `
+            <div style="font-family:Inter,sans-serif;max-width:560px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #E0E0E0;">
+              <div style="background:linear-gradient(135deg,#1B4332,#2D6A4F);padding:28px 32px;">
+                <div style="color:#fff;font-size:22px;font-weight:800;">Proxikau</div>
+                <div style="color:rgba(255,255,255,.8);font-size:14px;margin-top:4px;">Nouvelle commande reçue 🎉</div>
+              </div>
+              <div style="padding:28px 32px;">
+                <h2 style="font-size:18px;font-weight:700;margin:0 0 6px;">Tu as une nouvelle commande !</h2>
+                <p style="color:#555;font-size:14px;margin:0 0 24px;">Commande #${commande.id.substring(0,8).toUpperCase()} — <strong>${commande.boutiques?.nom}</strong></p>
+                <table style="width:100%;border-collapse:collapse;margin-bottom:20px;">
+                  <thead><tr>
+                    <th style="text-align:left;font-size:12px;color:#999;text-transform:uppercase;padding-bottom:8px;border-bottom:2px solid #eee;">Produit</th>
+                    <th style="text-align:center;font-size:12px;color:#999;text-transform:uppercase;padding-bottom:8px;border-bottom:2px solid #eee;">Qté</th>
+                    <th style="text-align:right;font-size:12px;color:#999;text-transform:uppercase;padding-bottom:8px;border-bottom:2px solid #eee;">Total</th>
+                  </tr></thead>
+                  <tbody>${produitsHTML}</tbody>
+                </table>
+                <div style="background:#F9F7F4;border-radius:10px;padding:16px;margin-bottom:20px;">
+                  <p style="margin:0 0 8px;font-weight:700;font-size:14px;">Livraison : ${livLabel(commande.mode_livraison)}</p>
+                  ${adresseHTML}
+                  <p style="margin:8px 0 0;font-size:14px;"><strong>Montant :</strong> <span style="color:#2D6A4F;font-weight:700;">${parseFloat(commande.montant_total).toFixed(2)}€</span></p>
+                </div>
+                <div style="border:1px solid #E0E0E0;border-radius:10px;padding:16px;margin-bottom:24px;">
+                  <p style="margin:0 0 6px;font-weight:700;font-size:14px;">Coordonnées acheteur</p>
+                  <p style="margin:0;font-size:14px;color:#555;">${acheteur_nom}</p>
+                  <p style="margin:0;font-size:14px;color:#555;">${acheteur_email}</p>
+                  <p style="margin:0;font-size:14px;color:#555;">${acheteur_tel}</p>
+                </div>
+                <a href="https://proxikau.com/dashboard.html" style="display:inline-block;background:#2D6A4F;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;">Gérer ma commande →</a>
+              </div>
+              <div style="padding:16px 32px;background:#F9F7F4;border-top:1px solid #E0E0E0;font-size:12px;color:#999;text-align:center;">
+                Proxikau — Marketplace des artisans et producteurs locaux
+              </div>
+            </div>`;
+
+          try {
+            await envoyerEmail(vendeurEmail, `🛒 Nouvelle commande — ${commande.boutiques?.nom}`, htmlVendeur);
+          } catch(e) { console.error('Erreur email vendeur:', e.message); }
+        }
+
+        // ✅ Email acheteur — un seul récap
+        if (acheteur_email) {
+          const commandesHTML = commandesRecuperees.map(c => {
+            const produitsHTML = c.commande_lignes.map(l =>
+              `<tr>
+                <td style="padding:6px 0;border-bottom:1px solid #eee;font-size:14px;">${l.nom_produit}</td>
+                <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:center;font-size:14px;">x${l.quantite}</td>
+                <td style="padding:6px 0;border-bottom:1px solid #eee;text-align:right;font-weight:600;color:#2D6A4F;font-size:14px;">${(l.prix_unitaire * l.quantite).toFixed(2)}€</td>
+              </tr>`
+            ).join('');
+            const addr = c.adresse_livraison || {};
+            const adresseHTML = ['colis','proximite'].includes(c.mode_livraison) && addr.rue
+              ? `<p style="margin:4px 0 0;font-size:13px;color:#555;">Adresse : ${addr.rue}, ${addr.cp} ${addr.ville}</p>` : '';
+            return `
+              <div style="margin-bottom:20px;border:1px solid #E0E0E0;border-radius:10px;overflow:hidden;">
+                <div style="background:#F9F7F4;padding:12px 16px;font-weight:700;font-size:14px;color:#1B4332;">🏪 ${c.boutiques?.nom}</div>
+                <div style="padding:12px 16px;">
+                  <table style="width:100%;border-collapse:collapse;">${produitsHTML}</table>
+                  <div style="margin-top:10px;padding:10px;background:#F9F7F4;border-radius:8px;">
+                    <p style="margin:0;font-size:13px;font-weight:600;">${livLabel(c.mode_livraison)}</p>
+                    ${adresseHTML}
+                    <p style="margin:6px 0 0;font-size:13px;">Sous-total : <strong style="color:#2D6A4F;">${parseFloat(c.montant_total).toFixed(2)}€</strong></p>
+                  </div>
+                </div>
+              </div>`;
+          }).join('');
+
+          const totalGlobal = commandesRecuperees.reduce((s,c) => s + parseFloat(c.montant_total), 0);
+
+          const htmlAcheteur = `
+            <div style="font-family:Inter,sans-serif;max-width:580px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;border:1px solid #E0E0E0;">
+              <div style="background:linear-gradient(135deg,#1B4332,#2D6A4F);padding:28px 32px;">
+                <div style="color:#fff;font-size:22px;font-weight:800;">Proxikau</div>
+                <div style="color:rgba(255,255,255,.8);font-size:14px;margin-top:4px;">Commande confirmée ✅</div>
+              </div>
+              <div style="padding:28px 32px;">
+                <h2 style="font-size:18px;font-weight:700;margin:0 0 6px;">Merci ${acheteur_nom} !</h2>
+                <p style="color:#555;font-size:14px;margin:0 0 24px;">Voici le récapitulatif de ta commande :</p>
+                ${commandesHTML}
+                <div style="background:#D8F3DC;border-radius:10px;padding:14px 16px;text-align:center;">
+                  <div style="font-size:13px;color:#1B4332;margin-bottom:4px;">Total payé</div>
+                  <div style="font-size:24px;font-weight:800;color:#1B4332;">${totalGlobal.toFixed(2)}€</div>
+                </div>
+                <p style="color:#555;font-size:13px;margin-top:20px;">Les vendeurs vont préparer tes articles et te contacter si besoin.</p>
+              </div>
+              <div style="padding:16px 32px;background:#F9F7F4;border-top:1px solid #E0E0E0;font-size:12px;color:#999;text-align:center;">
+                Proxikau — Marketplace des artisans et producteurs locaux
+              </div>
+            </div>`;
+
+          try {
+            await envoyerEmail(acheteur_email, `✅ Ta commande Proxikau est confirmée`, htmlAcheteur);
+          } catch(e) { console.error('Erreur email acheteur:', e.message); }
         }
 
       } catch (e) {
